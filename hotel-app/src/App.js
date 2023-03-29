@@ -1,11 +1,14 @@
-import logo from './logo.svg';
 import './App.css';
+import SignIn from './Pages/SignIn';
+import { Routes, Route } from 'react-router-dom';
+
 
 function App() {
   return (
-    <div>
-      hi
-    </div>
+    <Routes>
+      <Route path="/" element={<SignIn />} />
+    </Routes>
+  
   );
 }
 
