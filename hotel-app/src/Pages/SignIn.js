@@ -1,9 +1,27 @@
 import './SignIn.css';
 import test from '../test.jpg' ;
+import { Box, rgbToHex } from '@mui/material';
+import { Container } from '@mui/system';
 
 function SignIn() {
     return (
-        <section>
+        <Container>
+            <img src={test} className="bg" />
+            <Box sx={{
+                position: "relative",
+                padding: "60px",
+                backgroundColor: "#fffff40",
+                backdropFilter: "blur(15px)"
+            }}>
+            </Box>
+
+
+        </Container>
+        
+
+
+        
+        /*<section>
             <img src={test} className="bg" />
             <div className="login">
                 <h2>Sign In</h2>
@@ -21,7 +39,7 @@ function SignIn() {
                     <a href="3">Sign Up</a>
                 </div>
             </div>
-        </section>
+        </section>*/
     );
 }
 

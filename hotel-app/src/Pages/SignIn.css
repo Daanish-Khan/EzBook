@@ -16,7 +16,7 @@ section {
     overflow-x: hidden;
 }
 
-section .bg {
+.bg {
     position: absolute;
     top: 0;
     left: 0;
