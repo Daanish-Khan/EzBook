@@ -1,7 +1,12 @@
 import './SignIn.css';
-import test from '../test.jpg' ;
-import { Box, Button, rgbToHex, TextField } from '@mui/material';
-import { Container } from '@mui/system';
+import { Box, Button, TextField, Typography } from '@mui/material';
+import { Container, padding } from '@mui/system';
+import Waves from '../components/Waves';
+
+const focusedColor = "#CD5B68"
+const defaultColor = "#EF5F67"
+const primaryColor = "#C62368"
+const primaryFocusedColor = "#B21868"
 
 function SignIn() {
     return (
@@ -12,9 +17,40 @@ function SignIn() {
             alignItems: "center",
             overflowX: "hidden",
             width: "100%",
-            height: "100vh"
+            height: "100vh",
         }}>
-            <img src={test} className="bg" />
+
+            <div className="bg"/>
+            <Box
+            sx={{
+                position:"fixed",
+                top: "15vh",
+            }}>
+                <Typography variant="h1" sx={{color: defaultColor}}>EzBook.</Typography>
+            </Box>
+            <Waves
+                colorArray={[
+                    "#FA7268",
+                    "#EF5F67",
+                    "#E34C67",
+                    "#D53867",
+                    "#C62368",
+                ]}
+                style={{
+                    position:"absolute",
+                    width: "100vw",
+                    height: "55vh",
+                    bottom:"0px",
+                    left:"0px",
+                    margin: "0px"
+                }}
+                gap={100}
+                height={170}
+                speed={0.35}
+                points={5}
+                amplitude={20}
+            
+            />
             <Box sx={{
                 position: "relative",
                 padding: "60px",
@@ -49,27 +85,27 @@ function SignIn() {
                         },
                         
                         '&:hover label': {
-                            color: "#d64c42",
+                            color: focusedColor,
                             
                         },
 
                         '& label.Mui-focused': {
-                            color: "#d64c42",
+                            color: focusedColor,
                             
                         },
                         '& label': {
-                            color: "#8f2c24",
+                            color: defaultColor,
                         },
 
                         '&& .MuiFilledInput-underline:hover:before': {
-                            borderBottomColor: "#d64c42"
+                            borderBottomColor: focusedColor
                         },
                         '& .MuiFilledInput-underline:after': {
-                            borderBottomColor: "#d64c42"
+                            borderBottomColor: focusedColor
                         },
                         '& .MuiFilledInput-underline:before': {
                             
-                            borderBottomColor: "#8f2c24",
+                            borderBottomColor: defaultColor,
                         },
 
                     }}
@@ -78,30 +114,28 @@ function SignIn() {
                     variant="contained"
                     sx={{
                         marginTop: "30px",
-                        backgroundColor: "#8f2c24",
+                        backgroundColor:  primaryColor,
                         ':hover': {
-                            backgroundColor: "#d64c42"
+                            backgroundColor: primaryFocusedColor
                         }
                     }}>
                     login
                 </Button>
                 <Button
-                 variant="outlined"
+                 variant="contained"
                  sx={{
                      marginTop: "30px",
-                     borderColor: "#8f2c24",
-                     color: "#8f2c24",
+                     backgroundColor: defaultColor,
                      ':hover': {
-                         borderColor: "#d64c42",
-                         color: "#d64c42"
+                        backgroundColor: focusedColor
                      }
                  }}>
                     Sign Up
                 </Button>
             </Box>
-            
 
         </Container>
+
         
     );
 }
