@@ -5,12 +5,8 @@ import Waves from '../components/Waves';
 import SignInBox from '../components/SignInBox';
 import SignUpBox from '../components/SignUpBox';
 import { motion } from 'framer-motion';
+import { COLORS } from '../components/consts'
 import * as React from 'react';
-
-const focusedColor = "#CD5B68"
-const defaultColor = "#EF5F67"
-const primaryColor = "#C62368"
-const primaryFocusedColor = "#B21868"
 
 function SignIn() {
 
@@ -40,7 +36,7 @@ function SignIn() {
                 position:"fixed",
                 top: "15vh",
             }}>
-                <Typography variant="h1" sx={{color: defaultColor}}>EzBook.</Typography>
+                <Typography variant="h1" sx={{color: COLORS.defaultColor}}>EzBook.</Typography>
             </Box>
 
             <motion.div
@@ -50,6 +46,7 @@ function SignIn() {
                     width: "100%",  
                 }}
                 animate={{ y: animate ? "35vh" : "1vh" }}
+                initial={false}
                 transition={{duration: 0.75, type: "spring"}}
 
             >
@@ -79,18 +76,10 @@ function SignIn() {
 
             {animate 
             ? <SignUpBox 
-                defaultColor={defaultColor}
-                focusedColor={focusedColor}
-                primaryColor={primaryColor}
-                primaryFocusedColor={primaryFocusedColor}
-                onSignUpClick={onSwitchSignUpSignInClick}
+                onBackToSignInClick={onSwitchSignUpSignInClick}
             />
             :  <SignInBox 
-                defaultColor={defaultColor}
-                focusedColor={focusedColor}
-                primaryColor={primaryColor}
-                primaryFocusedColor={primaryFocusedColor}
-                onSignUpClick={onSwitchSignUpSignInClick}
+                onSignInClick={onSwitchSignUpSignInClick}
             />}
 
         </Container>

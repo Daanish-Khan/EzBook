@@ -1,6 +1,7 @@
 import { Box, Button, TextField } from '@mui/material';
 import { Grid } from '@mui/material';
-function SignUpBox({ defaultColor, focusedColor, primaryColor, primaryFocusedColor, onSignUpClick }) {
+import { COLORS } from '../components/consts'
+function SignUpBox({ onBackToSignInClick }) {
 
     const style = {
         '& .MuiInputBase-root.Mui-focused': {
@@ -14,27 +15,27 @@ function SignUpBox({ defaultColor, focusedColor, primaryColor, primaryFocusedCol
         },
         
         '&:hover label': {
-            color: focusedColor,
+            color: COLORS.focusedColor,
             
         },
 
         '& label.Mui-focused': {
-            color: focusedColor,
+            color: COLORS.focusedColor,
             
         },
         '& label': {
-            color: defaultColor,
+            color: COLORS.defaultColor,
         },
 
         '&& .MuiFilledInput-underline:hover:before': {
-            borderBottomColor: focusedColor
+            borderBottomColor: COLORS.focusedColor
         },
         '& .MuiFilledInput-underline:after': {
-            borderBottomColor: focusedColor
+            borderBottomColor: COLORS.focusedColor
         },
         '& .MuiFilledInput-underline:before': {
             
-            borderBottomColor: defaultColor,
+            borderBottomColor: COLORS.defaultColor,
         },
     }
 
@@ -94,21 +95,21 @@ function SignUpBox({ defaultColor, focusedColor, primaryColor, primaryFocusedCol
                 variant="contained"
                 sx={{
                     marginTop: "30px",
-                    backgroundColor:  primaryColor,
+                    backgroundColor:  COLORS.primaryColor,
                     ':hover': {
-                        backgroundColor: primaryFocusedColor
+                        backgroundColor: COLORS.primaryFocusedColor
                     }
                 }}>
                 Register
             </Button>
             <Button
              variant="contained"
-             onClick={onSignUpClick}
+             onClick={onBackToSignInClick}
              sx={{
                  marginTop: "30px",
-                 backgroundColor: defaultColor,
+                 backgroundColor: COLORS.defaultColor,
                  ':hover': {
-                    backgroundColor: focusedColor
+                    backgroundColor: COLORS.focusedColor
                  }
              }}>
                 Back to login

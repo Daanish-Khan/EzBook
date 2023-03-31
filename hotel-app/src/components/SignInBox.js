@@ -1,6 +1,7 @@
 import { Box, Button, TextField } from '@mui/material';
+import { COLORS } from '../components/consts'
 
-function SignInBox({ defaultColor, focusedColor, primaryColor, primaryFocusedColor, onSignUpClick }) {
+function SignInBox({ onSignInClick }) {
 
     return (
         <Box sx={{
@@ -37,27 +38,27 @@ function SignInBox({ defaultColor, focusedColor, primaryColor, primaryFocusedCol
                     },
                     
                     '&:hover label': {
-                        color: focusedColor,
+                        color: COLORS.focusedColor,
                         
                     },
 
                     '& label.Mui-focused': {
-                        color: focusedColor,
+                        color: COLORS.focusedColor,
                         
                     },
                     '& label': {
-                        color: defaultColor,
+                        color: COLORS.defaultColor,
                     },
 
                     '&& .MuiFilledInput-underline:hover:before': {
-                        borderBottomColor: focusedColor
+                        borderBottomColor: COLORS.focusedColor
                     },
                     '& .MuiFilledInput-underline:after': {
-                        borderBottomColor: focusedColor
+                        borderBottomColor: COLORS.focusedColor
                     },
                     '& .MuiFilledInput-underline:before': {
                         
-                        borderBottomColor: defaultColor,
+                        borderBottomColor: COLORS.defaultColor,
                     },
 
                 }}
@@ -66,21 +67,21 @@ function SignInBox({ defaultColor, focusedColor, primaryColor, primaryFocusedCol
                 variant="contained"
                 sx={{
                     marginTop: "30px",
-                    backgroundColor:  primaryColor,
+                    backgroundColor:  COLORS.primaryColor,
                     ':hover': {
-                        backgroundColor: primaryFocusedColor
+                        backgroundColor: COLORS.primaryFocusedColor
                     }
                 }}>
                 login
             </Button>
             <Button
              variant="contained"
-             onClick={onSignUpClick}
+             onClick={onSignInClick}
              sx={{
                  marginTop: "30px",
-                 backgroundColor: defaultColor,
+                 backgroundColor: COLORS.defaultColor,
                  ':hover': {
-                    backgroundColor: focusedColor
+                    backgroundColor: COLORS.focusedColor
                  }
              }}>
                 Sign Up
