@@ -1,0 +1,15 @@
+* {
+    margin:0;
+    padding:0;
+    overflow-y: hidden;
+    font-family: 'Poppins', sans-serif;
+}
+.bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height:100%;
+    width:100%;
+    pointer-events: none;
+    background-color: #001220;
+}
