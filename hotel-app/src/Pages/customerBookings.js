@@ -1,8 +1,8 @@
 import { Stack } from '@mui/system';
-
+import { COLORS } from '../components/consts'
 import Chip from '@mui/material/Chip';
-import { AppBar,Typography } from '@mui/material';
-const primary = "#b23a68"
+import Navbar from './navbar';
+import { colors } from '@mui/material';
 export default function customerBookings() {
     return (
 
@@ -14,27 +14,57 @@ export default function customerBookings() {
             justifyContent: "center",
             alignItems: "center"
         }}>
+            <Navbar/>
             <Stack spacing={2} direction="column">
-            <AppBar position='fixed'
-                style={{
-                    height:50,
-                    backgroundColor:primary,
-                    justifyContent:"center"
-                }}>
-                <Typography marginLeft={5}>EZBook</Typography>
-            </AppBar>
+
             <Stack spacing={2} direction="column"
                 style={{
-                    margin:100
+                    margin:50
                 }}>
                 <Stack spacing={5} direction="row">
-                    <Chip label="Start/End"  />
-                    <Chip label="Room Capacity"  />
-                    <Chip label="Area"  />
-                    <Chip label="Chain"  />
-                    <Chip label="Category"  />
-                    <Chip label="# of Rooms"  />
-                    <Chip label="Price"  />
+                    <Chip label="Start/End"  
+                        sx={{
+                        background:COLORS.defaultColor,
+                        color:'white'
+                        }}
+                    />
+                    <Chip label="Room Capacity"  
+                        sx={{
+                            background:COLORS.defaultColor,
+                            color:'white'
+                            }}
+                    />
+                    <Chip label="Area"  
+                        sx={{
+                            background:COLORS.defaultColor,
+                            color:'white'
+                            }}
+                    />
+                    <Chip label="Chain"  
+                        sx={{
+                            background:COLORS.defaultColor,
+                            color:'white'
+                            }}
+                    />
+                    <Chip label="Category"  
+                        sx={{
+                            background:COLORS.defaultColor,
+                            color:'white'
+                            }}
+                    />
+                    <Chip label="# of Rooms"  
+                        sx={{
+                            background:COLORS.defaultColor,
+                            color:'white'
+                            }}
+                    />
+
+                    <Chip label="Price"  
+                        sx={{
+                            background:COLORS.defaultColor,
+                            color:'white'
+                            }}
+                    />
                 </Stack>
             </Stack>
             </Stack>
