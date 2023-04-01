@@ -5,7 +5,7 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import { COLORS } from '../components/consts'
 import Chip from '@mui/material/Chip';
-import Navbar from './navbar';
+import Navbar from '../components/navbar';
 import { FixedSizeList } from 'react-window';
 
 function renderRow(props) {
@@ -27,15 +27,10 @@ function renderRow(props) {
 export default function customerBookings() {
     return (
 
-
-        <div className='bg'
-            style={{
-                display: "flex",
-                justifyContent: "center",
-                marginTop: 50
-            }}>
+        <div>
+            <div className='bg' />
             <Navbar />
-
+            
             <Stack spacing={2} direction="column"
                 style={{
                     margin: 50
@@ -95,7 +90,7 @@ export default function customerBookings() {
                 {renderRow}
                 </FixedSizeList>
             </Stack>
-
         </div>
+        
     );
 }

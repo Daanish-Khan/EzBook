@@ -1,7 +1,6 @@
 * {
     margin:0;
     padding:0;
-    overflow-y: hidden;
     font-family: 'Poppins', sans-serif;
 }
 .bg {
@@ -12,4 +11,5 @@
     width:100%;
     pointer-events: none;
     background-color: #001220;
+    z-index: -1;
 }
