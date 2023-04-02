@@ -24,10 +24,12 @@ function BookingList( {gutter_size, itemCount} ) {
                      borderRadius: "30px",
                 }}>
                     <ListItemText primary={`Booking ${index + 1}`}
-                    sx={{
-                        color:'white', 
-                    }}>
-                    </ListItemText>
+                      sx={{
+                          color:'white', 
+                          wordWrap: "break-word"
+                      }}
+                      primaryTypographyProps={{ style: {whiteSpace: "normal"}}}
+                    />
                 </ListItemButton>
             </ListItem>
         );
