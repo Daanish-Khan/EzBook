@@ -1,12 +1,12 @@
 import { Container } from '@mui/system';
 import './customerBookings.css';
 import { COLORS } from '../components/consts'
-import { Chip, Stack, Box, ListItem, ListItemButton, ListItemText } from '@mui/material';
+import { Chip, Stack, Box } from '@mui/material';
 import Navbar from '../components/navbar';
-import { FixedSizeList } from 'react-window';
-import AutoSizer from 'react-virtualized-auto-sizer';
 import Waves from '../components/Waves';
+import BookingList from '../components/BookingList';
 import * as React from 'react';
+import { Scrollbar } from 'react-scrollbars-custom';
 
 const chips = [
     {key: 0, label: 'Start - End Date'},
@@ -17,45 +17,6 @@ const chips = [
     {key: 5, label: 'Price'}
 ];
 
-const innerElementType = React.forwardRef(({ style, ...rest }, ref) => (
-    <div
-      ref={ref}
-      style={{
-        ...style,
-        paddingTop: GUTTER_SIZE
-      }}
-      {...rest}
-    />
-  ));
-
-const GUTTER_SIZE = 10;
-
-function renderRow(props) {
-    const { index, style } = props;
-
-    return (
-        <ListItem style={{
-            ...style,
-            top: style.top + GUTTER_SIZE,
-            height: style.height - GUTTER_SIZE,
-            borderRadius: "30px",
-            backgroundColor: COLORS.defaultColor,
-
-        }} key={index} component="div" disableGutters>
-            <ListItemButton sx={{
-                 borderRadius: "30px",
-            }}>
-                <ListItemText primary={`Booking ${index + 1}`}
-                sx={{
-                    color:'white',
-                    
-                    
-                }}>
-                </ListItemText>
-            </ListItemButton>
-        </ListItem>
-    );
-}
 export default function customerBookings() {
 
     return (
@@ -142,24 +103,9 @@ export default function customerBookings() {
                         boxShadow: "0 25px 50px #0000001a",
                     }}
                 >
-                    <AutoSizer>
-                        {({ height, width }) => (
-                            <FixedSizeList
-                                height={height + GUTTER_SIZE}
-                                innerElementType={innerElementType}
-                                width={width}
-                                itemSize={46}
-                                itemCount={30}
-                                overscanCount={5}
-                            >
-                                {renderRow}
-                            </FixedSizeList> 
-                        )}
-                    </AutoSizer>
-                     
+                    <BookingList gutter_size={15} itemCount={100} />
                 </Box>
             </Stack>
-            
         </Container>
         
     );
