@@ -120,7 +120,16 @@ function Navbar({sx}) {
                 </Button>
                 <Button
                     onClick={handleCloseNavMenu}
-                    sx={{ my: 2, color: 'white', display: 'block' }}
+                    sx={{ 
+                        my: 2,
+                        color: 'white', 
+                        display: 'block',
+                        borderRadius:"15px",
+                        ':hover': {
+                            backgroundColor: COLORS.focusedColor
+                        } 
+                    }}
+                    
                 >
                     My Trips
                 </Button>
