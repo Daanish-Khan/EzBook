@@ -42,7 +42,7 @@ function BookingList( {gutter_size, itemCount} ) {
         />
     ));
 
-    const CustomScrollbars = ({ forwardedRef, style, children }) => {
+    const CustomScrollbars = ({ onScroll, forwardedRef, style, children }) => {
         const refSetter = React.useCallback(scrollbarsRef => {
           if (scrollbarsRef) {
             forwardedRef(scrollbarsRef.view);
@@ -55,6 +55,24 @@ function BookingList( {gutter_size, itemCount} ) {
           <Scrollbar
             ref={refSetter}
             style={{ ...style, overflow: "hidden" }}
+            scrollerProps={{
+                renderer: props => {
+                  const { elementRef, onScroll: rscOnScroll, ...restProps } = props;
+        
+                  return (
+                    <span
+                      {...restProps}
+                      onScroll={e => {
+                        onScroll(e);
+                        rscOnScroll(e);
+                      }}
+                      ref={ref => {
+                        elementRef(ref);
+                      }}
+                    />
+                  );
+                }
+              }}
           >
             {children}
           </Scrollbar>
@@ -64,24 +82,22 @@ function BookingList( {gutter_size, itemCount} ) {
       const CustomScrollbarsVirtualList = React.forwardRef((props, ref) => (
         <CustomScrollbars {...props} forwardedRef={ref} />
       ));
-      
 
     return (
-            <AutoSizer >
+        <AutoSizer >
             {({ height, width }) => (
                     <FixedSizeList
+
                     height={height + gutter_size}
                     innerElementType={innerElementType}
                     width={width}
-                    itemSize={47}
+                    itemSize={46}
                     itemCount={itemCount}
                     overscanCount={5}
-                    //outerElementType={CustomScrollbarsVirtualList}
+                    outerElementType={CustomScrollbarsVirtualList}
                 >
                     {renderRow}
                 </FixedSizeList> 
-
-
             )}
         </AutoSizer>
     );
