@@ -5,9 +5,9 @@ import './Scrollbar.css';
 const CustomScrollbars = ({ onScroll, forwardedRef, style, children }) => {
     const refSetter = React.useCallback(scrollbarsRef => {
       if (scrollbarsRef) {
-        forwardedRef(scrollbarsRef.view);
+        React.forwardRef(scrollbarsRef.view);
       } else {
-        forwardedRef(null);
+        React.forwardRef(null);
       }
     }, []);
   

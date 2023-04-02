@@ -1,12 +1,11 @@
 import { Container } from '@mui/system';
 import './customerBookings.css';
 import { COLORS } from '../components/consts'
-import { Chip, Stack, Box } from '@mui/material';
+import { Chip, Stack, Box, Popover, TextField, Slider } from '@mui/material';
 import Navbar from '../components/navbar';
 import Waves from '../components/Waves';
 import BookingList from '../components/BookingList';
 import * as React from 'react';
-import { Scrollbar } from 'react-scrollbars-custom';
 
 const chips = [
     {key: 0, label: 'Start - End Date'},
@@ -17,7 +16,25 @@ const chips = [
     {key: 5, label: 'Price'}
 ];
 
-export default function customerBookings() {
+function valuetext(value) {
+    return `${value}`;
+}
+
+export default function CustomerBookings() {
+
+    const [anchorEl, setAnchorEl] = React.useState(null);
+    const [value, setValue] = React.useState([20, 37]);
+
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    }
+
+    const handleClose = () => {
+        setAnchorEl(null);
+    }
+
+    const open = Boolean(anchorEl);
+    const id = open ? 'popover' : undefined;
 
     return (
         <Container disableGutters maxWidth="false"
@@ -52,7 +69,6 @@ export default function customerBookings() {
                     points={5}
                     amplitude={20}
                 />
-
             
             <Stack useFlexGap sx={{width: "100vw", height: "100vh"}} spacing={0} >
                 <Navbar sx={{
@@ -66,6 +82,7 @@ export default function customerBookings() {
                     position: "relative",
                 }}/>
                 
+                <Slider defaultValue={50} aria-label="Default" sx={{}}/>
                 <Box
                     sx={{
                         position: "relative",
@@ -73,16 +90,34 @@ export default function customerBookings() {
                         marginTop: "50px"
                     }}
                 >
+                    
                     {chips.map((data) => {
                         return (
-                            <Chip 
-                                label={data.label}
-                                sx={{
-                                    color: "white",
-                                    backgroundColor: COLORS.defaultColor,
-                                    margin: "10px"
-                                }}
-                            />
+                            <div style={{width:"max-content", display: "inline-block", margin: 0}}>
+                                <Chip 
+                                    label={data.label}
+                                    onClick={handleClick}
+                                    sx={{
+                                        color: "white",
+                                        backgroundColor: COLORS.defaultColor,
+                                        margin: "10px"
+                                    }}
+                                />
+                                <Popover
+                                    id={id}
+                                    open={open}
+                                    anchorEl={anchorEl}
+                                    onClose={handleClose}
+                                    anchorOrigin={{
+                                        vertical: 'bottom',
+                                        horizontal: 'left'
+                                    }}
+                                
+                                >
+                                     
+                                </Popover>
+                            </div>
+                            
                         );
                     })}
                 </Box>
