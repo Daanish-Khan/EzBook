@@ -2,9 +2,8 @@ import * as React from 'react';
 import { ListItem, ListItemButton, ListItemText } from '@mui/material';
 import { FixedSizeList } from 'react-window';
 import AutoSizer from 'react-virtualized-auto-sizer';
-import { Scrollbar } from 'react-scrollbars-custom';
+import CustomScrollbarsVirtualList from './Scrollbar'
 import { COLORS } from './consts';
-import './BookingList.css';
 
 function BookingList( {gutter_size, itemCount} ) {
 
@@ -47,48 +46,6 @@ function BookingList( {gutter_size, itemCount} ) {
           {...rest}
         />
     ));
-
-    const CustomScrollbars = ({ onScroll, forwardedRef, style, children }) => {
-        const refSetter = React.useCallback(scrollbarsRef => {
-          if (scrollbarsRef) {
-            forwardedRef(scrollbarsRef.view);
-          } else {
-            forwardedRef(null);
-          }
-        }, []);
-      
-        return (
-          <Scrollbar
-            ref={refSetter}
-            style={{ ...style, overflow: "hidden" }}
-            scrollerProps={{
-                renderer: props => {
-                  const { elementRef, onScroll: rscOnScroll, ...restProps } = props;
-        
-                  return (
-                    <span
-                      {...restProps}
-                      onScroll={e => {
-                        onScroll(e);
-                        rscOnScroll(e);
-                      }}
-                      ref={ref => {
-                        elementRef(ref);
-                      }}
-                    />
-                  );
-                },
-                
-              }}
-          >
-            {children}
-          </Scrollbar>
-        );
-      };
-      
-      const CustomScrollbarsVirtualList = React.forwardRef((props, ref) => (
-        <CustomScrollbars {...props} forwardedRef={ref} />
-      ));
 
     return (
         <AutoSizer>
