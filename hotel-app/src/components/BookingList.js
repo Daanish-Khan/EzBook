@@ -18,10 +18,12 @@ function BookingList( {gutter_size, itemCount} ) {
                 height: style.height - gutter_size,
                 border: "2px solid #001220",
                 borderRadius: "30px",
+                padding: 0,
                 backgroundColor: COLORS.defaultColor,
             }} key={index} component="div" disableGutters>
                 <ListItemButton sx={{
                      borderRadius: "30px",
+                     height: "100%",
                 }}>
                     <ListItemText primary={`Booking ${index + 1}`}
                       sx={{
