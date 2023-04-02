@@ -1,14 +1,12 @@
 import { Container } from '@mui/system';
 import './customerBookings.css';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemText from '@mui/material/ListItemText';
 import { COLORS } from '../components/consts'
-import { Chip, Stack, Box } from '@mui/material';
+import { Chip, Stack, Box, ListItem, ListItemButton, ListItemText } from '@mui/material';
 import Navbar from '../components/navbar';
 import { FixedSizeList } from 'react-window';
 import AutoSizer from 'react-virtualized-auto-sizer';
 import Waves from '../components/Waves';
+import * as React from 'react';
 
 const chips = [
     {key: 0, label: 'Start - End Date'},
@@ -19,16 +17,39 @@ const chips = [
     {key: 5, label: 'Price'}
 ];
 
+const innerElementType = React.forwardRef(({ style, ...rest }, ref) => (
+    <div
+      ref={ref}
+      style={{
+        ...style,
+        paddingTop: GUTTER_SIZE
+      }}
+      {...rest}
+    />
+  ));
+
+const GUTTER_SIZE = 10;
+
 function renderRow(props) {
     const { index, style } = props;
 
     return (
-        <ListItem style={style} key={index} component="div" disablePadding>
-            <ListItemButton>
-                <ListItemText primary={`Booking ${index + 1}`}
-                style={{
-                    color:'white'
+        <ListItem style={{
+            ...style,
+            top: style.top + GUTTER_SIZE,
+            height: style.height - GUTTER_SIZE,
+            borderRadius: "30px",
+            backgroundColor: COLORS.defaultColor,
 
+        }} key={index} component="div" disableGutters>
+            <ListItemButton sx={{
+                 borderRadius: "30px",
+            }}>
+                <ListItemText primary={`Booking ${index + 1}`}
+                sx={{
+                    color:'white',
+                    
+                    
                 }}>
                 </ListItemText>
             </ListItemButton>
@@ -124,7 +145,8 @@ export default function customerBookings() {
                     <AutoSizer>
                         {({ height, width }) => (
                             <FixedSizeList
-                                height={height}
+                                height={height + GUTTER_SIZE}
+                                innerElementType={innerElementType}
                                 width={width}
                                 itemSize={46}
                                 itemCount={30}
