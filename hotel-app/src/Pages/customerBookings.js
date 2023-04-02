@@ -7,6 +7,7 @@ import { COLORS } from '../components/consts'
 import { Chip, Stack, Box } from '@mui/material';
 import Navbar from '../components/navbar';
 import { FixedSizeList } from 'react-window';
+import AutoSizer from 'react-virtualized-auto-sizer';
 import Waves from '../components/Waves';
 
 const chips = [
@@ -118,16 +119,22 @@ export default function customerBookings() {
                         borderRadius: "20px",
                         height: "75vh",
                         boxShadow: "0 25px 50px #0000001a",
-                    }}>
-                    <FixedSizeList
-                        height={400}
-                        width={800}
-                        itemSize={46}
-                        itemCount={10}
-                        overscanCount={5}
-                    >
-                        {renderRow}
-                    </FixedSizeList>  
+                    }}
+                >
+                    <AutoSizer>
+                        {({ height, width }) => (
+                            <FixedSizeList
+                                height={height}
+                                width={width}
+                                itemSize={46}
+                                itemCount={30}
+                                overscanCount={5}
+                            >
+                                {renderRow}
+                            </FixedSizeList> 
+                        )}
+                    </AutoSizer>
+                     
                 </Box>
             </Stack>
             
