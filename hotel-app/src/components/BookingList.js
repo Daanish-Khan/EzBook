@@ -16,6 +16,7 @@ function BookingList( {gutter_size, itemCount} ) {
                 ...style,
                 top: style.top + gutter_size,
                 height: style.height - gutter_size,
+                border: "2px solid #001220",
                 borderRadius: "30px",
                 backgroundColor: COLORS.defaultColor,
             }} key={index} component="div" disableGutters>
