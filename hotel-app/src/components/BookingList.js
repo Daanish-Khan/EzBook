@@ -4,6 +4,7 @@ import { FixedSizeList } from 'react-window';
 import AutoSizer from 'react-virtualized-auto-sizer';
 import { Scrollbar } from 'react-scrollbars-custom';
 import { COLORS } from './consts';
+import './BookingList.css';
 
 function BookingList( {gutter_size, itemCount} ) {
 
@@ -71,7 +72,8 @@ function BookingList( {gutter_size, itemCount} ) {
                       }}
                     />
                   );
-                }
+                },
+                
               }}
           >
             {children}
@@ -84,13 +86,13 @@ function BookingList( {gutter_size, itemCount} ) {
       ));
 
     return (
-        <AutoSizer >
+        <AutoSizer>
             {({ height, width }) => (
                     <FixedSizeList
 
                     height={height + gutter_size}
                     innerElementType={innerElementType}
-                    width={width}
+                    width={width - 15}
                     itemSize={46}
                     itemCount={itemCount}
                     overscanCount={5}
