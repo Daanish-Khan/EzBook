@@ -103,7 +103,7 @@ export default function customerBookings() {
                         boxShadow: "0 25px 50px #0000001a",
                     }}
                 >
-                    <BookingList gutter_size={10} itemCount={100} />
+                    <BookingList gutter_size={5} itemCount={100} />
                 </Box>
             </Stack>
         </Container>
