@@ -1,116 +1,206 @@
-import { Stack } from '@mui/system';
+import { Container } from '@mui/system';
 import './customerBookings.css';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemText from '@mui/material/ListItemText';
 import { COLORS } from '../components/consts'
-import Chip from '@mui/material/Chip';
-import Navbar from './navbar';
-import { FixedSizeList } from 'react-window';
-import { responsiveFontSizes } from '@mui/material';
+import { Chip, Stack, Box, Popover, Slider, Select, MenuItem, InputLabel, FormControl } from '@mui/material';
+import Navbar from '../components/navbar';
+import Waves from '../components/Waves';
+import BookingList from '../components/BookingList';
+import * as React from 'react';
+import { DateCalendar } from '@mui/x-date-pickers';
 
-function renderRow(props) {
-    const { index, style } = props;
+export default function CustomerBookings() {
+
+    const [chip1Anchor, setChip1Anchor] = React.useState(null);
+    const [chip2Anchor, setChip2Anchor] = React.useState(null);
+    const [chip3Anchor, setChip3Anchor] = React.useState(null);
+    const [chip4Anchor, setChip4Anchor] = React.useState(null);
+    const [chip5Anchor, setChip5Anchor] = React.useState(null);
+    const [chip6Anchor, setChip6Anchor] = React.useState(null);
+    const [chip7Anchor, setChip7Anchor] = React.useState(null);
+
+    const [areaChipText, setAreaChipText] = React.useState('');
+
+    const chips = [
+        {
+            key: 0, label: 'Start Date', 
+            component: <DateCalendar />, 
+            handleClick: (event) => {setChip1Anchor(event.currentTarget)}, 
+            anchor: {get: chip1Anchor, set: setChip1Anchor}, 
+            open: Boolean(chip1Anchor)
+        },
+        {
+            key: 1, label: 'End Date', 
+            component: <DateCalendar />, 
+            handleClick: (event) => {setChip2Anchor(event.currentTarget)}, 
+            anchor: {get: chip2Anchor, set: setChip2Anchor}, 
+            open: Boolean(chip2Anchor)
+        },
+        {
+            key: 2, label: 'Area', 
+            component: <Box sx={{minWidth: 100, padding: 1}}>
+                            <FormControl fullWidth>
+                                <InputLabel sx={{marginTop: 0.5}}>Area</InputLabel>
+                                <Select
+                                      
+                                    value={areaChipText}
+                                    label="Area"
+                                    sx={{color: COLORS.defaultColor}}
+                                    onChange={(event) => {console.log("test"); setAreaChipText(event.target.value)}}
+                                >
+                                    <MenuItem value="Test">Test1</MenuItem>
+                                    <MenuItem value="Test2">Test2</MenuItem>
+                                    <MenuItem value="Test3">Test3</MenuItem>
+                                </Select>
+                            </FormControl>
+                        </Box>, 
+            handleClick: (event) => {setChip3Anchor(event.currentTarget)}, 
+            anchor: {get: chip3Anchor, set: setChip3Anchor}, 
+            open: Boolean(chip3Anchor)
+        },
+        {
+            key: 3, label: 'Chain', 
+            component: <div>wololo3</div>, 
+            handleClick: (event) => {setChip4Anchor(event.currentTarget)}, 
+            anchor: {get: chip4Anchor, set: setChip4Anchor}, 
+            open: Boolean(chip4Anchor)},
+        {
+            key: 4, label: 'Category', 
+            component: <div>wololo4</div>, 
+            handleClick: (event) => {setChip5Anchor(event.currentTarget)}, 
+            anchor: {get: chip5Anchor, set: setChip5Anchor}, 
+            open: Boolean(chip5Anchor)
+        },
+        {
+            key: 5, label: '# of Rooms', 
+            component: <div>wololo5</div>, 
+            handleClick: (event) => {setChip6Anchor(event.currentTarget)}, 
+            anchor: {get: chip6Anchor, set: setChip6Anchor}, 
+            open: Boolean(chip6Anchor)
+        },
+        {
+            key: 6, label: 'Price', 
+            component: <div>wololo6</div>, 
+            handleClick: (event) => {setChip7Anchor(event.currentTarget)}, 
+            anchor: {get: chip7Anchor, set: setChip7Anchor}, 
+            open: Boolean(chip7Anchor)
+        },
+    ];
+
+    const handleClose = () => {
+        setChip1Anchor(null);
+        setChip2Anchor(null);
+        setChip3Anchor(null);
+        setChip4Anchor(null);
+        setChip5Anchor(null);
+        setChip6Anchor(null);
+    }
 
     return (
-        <ListItem style={style} key={index} component="div" disablePadding>
-            <ListItemButton>
-                <ListItemText primary={`Booking ${index + 1}`}
-                style={{
-                    color:'white'
-
-                }}>
-                </ListItemText>
-            </ListItemButton>
-        </ListItem>
-    );
-}
-export default function customerBookings() {
-    return (
-
-
-        <div className='bg'
-            style={{
+        <Container disableGutters maxWidth="false"
+            sx={{
                 display: "flex",
+                width: "100vw",
+                height: "100vh",
+                alignItems: "center",
                 justifyContent: "center",
-                marginTop: 50
-            }}>
-            <Navbar />
+            }}
+        >
+            
+            <div className="bg" />
 
-            <Stack spacing={2} direction="column"
-                style={{
-                    margin: 50
-                }}>
-                <Stack spacing={5} direction="row">
-                    <Chip label="Start/End"
-                        sx={{
-                            background: COLORS.defaultColor,
-                            color: 'white',
-                            height:50,
-                            fontSize:30
-                        }}
-                    />
-                    <Chip label="Room Capacity"
-                        sx={{
-                            background: COLORS.defaultColor,
-                            color: 'white',
-                            height:50,
-                            fontSize:30
-                        }}
-                    />
-                    <Chip label="Area"
-                        sx={{
-                            background: COLORS.defaultColor,
-                            color: 'white',
-                            height:50,
-                            fontSize:30
-                        }}
-                    />
-                    <Chip label="Chain"
-                        sx={{
-                            background: COLORS.defaultColor,
-                            color: 'white',
-                            height:50,
-                            fontSize:30
-                        }}
-                    />
-                    <Chip label="Category"
-                        sx={{
-                            background: COLORS.defaultColor,
-                            color: 'white',
-                            height:50,
-                            fontSize:30
-                        }}
-                    />
-                    <Chip label="# of Rooms"
-                        sx={{
-                            background: COLORS.defaultColor,
-                            color: 'white',
-                            height:50,
-                            fontSize:30
-                        }}
-                    />
-
-                    <Chip label="Price"
-                        sx={{
-                            background: COLORS.defaultColor,
-                            color: 'white',
-                            fontSize:30,
-                            height:50
-                        }}
-                    />
-                </Stack>
-                <FixedSizeList
-                    height={700}
-                    width={1300}
-                    itemSize={46}
-                    itemCount={20}
-                    overscanCount={5}
+            <Waves
+                    colorArray={[
+                        "#FA7268",
+                        "#EF5F67",
+                        "#E34C67",
+                        "#D53867",
+                        "#C62368",
+                    ]}
+                    style={{
+                        position:"absolute",
+                        width: "100vw",
+                        height: "55vh",
+                        bottom:"0px",
+                        left:"0px",
+                        margin: "0px"
+                    }}
+                    gap={100}
+                    height={500}
+                    speed={0.35}
+                    points={5}
+                    amplitude={20}
+                />
+            
+            <Stack useFlexGap sx={{width: "100vw", height: "100vh"}} spacing={0} >
+                <Navbar sx={{
+                    borderBottomLeftRadius: "20px", 
+                    borderBottomRightRadius: "20px", 
+                    backgroundColor: COLORS.defaultColor,
+                    top: "0",
+                    left: "0",
+                    padding: 0,
+                    margin: 0,
+                    position: "relative",
+                }}/>
+                
+                <Slider defaultValue={50} aria-label="Default" sx={{}}/>
+                <Box
+                    sx={{
+                        position: "relative",
+                        marginX: "100px",
+                        marginTop: "50px"
+                    }}
                 >
-                {renderRow}
-                </FixedSizeList>
+                    
+                    {chips.map((data) => {
+                        return (
+                            <div style={{width:"max-content", display: "inline-block", margin: 0}}>
+                                <Chip 
+                                    label={data.label}
+                                    onClick={data.handleClick}
+                                    sx={{
+                                        color: "white",
+                                        backgroundColor: COLORS.defaultColor,
+                                        margin: "10px"
+                                    }}
+                                />
+                                <Popover
+                                    open={data.open}
+                                    anchorEl={data.anchor.get}
+                                    onClose={handleClose}
+                                    anchorOrigin={{
+                                        vertical: 'bottom',
+                                        horizontal: 'left'
+                                    }}
+                                    
+                                >
+                                    {data.component}
+                                </Popover>
+                            </div>
+                        );
+                    })}
+                </Box>
+                <Box
+                    sx={{
+                        position: "relative",
+                        padding: "60px",
+                        paddingTop: "20px",
+                        marginTop: "10px",
+                        marginX: "100px",
+                        backgroundColor: "#fffff40",
+                        backdropFilter: "blur(15px)",
+                        border: "1px solid #fff",
+                        borderBottom: "1px solid #ffffff80",
+                        borderRight: "1px solid #ffffff80",
+                        borderRadius: "20px",
+                        height: "75vh",
+                        boxShadow: "0 25px 50px #0000001a",
+                    }}
+                >
+                    <BookingList gutter_size={5} itemCount={100} />
+                </Box>
             </Stack>
-
-        </div>
+        </Container>
+        
     );
 }
