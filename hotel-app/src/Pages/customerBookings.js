@@ -7,34 +7,71 @@ import Waves from '../components/Waves';
 import BookingList from '../components/BookingList';
 import * as React from 'react';
 
-const chips = [
-    {key: 0, label: 'Start - End Date'},
-    {key: 1, label: 'Area'},
-    {key: 2, label: 'Chain'},
-    {key: 3, label: 'Category'},
-    {key: 4, label: '# of Rooms'},
-    {key: 5, label: 'Price'}
-];
-
 function valuetext(value) {
     return `${value}`;
 }
 
 export default function CustomerBookings() {
 
-    const [anchorEl, setAnchorEl] = React.useState(null);
-    const [value, setValue] = React.useState([20, 37]);
+    const [chip1Anchor, setChip1Anchor] = React.useState(null);
+    const [chip2Anchor, setChip2Anchor] = React.useState(null);
+    const [chip3Anchor, setChip3Anchor] = React.useState(null);
+    const [chip4Anchor, setChip4Anchor] = React.useState(null);
+    const [chip5Anchor, setChip5Anchor] = React.useState(null);
+    const [chip6Anchor, setChip6Anchor] = React.useState(null);
 
-    const handleClick = (event) => {
-        setAnchorEl(event.currentTarget);
-    }
+    const chips = [
+        {
+            key: 0, label: 'Start - End Date', 
+            component: <div>wololo</div>, 
+            handleClick: (event) => {setChip1Anchor(event.currentTarget)}, 
+            anchor: {get: chip1Anchor, set: setChip1Anchor}, 
+            open: Boolean(chip1Anchor)
+        },
+        {
+            key: 1, label: 'Area', 
+            component: <div>wololo2</div>, 
+            handleClick: (event) => {setChip2Anchor(event.currentTarget)}, 
+            anchor: {get: chip2Anchor, set: setChip2Anchor}, 
+            open: Boolean(chip2Anchor)
+        },
+        {
+            key: 2, label: 'Chain', 
+            component: <div>wololo3</div>, 
+            handleClick: (event) => {setChip3Anchor(event.currentTarget)}, 
+            anchor: {get: chip3Anchor, set: setChip3Anchor}, 
+            open: Boolean(chip3Anchor)},
+        {
+            key: 3, label: 'Category', 
+            component: <div>wololo4</div>, 
+            handleClick: (event) => {setChip4Anchor(event.currentTarget)}, 
+            anchor: {get: chip4Anchor, set: setChip4Anchor}, 
+            open: Boolean(chip4Anchor)
+        },
+        {
+            key: 4, label: '# of Rooms', 
+            component: <div>wololo5</div>, 
+            handleClick: (event) => {setChip5Anchor(event.currentTarget)}, 
+            anchor: {get: chip5Anchor, set: setChip5Anchor}, 
+            open: Boolean(chip5Anchor)
+        },
+        {
+            key: 5, label: 'Price', 
+            component: <div>wololo6</div>, 
+            handleClick: (event) => {setChip6Anchor(event.currentTarget)}, 
+            anchor: {get: chip6Anchor, set: setChip6Anchor}, 
+            open: Boolean(chip6Anchor)
+        },
+    ];
 
     const handleClose = () => {
-        setAnchorEl(null);
+        setChip1Anchor(null);
+        setChip2Anchor(null);
+        setChip3Anchor(null);
+        setChip4Anchor(null);
+        setChip5Anchor(null);
+        setChip6Anchor(null);
     }
-
-    const open = Boolean(anchorEl);
-    const id = open ? 'popover' : undefined;
 
     return (
         <Container disableGutters maxWidth="false"
@@ -96,7 +133,7 @@ export default function CustomerBookings() {
                             <div style={{width:"max-content", display: "inline-block", margin: 0}}>
                                 <Chip 
                                     label={data.label}
-                                    onClick={handleClick}
+                                    onClick={data.handleClick}
                                     sx={{
                                         color: "white",
                                         backgroundColor: COLORS.defaultColor,
@@ -104,20 +141,18 @@ export default function CustomerBookings() {
                                     }}
                                 />
                                 <Popover
-                                    id={id}
-                                    open={open}
-                                    anchorEl={anchorEl}
+                                    open={data.open}
+                                    anchorEl={data.anchor.get}
                                     onClose={handleClose}
                                     anchorOrigin={{
                                         vertical: 'bottom',
                                         horizontal: 'left'
                                     }}
-                                
+                                    
                                 >
-                                     
+                                    {data.component}
                                 </Popover>
                             </div>
-                            
                         );
                     })}
                 </Box>
