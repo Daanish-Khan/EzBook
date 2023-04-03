@@ -1,15 +1,12 @@
 import { Container } from '@mui/system';
 import './customerBookings.css';
 import { COLORS } from '../components/consts'
-import { Chip, Stack, Box, Popover, TextField, Slider } from '@mui/material';
+import { Chip, Stack, Box, Popover, Slider, Select, MenuItem, InputLabel, FormControl } from '@mui/material';
 import Navbar from '../components/navbar';
 import Waves from '../components/Waves';
 import BookingList from '../components/BookingList';
 import * as React from 'react';
-
-function valuetext(value) {
-    return `${value}`;
-}
+import { DateCalendar } from '@mui/x-date-pickers';
 
 export default function CustomerBookings() {
 
@@ -19,48 +16,73 @@ export default function CustomerBookings() {
     const [chip4Anchor, setChip4Anchor] = React.useState(null);
     const [chip5Anchor, setChip5Anchor] = React.useState(null);
     const [chip6Anchor, setChip6Anchor] = React.useState(null);
+    const [chip7Anchor, setChip7Anchor] = React.useState(null);
+
+    const [areaChipText, setAreaChipText] = React.useState('');
 
     const chips = [
         {
-            key: 0, label: 'Start - End Date', 
-            component: <div>wololo</div>, 
+            key: 0, label: 'Start Date', 
+            component: <DateCalendar />, 
             handleClick: (event) => {setChip1Anchor(event.currentTarget)}, 
             anchor: {get: chip1Anchor, set: setChip1Anchor}, 
             open: Boolean(chip1Anchor)
         },
         {
-            key: 1, label: 'Area', 
-            component: <div>wololo2</div>, 
+            key: 1, label: 'End Date', 
+            component: <DateCalendar />, 
             handleClick: (event) => {setChip2Anchor(event.currentTarget)}, 
             anchor: {get: chip2Anchor, set: setChip2Anchor}, 
             open: Boolean(chip2Anchor)
         },
         {
-            key: 2, label: 'Chain', 
-            component: <div>wololo3</div>, 
+            key: 2, label: 'Area', 
+            component: <Box sx={{minWidth: 100, padding: 1}}>
+                            <FormControl fullWidth>
+                                <InputLabel sx={{marginTop: 0.5}}>Area</InputLabel>
+                                <Select
+                                      
+                                    value={areaChipText}
+                                    label="Area"
+                                    sx={{color: COLORS.defaultColor}}
+                                    onChange={(event) => {console.log("test"); setAreaChipText(event.target.value)}}
+                                >
+                                    <MenuItem value="Test">Test1</MenuItem>
+                                    <MenuItem value="Test2">Test2</MenuItem>
+                                    <MenuItem value="Test3">Test3</MenuItem>
+                                </Select>
+                            </FormControl>
+                        </Box>, 
             handleClick: (event) => {setChip3Anchor(event.currentTarget)}, 
             anchor: {get: chip3Anchor, set: setChip3Anchor}, 
-            open: Boolean(chip3Anchor)},
-        {
-            key: 3, label: 'Category', 
-            component: <div>wololo4</div>, 
-            handleClick: (event) => {setChip4Anchor(event.currentTarget)}, 
-            anchor: {get: chip4Anchor, set: setChip4Anchor}, 
-            open: Boolean(chip4Anchor)
+            open: Boolean(chip3Anchor)
         },
         {
-            key: 4, label: '# of Rooms', 
-            component: <div>wololo5</div>, 
+            key: 3, label: 'Chain', 
+            component: <div>wololo3</div>, 
+            handleClick: (event) => {setChip4Anchor(event.currentTarget)}, 
+            anchor: {get: chip4Anchor, set: setChip4Anchor}, 
+            open: Boolean(chip4Anchor)},
+        {
+            key: 4, label: 'Category', 
+            component: <div>wololo4</div>, 
             handleClick: (event) => {setChip5Anchor(event.currentTarget)}, 
             anchor: {get: chip5Anchor, set: setChip5Anchor}, 
             open: Boolean(chip5Anchor)
         },
         {
-            key: 5, label: 'Price', 
-            component: <div>wololo6</div>, 
+            key: 5, label: '# of Rooms', 
+            component: <div>wololo5</div>, 
             handleClick: (event) => {setChip6Anchor(event.currentTarget)}, 
             anchor: {get: chip6Anchor, set: setChip6Anchor}, 
             open: Boolean(chip6Anchor)
+        },
+        {
+            key: 6, label: 'Price', 
+            component: <div>wololo6</div>, 
+            handleClick: (event) => {setChip7Anchor(event.currentTarget)}, 
+            anchor: {get: chip7Anchor, set: setChip7Anchor}, 
+            open: Boolean(chip7Anchor)
         },
     ];
 
@@ -75,14 +97,16 @@ export default function CustomerBookings() {
 
     return (
         <Container disableGutters maxWidth="false"
-        sx={{
-            display: "flex",
-            width: "100vw",
-            height: "100vh",
-            alignItems: "center",
-            justifyContent: "center",
-        }}>
-            <div className='bg' />
+            sx={{
+                display: "flex",
+                width: "100vw",
+                height: "100vh",
+                alignItems: "center",
+                justifyContent: "center",
+            }}
+        >
+            
+            <div className="bg" />
 
             <Waves
                     colorArray={[
