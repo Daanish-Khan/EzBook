@@ -143,7 +143,7 @@ export default function CustomerBookings() {
                     position: "relative",
                 }}/>
                 
-                <Slider defaultValue={50} aria-label="Default" sx={{}}/>
+                <Slider sx={{ '& .MuiSlider-thumb::after': {width:0}}} />
                 <Box
                     sx={{
                         position: "relative",
