@@ -123,12 +123,9 @@ export default function CustomerBookings() {
     ];
 
     const handleClose = () => {
-        setChip1Anchor(null);
-        setChip2Anchor(null);
-        setChip3Anchor(null);
-        setChip4Anchor(null);
-        setChip5Anchor(null);
-        setChip6Anchor(null);
+        chips.forEach(function (items) {
+            items.anchor.set(null);
+        })
     }
 
     return (
@@ -155,7 +152,7 @@ export default function CustomerBookings() {
                     style={{
                         position:"absolute",
                         width: "100vw",
-                        height: "55vh",
+                        height: "70vh",
                         bottom:"0px",
                         left:"0px",
                         margin: "0px"
