@@ -19,16 +19,16 @@ function valuetext(value) {
 export default function CustomerBookings() {
 
 //these look at the slider and display the correct value depending on the value between steps
-    const [value1, setValue1] = React.useState([0, 500]);
-    const handleChange1 = (event, newValue, activeThumb) => {
+    const [value, setValue] = React.useState([0, 500]);
+    const handleChange = (event, newValue, activeThumb) => {
         if (!Array.isArray(newValue)) {
           return;
         }
     
         if (activeThumb === 0) {
-          setValue1([Math.min(newValue[0], value1[1] - minDistance), value1[1]]);
+          setValue([Math.min(newValue[0], value[1] - minDistance), value[1]]);
         } else {
-          setValue1([value1[0], Math.max(newValue[1], value1[0] + minDistance)]);
+          setValue([value[0], Math.max(newValue[1], value[0] + minDistance)]);
         }
       };
 
@@ -108,9 +108,9 @@ export default function CustomerBookings() {
                                 min={0}
                                 max={1000}
                                 getAriaLabel={() => 'Price Range'}
-                                onChange={handleChange1}
+                                onChange={handleChange}
                                 valueLabelDisplay="auto"
-                                value={value1}
+                                value={value}
                                 getAriaValueText={valuetext}
                                 disableSwap
                                 sx={{ '& .MuiSlider-thumb::after': {width:0}, position:"static"}}
