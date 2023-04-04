@@ -8,7 +8,29 @@ import BookingList from '../components/BookingList';
 import * as React from 'react';
 import { DateCalendar } from '@mui/x-date-pickers';
 
+//minDistance and valuetext are for displaying values on the price slider
+
+const minDistance = 100;
+function valuetext(value) {
+    return `${value}°C`;
+  }
+
+
 export default function CustomerBookings() {
+
+//these look at the slider and display the correct value depending on the value between steps
+    const [value1, setValue1] = React.useState([0, 500]);
+    const handleChange1 = (event, newValue, activeThumb) => {
+        if (!Array.isArray(newValue)) {
+          return;
+        }
+    
+        if (activeThumb === 0) {
+          setValue1([Math.min(newValue[0], value1[1] - minDistance), value1[1]]);
+        } else {
+          setValue1([value1[0], Math.max(newValue[1], value1[0] + minDistance)]);
+        }
+      };
 
     const [chip1Anchor, setChip1Anchor] = React.useState(null);
     const [chip2Anchor, setChip2Anchor] = React.useState(null);
@@ -79,7 +101,18 @@ export default function CustomerBookings() {
         },
         {
             key: 6, label: 'Price', 
-            component: <div>wololo6</div>, 
+            component: <Box minWidth={200} minHeight={70}> <Slider
+            step={100}
+            marks
+            min={0}
+            max={1000}
+            getAriaLabel={() => 'Price Range'}
+            onChange={handleChange1}
+            valueLabelDisplay="auto"
+            value={value1}
+            getAriaValueText={valuetext}
+            disableSwap
+            sx={{ '& .MuiSlider-thumb::after': {width:0}, position:"static"}}/> </Box>, 
             handleClick: (event) => {setChip7Anchor(event.currentTarget)}, 
             anchor: {get: chip7Anchor, set: setChip7Anchor}, 
             open: Boolean(chip7Anchor)
@@ -143,7 +176,7 @@ export default function CustomerBookings() {
                     position: "relative",
                 }}/>
                 
-                <Slider sx={{ '& .MuiSlider-thumb::after': {width:0}}} />
+                
                 <Box
                     sx={{
                         position: "relative",
