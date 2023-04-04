@@ -41,6 +41,9 @@ export default function CustomerBookings() {
     const [chip7Anchor, setChip7Anchor] = React.useState(null);
 
     const [areaChipText, setAreaChipText] = React.useState('');
+    const [chainChipText, setChainChipText] = React.useState('');
+    const [categoryChipText, setCategoryChipText] = React.useState('');
+    const [roomChipText, setRoomChipText] = React.useState('');
 
     const chips = [
         {
@@ -81,20 +84,65 @@ export default function CustomerBookings() {
         },
         {
             key: 3, label: 'Chain', 
-            component: <div>wololo3</div>, 
+            component: <Box sx={{minWidth: 100, padding: 1}}>
+                            <FormControl fullWidth>
+                                <InputLabel sx={{marginTop: 0.5}}>Chain</InputLabel>
+                                <Select
+                                    
+                                    value={areaChipText}
+                                    label="Chain"
+                                    sx={{color: COLORS.defaultColor}}
+                                    onChange={(event) => {console.log("test"); setChainChipText(event.target.value)}}
+                                >
+                                    <MenuItem value="Test">Test1</MenuItem>
+                                    <MenuItem value="Test2">Test2</MenuItem>
+                                    <MenuItem value="Test3">Test3</MenuItem>
+                                </Select>
+                            </FormControl>
+                        </Box>,
             handleClick: (event) => {setChip4Anchor(event.currentTarget)}, 
             anchor: {get: chip4Anchor, set: setChip4Anchor}, 
             open: Boolean(chip4Anchor)},
         {
             key: 4, label: 'Category', 
-            component: <div>wololo4</div>, 
+            component: <Box sx={{minWidth: 100, padding: 1}}>
+                            <FormControl fullWidth>
+                                <InputLabel sx={{marginTop: 0.5}}>Category</InputLabel>
+                                <Select
+                                    
+                                    value={areaChipText}
+                                    label="Category"
+                                    sx={{color: COLORS.defaultColor}}
+                                    onChange={(event) => {console.log("test"); setCategoryChipText(event.target.value)}}
+                                >
+                                    <MenuItem value="Test">Test1</MenuItem>
+                                    <MenuItem value="Test2">Test2</MenuItem>
+                                    <MenuItem value="Test3">Test3</MenuItem>
+                                </Select>
+                            </FormControl>
+                        </Box>,
             handleClick: (event) => {setChip5Anchor(event.currentTarget)}, 
             anchor: {get: chip5Anchor, set: setChip5Anchor}, 
             open: Boolean(chip5Anchor)
         },
         {
             key: 5, label: '# of Rooms', 
-            component: <div>wololo5</div>, 
+            component: <Box sx={{minWidth: 100, padding: 1}}>
+                            <FormControl fullWidth>
+                                <InputLabel sx={{marginTop: 0.5}}># of Rooms</InputLabel>
+                                <Select
+                                    
+                                    value={areaChipText}
+                                    label="# of Rooms"
+                                    sx={{color: COLORS.defaultColor}}
+                                    onChange={(event) => {console.log("test"); setRoomChipText(event.target.value)}}
+                                >
+                                    <MenuItem value="Test">Test1</MenuItem>
+                                    <MenuItem value="Test2">Test2</MenuItem>
+                                    <MenuItem value="Test3">Test3</MenuItem>
+                                </Select>
+                            </FormControl>
+                        </Box>, 
             handleClick: (event) => {setChip6Anchor(event.currentTarget)}, 
             anchor: {get: chip6Anchor, set: setChip6Anchor}, 
             open: Boolean(chip6Anchor)
