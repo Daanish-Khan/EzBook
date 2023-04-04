@@ -242,7 +242,11 @@ export default function CustomerBookings() {
                                     sx={{
                                         color: "white",
                                         backgroundColor: COLORS.defaultColor,
-                                        margin: "10px"
+                                        margin: "10px",
+
+                                        '&:hover': {
+                                            backgroundColor: COLORS.focusedColor
+                                        }
                                     }}
                                 />
                                 <Popover
