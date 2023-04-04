@@ -101,18 +101,21 @@ export default function CustomerBookings() {
         },
         {
             key: 6, label: 'Price', 
-            component: <Box minWidth={200} minHeight={70}> <Slider
-            step={100}
-            marks
-            min={0}
-            max={1000}
-            getAriaLabel={() => 'Price Range'}
-            onChange={handleChange1}
-            valueLabelDisplay="auto"
-            value={value1}
-            getAriaValueText={valuetext}
-            disableSwap
-            sx={{ '& .MuiSlider-thumb::after': {width:0}, position:"static"}}/> </Box>, 
+            component: <Box minWidth={200} minHeight={70}>
+                            <Slider
+                                step={100}
+                                marks
+                                min={0}
+                                max={1000}
+                                getAriaLabel={() => 'Price Range'}
+                                onChange={handleChange1}
+                                valueLabelDisplay="auto"
+                                value={value1}
+                                getAriaValueText={valuetext}
+                                disableSwap
+                                sx={{ '& .MuiSlider-thumb::after': {width:0}, position:"static"}}
+                            /> 
+                        </Box>, 
             handleClick: (event) => {setChip7Anchor(event.currentTarget)}, 
             anchor: {get: chip7Anchor, set: setChip7Anchor}, 
             open: Boolean(chip7Anchor)
