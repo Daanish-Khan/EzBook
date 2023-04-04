@@ -22,15 +22,17 @@ export default function CustomerBookings() {
     const [value, setValue] = React.useState([0, 500]);
     const handleChange = (event, newValue, activeThumb) => {
         if (!Array.isArray(newValue)) {
-          return;
+            return;
         }
-    
+
         if (activeThumb === 0) {
-          setValue([Math.min(newValue[0], value[1] - minDistance), value[1]]);
+            setValue([Math.min(newValue[0], value[1] - minDistance), value[1]]);
+            setPriceChipText([Math.min(newValue[0], value[1] - minDistance), value[1]].toString());
         } else {
-          setValue([value[0], Math.max(newValue[1], value[0] + minDistance)]);
+            setValue([value[0], Math.max(newValue[1], value[0] + minDistance)]);
+            setPriceChipText([value[0], Math.max(newValue[1], value[0] + minDistance)].toString());
         }
-      };
+    };
 
     const [chip1Anchor, setChip1Anchor] = React.useState(null);
     const [chip2Anchor, setChip2Anchor] = React.useState(null);
@@ -40,10 +42,13 @@ export default function CustomerBookings() {
     const [chip6Anchor, setChip6Anchor] = React.useState(null);
     const [chip7Anchor, setChip7Anchor] = React.useState(null);
 
+    const [startChipText, setStartChipText] = React.useState('');
+    const [endChipText, setEndChipText] = React.useState('')
     const [areaChipText, setAreaChipText] = React.useState('');
     const [chainChipText, setChainChipText] = React.useState('');
     const [categoryChipText, setCategoryChipText] = React.useState('');
     const [roomChipText, setRoomChipText] = React.useState('');
+    const [priceChipText, setPriceChipText] = React.useState('');
 
     const chips = [
         {
@@ -51,14 +56,17 @@ export default function CustomerBookings() {
             component: <DateCalendar />, 
             handleClick: (event) => {setChip1Anchor(event.currentTarget)}, 
             anchor: {get: chip1Anchor, set: setChip1Anchor}, 
-            open: Boolean(chip1Anchor)
+            open: Boolean(chip1Anchor),
+            text: { get: startChipText, set: setStartChipText }
+            
         },
         {
             key: 1, label: 'End Date', 
             component: <DateCalendar />, 
             handleClick: (event) => {setChip2Anchor(event.currentTarget)}, 
             anchor: {get: chip2Anchor, set: setChip2Anchor}, 
-            open: Boolean(chip2Anchor)
+            open: Boolean(chip2Anchor),
+            text: { get: endChipText, set: setEndChipText }
         },
         {
             key: 2, label: 'Area', 
@@ -80,7 +88,8 @@ export default function CustomerBookings() {
                         </Box>, 
             handleClick: (event) => {setChip3Anchor(event.currentTarget)}, 
             anchor: {get: chip3Anchor, set: setChip3Anchor}, 
-            open: Boolean(chip3Anchor)
+            open: Boolean(chip3Anchor),
+            text: { get: areaChipText, set: setAreaChipText }
         },
         {
             key: 3, label: 'Chain', 
@@ -89,7 +98,7 @@ export default function CustomerBookings() {
                                 <InputLabel sx={{marginTop: 0.5}}>Chain</InputLabel>
                                 <Select
                                     
-                                    value={areaChipText}
+                                    value={chainChipText}
                                     label="Chain"
                                     sx={{color: COLORS.defaultColor}}
                                     onChange={(event) => {console.log("test"); setChainChipText(event.target.value)}}
@@ -102,7 +111,9 @@ export default function CustomerBookings() {
                         </Box>,
             handleClick: (event) => {setChip4Anchor(event.currentTarget)}, 
             anchor: {get: chip4Anchor, set: setChip4Anchor}, 
-            open: Boolean(chip4Anchor)},
+            open: Boolean(chip4Anchor),
+            text: { get: chainChipText, set: setChainChipText }
+        },
         {
             key: 4, label: 'Category', 
             component: <Box sx={{minWidth: 100, padding: 1}}>
@@ -110,7 +121,7 @@ export default function CustomerBookings() {
                                 <InputLabel sx={{marginTop: 0.5}}>Category</InputLabel>
                                 <Select
                                     
-                                    value={areaChipText}
+                                    value={categoryChipText}
                                     label="Category"
                                     sx={{color: COLORS.defaultColor}}
                                     onChange={(event) => {console.log("test"); setCategoryChipText(event.target.value)}}
@@ -123,7 +134,8 @@ export default function CustomerBookings() {
                         </Box>,
             handleClick: (event) => {setChip5Anchor(event.currentTarget)}, 
             anchor: {get: chip5Anchor, set: setChip5Anchor}, 
-            open: Boolean(chip5Anchor)
+            open: Boolean(chip5Anchor),
+            text: { get: categoryChipText, set: setCategoryChipText }
         },
         {
             key: 5, label: '# of Rooms', 
@@ -132,12 +144,12 @@ export default function CustomerBookings() {
                                 <InputLabel sx={{marginTop: 0.5}}># of Rooms</InputLabel>
                                 <Select
                                     
-                                    value={areaChipText}
+                                    value={roomChipText}
                                     label="# of Rooms"
                                     sx={{color: COLORS.defaultColor}}
                                     onChange={(event) => {console.log("test"); setRoomChipText(event.target.value)}}
                                 >
-                                    <MenuItem value="Test">Test1</MenuItem>
+                                    <MenuItem value="Test1">Test1</MenuItem>
                                     <MenuItem value="Test2">Test2</MenuItem>
                                     <MenuItem value="Test3">Test3</MenuItem>
                                 </Select>
@@ -145,7 +157,8 @@ export default function CustomerBookings() {
                         </Box>, 
             handleClick: (event) => {setChip6Anchor(event.currentTarget)}, 
             anchor: {get: chip6Anchor, set: setChip6Anchor}, 
-            open: Boolean(chip6Anchor)
+            open: Boolean(chip6Anchor),
+            text: { get: roomChipText, set: setRoomChipText }
         },
         {
             key: 6, label: 'Price', 
@@ -166,7 +179,8 @@ export default function CustomerBookings() {
                         </Box>, 
             handleClick: (event) => {setChip7Anchor(event.currentTarget)}, 
             anchor: {get: chip7Anchor, set: setChip7Anchor}, 
-            open: Boolean(chip7Anchor)
+            open: Boolean(chip7Anchor),
+            text: { get: priceChipText, set: setPriceChipText }
         },
     ];
 
@@ -237,7 +251,7 @@ export default function CustomerBookings() {
                         return (
                             <div style={{width:"max-content", display: "inline-block", margin: 0}}>
                                 <Chip 
-                                    label={data.label}
+                                    label={data.text.get === '' ? data.label : data.label + ": " + data.text.get}
                                     onClick={data.handleClick}
                                     sx={{
                                         color: "white",
