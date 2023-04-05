@@ -81,8 +81,19 @@ function SignUpBox({ onBackToSignInClick }) {
                     <TextField
                         required
                         fullWidth
+                        label="Address"
+                        variant="filled"
+                        
+                        sx={style}
+                    />
+                </Grid>
+                <Grid item xs={12}>
+                    <TextField
+                        required
+                        fullWidth
                         label="SSN"
                         variant="filled"
+                        type="password"
                         
                         sx={style}
                     />
