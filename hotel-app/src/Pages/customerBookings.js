@@ -1,7 +1,7 @@
 import { Container } from '@mui/system';
 import './customerBookings.css';
 import { COLORS } from '../components/consts'
-import { Chip, Stack, Box, Popover, Slider, Select, MenuItem, InputLabel, FormControl } from '@mui/material';
+import { Chip, Stack, Box, Popover, Slider, Select, MenuItem, InputLabel, FormControl, Rating } from '@mui/material';
 import Navbar from '../components/navbar';
 import Waves from '../components/Waves';
 import BookingList from '../components/BookingList';
@@ -48,7 +48,7 @@ export default function CustomerBookings() {
     const [endChipText, setEndChipText] = React.useState('')
     const [areaChipText, setAreaChipText] = React.useState('');
     const [chainChipText, setChainChipText] = React.useState('');
-    const [categoryChipText, setCategoryChipText] = React.useState('');
+    const [categoryChipText, setCategoryChipText] = React.useState(2);
     const [roomChipText, setRoomChipText] = React.useState('');
     const [priceChipText, setPriceChipText] = React.useState('');
 
@@ -81,7 +81,7 @@ export default function CustomerBookings() {
                                     value={areaChipText}
                                     label="Area"
                                     sx={{color: COLORS.defaultColor}}
-                                    onChange={(event) => {console.log("test"); setAreaChipText(event.target.value)}}
+                                    onChange={(event) => {setAreaChipText(event.target.value)}}
                                 >
                                     <MenuItem value="Test">Test1</MenuItem>
                                     <MenuItem value="Test2">Test2</MenuItem>
@@ -104,7 +104,7 @@ export default function CustomerBookings() {
                                     value={chainChipText}
                                     label="Chain"
                                     sx={{color: COLORS.defaultColor}}
-                                    onChange={(event) => {console.log("test"); setChainChipText(event.target.value)}}
+                                    onChange={(event) => {setChainChipText(event.target.value)}}
                                 >
                                     <MenuItem value="Test">Test1</MenuItem>
                                     <MenuItem value="Test2">Test2</MenuItem>
@@ -121,18 +121,15 @@ export default function CustomerBookings() {
             key: 4, label: 'Category', 
             component: <Box sx={{minWidth: 100, padding: 1}}>
                             <FormControl fullWidth>
-                                <InputLabel sx={{marginTop: 0.5}}>Category</InputLabel>
-                                <Select
-                                    
-                                    value={categoryChipText}
-                                    label="Category"
-                                    sx={{color: COLORS.defaultColor}}
-                                    onChange={(event) => {console.log("test"); setCategoryChipText(event.target.value)}}
-                                >
-                                    <MenuItem value="Test">Test1</MenuItem>
-                                    <MenuItem value="Test2">Test2</MenuItem>
-                                    <MenuItem value="Test3">Test3</MenuItem>
-                                </Select>
+                                    <Rating 
+                                        name="simple-controlled"
+                                        value={categoryChipText}
+                                        onChange={(event, newValue) => {
+                                            setCategoryChipText(newValue);
+                                        }}
+                                        width="100%"
+                                        sx={{'& .MuiRating-label label': {overflowX: "hidden"}}}
+                                    />
                             </FormControl>
                         </Box>,
             handleClick: (event) => {setChip5Anchor(event.currentTarget)}, 
