@@ -5,9 +5,9 @@ import { Chip, Stack, Box, Popover, Slider, Select, MenuItem, InputLabel, FormCo
 import Navbar from '../components/navbar';
 import Waves from '../components/Waves';
 import BookingList from '../components/BookingList';
+import dayjs from 'dayjs';
 import * as React from 'react';
 import { DateCalendar } from '@mui/x-date-pickers';
-
 //minDistance and valuetext are for displaying values on the price slider
 
 const minDistance = 100;
@@ -19,6 +19,8 @@ function valuetext(value) {
 export default function CustomerBookings() {
 
 //these look at the slider and display the correct value depending on the value between steps
+    const [valueStartDate, setValueStartDate] = React.useState(dayjs(new Date()));
+    const [valueEndDate, setValueEndDate] = React.useState(dayjs(new Date()).add(1,'day'));
     const [value, setValue] = React.useState([0, 500]);
     const handleChange = (event, newValue, activeThumb) => {
         if (!Array.isArray(newValue)) {
@@ -53,20 +55,21 @@ export default function CustomerBookings() {
     const chips = [
         {
             key: 0, label: 'Start Date', 
-            component: <DateCalendar />, 
+            component:
+            <DateCalendar value={valueStartDate} maxDate={valueEndDate} onChange={(newValueStartDate) => {setValueStartDate(newValueStartDate)}}/>, 
             handleClick: (event) => {setChip1Anchor(event.currentTarget)}, 
             anchor: {get: chip1Anchor, set: setChip1Anchor}, 
             open: Boolean(chip1Anchor),
-            text: { get: startChipText, set: setStartChipText }
+            text: { get: new Date(valueStartDate).toLocaleDateString('en-ca', { weekday:"short", year:"numeric", month:"short", day:"numeric"}), set: setValueStartDate }
             
         },
         {
             key: 1, label: 'End Date', 
-            component: <DateCalendar />, 
+            component: <DateCalendar value={valueEndDate} minDate={valueStartDate} onChange={(newValueEndDate) => {setValueEndDate(newValueEndDate)}}/>, 
             handleClick: (event) => {setChip2Anchor(event.currentTarget)}, 
             anchor: {get: chip2Anchor, set: setChip2Anchor}, 
             open: Boolean(chip2Anchor),
-            text: { get: endChipText, set: setEndChipText }
+            text: { get: new Date(valueEndDate).toLocaleDateString('en-ca', { weekday:"short", year:"numeric", month:"short", day:"numeric"}), set: setValueEndDate}
         },
         {
             key: 2, label: 'Area', 
@@ -162,7 +165,7 @@ export default function CustomerBookings() {
         },
         {
             key: 6, label: 'Price', 
-            component: <Box minWidth={200} minHeight={70}>
+            component: <Box minWidth={200} minHeight={50}>
                             <Slider
                                 step={100}
                                 marks
