@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ListItem, ListItemButton, ListItemText, Dialog, DialogTitle, DialogContentText, DialogContent, DialogActions, Button } from '@mui/material';
+import { ListItem, ListItemButton, ListItemText, Dialog, DialogTitle, DialogContentText, DialogContent, DialogActions, Button, TextField, Stack } from '@mui/material';
 import { FixedSizeList } from 'react-window';
 import AutoSizer from 'react-virtualized-auto-sizer';
 import CustomScrollbarsVirtualList from './Scrollbar'
@@ -50,15 +50,67 @@ function BookingList( {gutter_size, itemCount, isAdmin} ) {
                     onClose={handleClose}
                     aria-labelledby="alert-dialog-title"
                     aria-describedby="alert-dialog-description"
+                    
             
                 >
                     <DialogTitle id="alert-dialog-title" sx={{paddingRight: 0, paddingLeft: 0, backgroundColor: COLORS.defaultColor, color: "white"}}>
                         {`Booking ${index + 1}`}
                     </DialogTitle>
-                    <DialogContent sx={{backgroundColor: COLORS.defaultColor}}>
-                        <DialogContentText id="alert-dialog-description" sx={{color: "white"}}>
-                            Would you like to {isAdmin ? "rent" : "book"} this room?
-                        </DialogContentText>
+                    <DialogContent sx={{backgroundColor: COLORS.defaultColor, alignItems: "center", display: "flex", justifyContent: "center"}}>
+                        <Stack spacing={2}>
+                            <DialogContentText id="alert-dialog-description" sx={{color: "white"}}>
+                                Would you like to {isAdmin ? "rent" : "book"} this room?
+                            </DialogContentText>
+                            {isAdmin ? 
+                            
+                                <TextField 
+                                    id="filled-password-input"
+                                    label="SSN"
+                                    type="password"
+                                    variant="filled"
+                                    
+                                    sx={{
+                                        
+                                        
+                                        '& .MuiInputBase-root.Mui-focused': {
+                                            backgroundColor: "#ffff"
+                                        },
+                                        '& .MuiInputBase-root': {
+                                            backgroundColor: "#ffff"
+                                        },
+                                        '& .MuiInputBase-root:hover': {
+                                            backgroundColor: "#ffff",
+                                        },
+                                        
+                                        '&:hover label': {
+                                            color: COLORS.focusedColor,
+                                            
+                                        },
+                    
+                                        '& label.Mui-focused': {
+                                            color: COLORS.focusedColor,
+                                            
+                                        },
+                                        '& label': {
+                                            color: COLORS.defaultColor,
+                                        },
+                    
+                                        '&& .MuiFilledInput-underline:hover:before': {
+                                            borderBottomColor: COLORS.focusedColor
+                                        },
+                                        '& .MuiFilledInput-underline:after': {
+                                            borderBottomColor: COLORS.focusedColor
+                                        },
+                                        '& .MuiFilledInput-underline:before': {
+                                            borderBottomColor: COLORS.defaultColor,
+                                        },
+                    
+                                    }}
+                                />
+                                :
+                                null  
+                            }
+                        </Stack>
                     </DialogContent>
                     <DialogActions sx={{backgroundColor: COLORS.defaultColor}}>
                         <Button onClick={handleClose} sx={{color: "white", ':hover': {backgroundColor: COLORS.focusedColor}}}>Cancel</Button>
