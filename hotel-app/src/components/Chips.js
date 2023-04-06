@@ -162,7 +162,8 @@ function Chips() {
         },
         {
             key: 6, label: 'Price', 
-            component: <Box minWidth={200} minHeight={50}>
+            component: <Box minWidth={200} minHeight={50} sx={{position: "relative", marginX: 2, overflow: "visible"}}>
+                            
                             <Slider
                                 step={100}
                                 marks
@@ -173,7 +174,7 @@ function Chips() {
                                 valueLabelDisplay="auto"
                                 value={value}
                                 disableSwap
-                                sx={{ '& .MuiSlider-thumb::after': {width:0}, position:"static"}}
+                                sx={{ '& .MuiSlider-thumb::after': {width:0}, position: "static"}}
                             /> 
                         </Box>, 
             handleClick: (event) => {setChip7Anchor(event.currentTarget)}, 
