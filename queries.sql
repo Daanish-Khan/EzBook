@@ -102,10 +102,10 @@ WHERE
 SELECT *
 FROM rooms a, hotels b
 WHERE 
-    b.star_rating = 3  AND a.status = 'Available' AND a.hotel = b.address;
+    b.num_rooms = 3  AND a.status = 'Available' AND a.hotel = b.address;
     
-#Search by # of rooms
+#Search by capacity
 SELECT *
 FROM rooms a, hotels b
 WHERE 
-    (a.price >= Min AND a.price <= Max)  AND a.status = 'Available' AND a.hotel = b.address;
+    a.capacity = 2  AND a.status = 'Available' AND a.hotel = b.address;
