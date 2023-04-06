@@ -69,3 +69,43 @@ select b.address,a.room_num,a.capacity
 from rooms a, hotels b
 where a.hotel = b.address
 group by b.address, a.room_num;
+
+#Search for room by start and end date.
+SELECT *
+FROM rooms
+WHERE NOT EXISTS (
+    SELECT *
+    FROM bookings
+    WHERE (startDate < '2020-02-02' AND endDate > '2020-02-02')
+      AND bookings.room_num = rooms.room_num
+      AND bookings.hotel = rooms.hotel
+  );
+#Search by city and country
+SELECT *
+FROM rooms a, hotels b
+WHERE 
+    b.city = 'Regina' AND b.country = 'Canada' AND a.status = 'Available' AND a.hotel = b.address;
+    
+#Search by chain
+SELECT *
+FROM rooms a, hotels b
+WHERE 
+    b.chainName = 'Value Motels'  AND a.status = 'Available' AND a.hotel = b.address;
+    
+#Search by catagory
+SELECT *
+FROM rooms a, hotels b
+WHERE 
+    b.star_rating = 3  AND a.status = 'Available' AND a.hotel = b.address;
+    
+#Search by # of rooms
+SELECT *
+FROM rooms a, hotels b
+WHERE 
+    b.star_rating = 3  AND a.status = 'Available' AND a.hotel = b.address;
+    
+#Search by # of rooms
+SELECT *
+FROM rooms a, hotels b
+WHERE 
+    (a.price >= Min AND a.price <= Max)  AND a.status = 'Available' AND a.hotel = b.address;
