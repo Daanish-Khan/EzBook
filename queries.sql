@@ -1,6 +1,9 @@
 #Selects for queries on website
 #1
-SELECT room_num, hotel FROM rooms WHERE hotel = hName AND ;
+SELECT * FROM rooms WHERE hotel = hName AND room_num = num;
+SELECT * FROM hotels WHERE address = hName;
+SELECT * FROM hotelchains WHERE name = chainName;
+
 #2 Basic insert, where for a renting isPaid is set as TRUE automatically because it is being RENTED
 INSERT INTO bookings(room_num, hotel, customer, isPaid, startDate, endDate) Value (a1,a2,a3,TRUE,a5,a6);
 #3
@@ -31,6 +34,20 @@ CREATE TRIGGER delRooms  BEFORE DELETE ON hotels
 	   END$$
 DELIMITER ;
 #7
+INSERT INTO employees(SSN, full_name, works_at, role) VALUE ();
+INSERT INTO customers(SSN, full_name, address) VALUE ();
+INSERT INTO hotels(name, office_address, city, country, num_hotels) VALUE ();
+INSERT INTO rooms(room_num, hotel, price, capacity, view_type, amenities, expandable) VALUE ();
+
+DELETE FROM employees WHERE SSN = sinNum;
+DELETE FROM customers WHERE SSN = sinNum;
+DELETE FROM hotels where address = addToDel;
+DELETE FROM rooms where room_num = numToDel AND hotel = hotelToDel;
+
+UPDATE employees SET [ATTRIBUTE] = [VALUE] WHERE SSN = sinNum;
+UPDATE customers SET [ATTRIBUTE] = [VALUE] WHERE SSN = sinNum;
+UPDATE hotels SET [ATTRIBUTE] = [VALUE] WHERE address = addToUpdate;
+UPDATE rooms SET [ATTRIBUTE] = [VALUE] where room_num = numToDel AND hotel = hotelToUpdate;
 
 #8
 UPDATE bookings SET isPaid = TRUE WHERE customer = id AND room_num = room AND hotel = hName AND startDate = startD AND endDate = endD;
