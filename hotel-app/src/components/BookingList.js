@@ -1,14 +1,23 @@
 import * as React from 'react';
-import { ListItem, ListItemButton, ListItemText } from '@mui/material';
+import { ListItem, ListItemButton, ListItemText, Dialog, DialogTitle, DialogContentText, DialogContent, DialogActions, Button } from '@mui/material';
 import { FixedSizeList } from 'react-window';
 import AutoSizer from 'react-virtualized-auto-sizer';
 import CustomScrollbarsVirtualList from './Scrollbar'
 import { COLORS } from './consts';
 
-function BookingList( {gutter_size, itemCount} ) {
+function BookingList( {gutter_size, itemCount, isAdmin} ) {
+    const [open, setOpen] = React.useState({open: false, index: -1});
+
+    const bookingClick = (index) => {
+        setOpen({open: true, index: index});
+    }
 
     function renderRow(props) {
         const { index, style } = props;
+
+        const handleClose = () => {
+            setOpen({open: false, index: -1})
+        }
     
         return (
             <ListItem style={{
@@ -20,10 +29,13 @@ function BookingList( {gutter_size, itemCount} ) {
                 padding: 0,
                 backgroundColor: COLORS.defaultColor,
             }} key={index} component="div" disableGutters>
-                <ListItemButton sx={{
-                     borderRadius: "30px",
-                     height: "100%",
-                }}>
+                <ListItemButton 
+                    sx={{
+                        borderRadius: "30px",
+                        height: "100%",
+                    }}
+                    onClick={() => bookingClick(index)}
+                >
                     <ListItemText primary={`Booking ${index + 1}`}
                       sx={{
                           color:'white', 
@@ -32,6 +44,30 @@ function BookingList( {gutter_size, itemCount} ) {
                       primaryTypographyProps={{ style: {whiteSpace: "normal"}}}
                     />
                 </ListItemButton>
+                <Dialog
+                
+                    open={open.open && open.index === index}
+                    onClose={handleClose}
+                    aria-labelledby="alert-dialog-title"
+                    aria-describedby="alert-dialog-description"
+            
+                >
+                    <DialogTitle id="alert-dialog-title" sx={{paddingRight: 0, paddingLeft: 0}}>
+                        {`Booking ${index + 1}`}
+                    </DialogTitle>
+                    <DialogContent>
+                        <DialogContentText id="alert-dialog-description">
+                            Would you like to book this room?
+                        </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={handleClose}>Cancel</Button>
+                        <Button onClick={handleClose} autoFocus>
+                            Book Now
+                        </Button>
+                        
+                    </DialogActions>
+                </Dialog>
             </ListItem>
         );
     }
@@ -61,8 +97,10 @@ function BookingList( {gutter_size, itemCount} ) {
                     outerElementType={CustomScrollbarsVirtualList}
                 >
                     {renderRow}
+                    
                 </FixedSizeList> 
             )}
+            
         </AutoSizer>
     );
 
