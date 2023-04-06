@@ -62,8 +62,8 @@ CREATE TABLE bookings (
   FOREIGN KEY (customer) REFERENCES customers (SSN),
   PRIMARY KEY (hotel, room_num, startDate),
   isPaid BOOLEAN NOT NULL DEFAULT false,
-  startDate datetime NOT NULL,
-  endDate datetime NOT NULL
+  startDate date NOT NULL,
+  endDate date NOT NULL
 );
 
 CREATE TABLE emails (#stores all emails for chains and hotels
