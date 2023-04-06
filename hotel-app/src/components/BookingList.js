@@ -52,20 +52,42 @@ function BookingList( {gutter_size, itemCount, isAdmin} ) {
                     aria-describedby="alert-dialog-description"
             
                 >
-                    <DialogTitle id="alert-dialog-title" sx={{paddingRight: 0, paddingLeft: 0}}>
+                    <DialogTitle id="alert-dialog-title" sx={{paddingRight: 0, paddingLeft: 0, backgroundColor: COLORS.defaultColor, color: "white"}}>
                         {`Booking ${index + 1}`}
                     </DialogTitle>
-                    <DialogContent>
-                        <DialogContentText id="alert-dialog-description">
-                            Would you like to book this room?
+                    <DialogContent sx={{backgroundColor: COLORS.defaultColor}}>
+                        <DialogContentText id="alert-dialog-description" sx={{color: "white"}}>
+                            Would you like to {isAdmin ? "rent" : "book"} this room?
                         </DialogContentText>
                     </DialogContent>
-                    <DialogActions>
-                        <Button onClick={handleClose}>Cancel</Button>
-                        <Button onClick={handleClose} autoFocus>
-                            Book Now
-                        </Button>
+                    <DialogActions sx={{backgroundColor: COLORS.defaultColor}}>
+                        <Button onClick={handleClose} sx={{color: "white", ':hover': {backgroundColor: COLORS.focusedColor}}}>Cancel</Button>
                         
+                        {isAdmin ? 
+                            <Button 
+                                onClick={handleClose} 
+                                sx={{
+                                    color: "white", 
+                                    backgroundColor: COLORS.primaryColor, 
+                                    ':hover': {backgroundColor: COLORS.primaryFocusedColor}
+                                }} 
+                                autoFocus
+                            >
+                                Rent Now
+                            </Button> 
+                            : 
+                            <Button 
+                                onClick={handleClose} 
+                                sx={{
+                                    color: "white", 
+                                    backgroundColor: COLORS.primaryColor, 
+                                    ':hover': {backgroundColor: COLORS.primaryFocusedColor}
+                                    }} 
+                                    autoFocus
+                            >
+                                Book Now
+                            </Button>
+                        }
                     </DialogActions>
                 </Dialog>
             </ListItem>

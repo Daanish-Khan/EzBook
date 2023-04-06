@@ -20,7 +20,7 @@ function App() {
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <ThemeProvider theme={theme}>
           <Routes>
-            <Route path="/" element={<CustomerBookings />} />
+            <Route path="/" element={<CustomerBookings isAdmin={true}/>} />
           </Routes>
       </ThemeProvider>
     </LocalizationProvider>

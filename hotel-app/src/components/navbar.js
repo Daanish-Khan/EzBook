@@ -8,7 +8,7 @@ import * as React from 'react';
 const pages = ['Book Now', 'My Trips'];
 const settings = ['Profile', 'Dashboard', 'Logout'];
 
-function Navbar({sx}) {
+function Navbar({sx, isAdmin}) {
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
     
@@ -116,7 +116,7 @@ function Navbar({sx}) {
                         }
                      }}
                 >
-                    Book Now
+                    {isAdmin ? "Rent Now" : "Book Now" }
                 </Button>
                 <Button
                     onClick={handleCloseNavMenu}

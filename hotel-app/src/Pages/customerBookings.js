@@ -10,7 +10,7 @@ import Chips from '../components/Chips.js';
 import * as React from 'react';
 
 
-export default function CustomerBookings() {
+export default function CustomerBookings({isAdmin}) {
 
     return (
         <Container disableGutters maxWidth="false"
@@ -49,16 +49,19 @@ export default function CustomerBookings() {
                 />
             
             <Stack useFlexGap sx={{width: "100vw", height: "100vh"}} spacing={0} >
-                <Navbar sx={{
-                    borderBottomLeftRadius: "20px", 
-                    borderBottomRightRadius: "20px", 
-                    backgroundColor: COLORS.defaultColor,
-                    top: "0",
-                    left: "0",
-                    padding: 0,
-                    margin: 0,
-                    position: "relative",
-                }}/>
+                <Navbar 
+                    sx={{
+                        borderBottomLeftRadius: "20px", 
+                        borderBottomRightRadius: "20px", 
+                        backgroundColor: COLORS.defaultColor,
+                        top: "0",
+                        left: "0",
+                        padding: 0,
+                        margin: 0,
+                        position: "relative",
+                    }}
+                    isAdmin={isAdmin}
+                />
                 
                 <Chips />
                 
@@ -79,7 +82,7 @@ export default function CustomerBookings() {
                         boxShadow: "0 25px 50px #0000001a",
                     }}
                 >
-                    <BookingList gutter_size={5} itemCount={100} />
+                    <BookingList gutter_size={5} itemCount={100} isAdmin={isAdmin} />
                 </Box>
             </Stack>
         </Container>
