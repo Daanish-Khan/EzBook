@@ -124,8 +124,11 @@ function Chips() {
                                         onChange={(event, newValue) => {
                                             setCategoryChipText(newValue);
                                         }}
-                                        width="100%"
-                                        sx={{'& .MuiRating-label label': {overflowX: "hidden"}}}
+                                        sx={{
+                                            "& label": {
+                                                overflowX: "hidden"
+                                            }
+                                        }}
                                     />
                             </FormControl>
                         </Box>,
