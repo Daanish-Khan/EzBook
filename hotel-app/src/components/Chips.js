@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Slider, Select, MenuItem, InputLabel, FormControl, Rating, Box, Chip, Popover } from '@mui/material';
+import { Slider, Select, MenuItem, InputLabel, FormControl, Rating, Box, Chip, Popover, Button } from '@mui/material';
 import { DateCalendar } from '@mui/x-date-pickers';
 import dayjs from 'dayjs';
 import { COLORS } from './consts'
@@ -224,6 +224,22 @@ function Chips() {
                     </div>
                 );
             })}
+             <div style={{width:"max-content", display: "inline-block", margin: 0}}>
+                <Button
+                        sx={{
+                            color: 'white',  
+                            backgroundColor: COLORS.primaryColor, 
+                            borderRadius:"15px",
+                            margin: "8px",
+                            ':hover': {
+                                backgroundColor: COLORS.primaryFocusedColor
+                            }
+                        }}
+                    >
+                        Search
+                    </Button>
+             </div>
+            
         </Box>
         
     );
