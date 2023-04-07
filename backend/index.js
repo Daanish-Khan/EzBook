@@ -62,6 +62,36 @@
     if (req.body.room_capacity !== "") {
       q_middle += ` AND r.capacity >= '${req.body.room_capacity}'`
     }
+    
+    // City
+    if (req.body.city !== "") {
+      q_middle += ` AND r.city = '${req.body.city}'`
+    }
+    
+    // Country
+    if (req.body.country !== "") {
+      q_middle += ` AND r.country = '${req.body.country}'`
+    }
+    
+    // star_rating
+    if (req.body.country !== "") {
+      q_middle += ` AND r.country >= '${req.body.country}'`
+    }
+    
+    // num_rooms
+    if (req.body.num_rooms !== "") {
+      q_middle += ` AND r.num_rooms >= '${req.body.num_rooms}'`
+    }
+    
+    // price
+    if (req.body.price !== "") {
+      q_middle += ` AND r.price >= '${req.body.price_low}'`
+    }
+    
+    // price
+    if (req.body.price !== "") {
+      q_middle += ` AND r.price <= '${req.body.price_high}'`
+    }
 
     const q = q_start + q_middle + q_end;
 
