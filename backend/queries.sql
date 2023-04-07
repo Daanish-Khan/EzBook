@@ -70,20 +70,19 @@ from rooms a, hotels b
 where a.hotel = b.address
 group by b.address, a.room_num;
 
-#Search for room by start and end date.
+# Search query with ALL parameters. :startDate, :endDate, etc are params you need to use
 SELECT r.*, h.chainName, h.city, h.country, h.star_rating, h.num_rooms
-FROM (
-  SELECT * FROM rooms
-  WHERE NOT EXISTS ( 
-    SELECT *
-    FROM bookings
-    WHERE (startDate < '2020-02-02' AND endDate > '2020-02-02')
-      AND bookings.room_num = rooms.room_num
-      AND bookings.hotel = rooms.hotel
-  )
-) r
-JOIN hotels h ON r.hotel = h.address;
-
+FROM rooms r
+JOIN hotels h ON r.hotel = h.address
+LEFT JOIN bookings b ON r.room_num = b.room_num AND r.hotel = b.hotel
+WHERE (b.room_num IS NULL OR b.endDate < :startDate OR b.startDate > :endDate)
+AND r.capacity >= :capacity
+AND h.city = :city
+AND h.country = :country
+AND h.star_rating >= :star_rating
+AND h.num_rooms >= :num_rooms
+AND r.price >= :price_low
+AND r.price <= :price_high
 
 SELECT *
 FROM rooms a, hotels b
