@@ -75,20 +75,3 @@
       return res.json(data)
     })
   })
-
-  app.post("/books", (req, res) => {
-    const q = "INSERT INTO rooms (`room_num`, `hotel`, `price`, `capacity`, `view_type`, `amenities`, `expandable`, `status`) VALUES (?)"
-    const values = [6, "112 Flint Place", 0.00, 1, null, "test", 0, "Available"]
-
-    db.query(q, [values], (err, data) => {
-      if (err) {
-        return res.json(err)
-      }
-
-      return res.json(data)
-    })
-  })
-
-  app.listen(8800, () => {
-    console.log("Connected to db!")
-  })
