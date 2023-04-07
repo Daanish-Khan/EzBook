@@ -79,7 +79,7 @@ WHERE (b.room_num IS NULL OR b.endDate < :startDate OR b.startDate > :endDate)
 AND r.capacity >= :capacity
 AND h.city = :city
 AND h.country = :country
-AND h.star_rating >= :star_rating
+AND h.star_rating >= :rating
 AND h.num_rooms >= :num_rooms
 AND r.price >= :price_low
 AND r.price <= :price_high
