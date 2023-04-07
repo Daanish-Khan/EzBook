@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Slider, Select, MenuItem, InputLabel, FormControl, Rating, Box, Chip, Popover, Button } from '@mui/material';
+import { Slider, Select, MenuItem, InputLabel, FormControl, Rating, Box, Chip, Popover, Button} from '@mui/material';
 import { DateCalendar } from '@mui/x-date-pickers';
 import dayjs from 'dayjs';
 import { COLORS } from './consts'
@@ -36,10 +36,10 @@ function Chips() {
 
         if (activeThumb === 0) {
             setValue([Math.min(newValue[0], value[1] - minDistance), value[1]]);
-            setPriceChipText([Math.min(newValue[0], value[1] - minDistance), value[1]].toString());
+            setPriceChipText("$"+[Math.min(newValue[0], value[1] - minDistance)]+" - $"+ value[1].toString());
         } else {
             setValue([value[0], Math.max(newValue[1], value[0] + minDistance)]);
-            setPriceChipText([value[0], Math.max(newValue[1], value[0] + minDistance)].toString());
+            setPriceChipText("$"+[value[0]]+" - $"+ [Math.max(newValue[1],+ value[0] + minDistance)].toString());
         }
     };
 
@@ -174,7 +174,7 @@ function Chips() {
                                 valueLabelDisplay="auto"
                                 value={value}
                                 disableSwap
-                                sx={{ '& .MuiSlider-thumb::after': {width:0}, position: "static"}}
+                                sx={{ '& .MuiSlider-thumb::after': {width:0}, position: "static",color:COLORS.primaryColor}}
                             /> 
                         </Box>, 
             handleClick: (event) => {setChip7Anchor(event.currentTarget)}, 
@@ -196,7 +196,7 @@ function Chips() {
             {chips.map((data) => {
                 return (
                     <div style={{width:"max-content", display: "inline-block", margin: 0}}>
-                        <Chip 
+                        <Chip
                             label={data.text.get === '' ? data.label : data.label + ": " + data.text.get}
                             onClick={data.handleClick}
                             sx={{
