@@ -20,7 +20,8 @@ function SignInBox({ onSignInClick }) {
             boxShadow: "0 25px 50px #0000001a"
         }}>
             <h2>Sign In</h2>
-            <TextField 
+            <TextField
+                required
                 id="filled-password-input"
                 label="SSN"
                 type="password"
