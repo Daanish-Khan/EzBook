@@ -71,16 +71,20 @@ where a.hotel = b.address
 group by b.address, a.room_num;
 
 #Search for room by start and end date.
-SELECT *
-FROM rooms
-WHERE NOT EXISTS (
+SELECT r.*, h.chainName, h.city, h.country, h.star_rating, h.num_rooms
+FROM (
+  SELECT * FROM rooms
+  WHERE NOT EXISTS ( 
     SELECT *
     FROM bookings
     WHERE (startDate < '2020-02-02' AND endDate > '2020-02-02')
       AND bookings.room_num = rooms.room_num
       AND bookings.hotel = rooms.hotel
-  );
-#Search by city and country
+  )
+) r
+JOIN hotels h ON r.hotel = h.address;
+
+
 SELECT *
 FROM rooms a, hotels b
 WHERE 
