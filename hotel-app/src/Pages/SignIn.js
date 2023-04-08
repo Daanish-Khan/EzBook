@@ -14,6 +14,8 @@ function SignIn({auth, authHandle}) {
 
     const [animate, setAnimate] = React.useState(false);
     const [error, setError] = React.useState('');
+    const [registerError, setRegisterError] = React.useState({first: "", last: "", address: "", SSN: ""});
+    
     const navigator = useNavigate();
 
     const onSwitchSignUpSignInClick = (() => {
@@ -22,8 +24,60 @@ function SignIn({auth, authHandle}) {
 
     });
 
+    const registerClick = async (text) => {
+        let e = {};
+        if (!/^[a-zA-Z]+$/.test(text.first) || text.first === "") {
+            e.first="Must contain only characters."
+        } else {
+            e.first=""
+        }
+
+        if (!/^[a-zA-Z]+$/.test(text.last) || text.last === "") {
+            e.last="Must contain only characters."
+        } else {
+            e.last=""
+        }
+
+        if (text.address === "") {
+            e.address="Must not be empty."
+        } else {
+            e.address=""
+        }
+
+        if (text.SSN === "" || !/^\d+$/.test(text.SSN)) {
+            e.SSN="Must not be empty and only contain digits."
+        } else {
+            e.SSN=""
+        } 
+
+        if (e.first !== "" || e.last !== "" || e.address !== "" || e.SSN !== "") {
+            setRegisterError(e)
+            return
+        }
+
+        try {
+            const res = await axios.post("http://localhost:8800/register", {SSN: text.SSN, name: text.first + " " + text.last, address: text.address})
+            if (res.data["code"] !== undefined) {
+
+                if (res.data.code === "ER_DUP_ENTRY") {
+                    e.SSN="Duplicate entry found, please use another SSN."
+                    setRegisterError(e)
+                }
+            } else {
+                e.SSN=""
+                setRegisterError(e)
+                authHandle({SSN: text.SSN, isAdmin: false})
+                navigator('/bookings');
+            }
+            
+        } catch (err) {
+            console.log(err)
+        }
+
+    }
+
     const signInClick = async (text) => {
-        console.log(!/^\d+$/.test(text))
+
         if (text === "" || !/^\d+$/.test(text)) {
             setError('Must not be empty and only contain digits.');
             return;
@@ -35,12 +89,13 @@ function SignIn({auth, authHandle}) {
 
         if (res.data[0][0][Object.keys(res.data[0][0])[0]] === 1) {
             authHandle({SSN: text, isAdmin: false});
-            navigator('/bookings');
             setError('');
+            navigator('/bookings');
+            
         } else if (res.data[1][0][Object.keys(res.data[1][0])[0]] === 1) {
             authHandle({SSN: text, isAdmin: true});
-            navigator('/bookings');
             setError('');
+            navigator('/bookings');
         } else {
             setError('Incorrect SSN');
         }
@@ -107,10 +162,10 @@ function SignIn({auth, authHandle}) {
 
             {animate 
             ? <SignUpBox
-                isError={error}
+                isError={registerError}
                 authHandle={authHandle}
-                signInClick={signInClick}
-                swapToRegisterClick={onSwitchSignUpSignInClick}
+                signInClick={registerClick}
+                swapToSignInClick={onSwitchSignUpSignInClick}
             />
             :  <SignInBox
                 isError={error}
