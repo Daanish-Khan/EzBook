@@ -2,7 +2,7 @@ import { Box, Button, TextField } from '@mui/material';
 import { Grid } from '@mui/material';
 import { COLORS } from '../components/consts'
 
-function SignUpBox({ signInClick, swapToSignInClick, authHandle }) {
+function SignUpBox({ signInClick, swapToSignInClick, authHandle, isError }) {
 
     const style = {
         '& .MuiInputBase-root.Mui-focused': {

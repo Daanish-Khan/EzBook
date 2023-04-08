@@ -13,6 +13,7 @@ import { useNavigate } from 'react-router-dom';
 function SignIn({auth, authHandle}) {
 
     const [animate, setAnimate] = React.useState(false);
+    const [error, setError] = React.useState('');
     const navigator = useNavigate();
 
     const onSwitchSignUpSignInClick = (() => {
@@ -22,19 +23,29 @@ function SignIn({auth, authHandle}) {
     });
 
     const signInClick = async (text) => {
+        console.log(!/^\d+$/.test(text))
+        if (text === "" || !/^\d+$/.test(text)) {
+            setError('Must not be empty and only contain digits.');
+            return;
+        } else {
+            setError('');
+        }
        try {
         const res = await axios.post("http://localhost:8800/login", {SSN: text})
 
         if (res.data[0][0][Object.keys(res.data[0][0])[0]] === 1) {
-            authHandle({SSN: text, isAdmin: false})
-            navigator('/bookings')
+            authHandle({SSN: text, isAdmin: false});
+            navigator('/bookings');
+            setError('');
         } else if (res.data[1][0][Object.keys(res.data[1][0])[0]] === 1) {
-            authHandle({SSN: text, isAdmin: true})
-            navigator('/bookings')
+            authHandle({SSN: text, isAdmin: true});
+            navigator('/bookings');
+            setError('');
+        } else {
+            setError('Incorrect SSN');
         }
-
        } catch (err) {
-
+            console.log(err)
        }
     };
 
@@ -96,11 +107,13 @@ function SignIn({auth, authHandle}) {
 
             {animate 
             ? <SignUpBox
+                isError={error}
                 authHandle={authHandle}
                 signInClick={signInClick}
                 swapToRegisterClick={onSwitchSignUpSignInClick}
             />
             :  <SignInBox
+                isError={error}
                 authHandle={authHandle}
                 signInClick={signInClick}
                 swapToRegisterClick={onSwitchSignUpSignInClick}

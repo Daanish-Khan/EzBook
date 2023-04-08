@@ -2,7 +2,7 @@ import { Box, Button, TextField } from '@mui/material';
 import { COLORS } from '../components/consts';
 import * as React from 'react';
 
-function SignInBox({ signInClick, swapToRegisterClick, authHandle }) {
+function SignInBox({ signInClick, swapToRegisterClick, authHandle, isError }) {
 
     const [text, setText] = React.useState('');
 
@@ -29,6 +29,8 @@ function SignInBox({ signInClick, swapToRegisterClick, authHandle }) {
             <h2>Sign In</h2>
             <TextField
                 required
+                error={isError !== ""}
+                helperText={isError}
                 id="filled-password-input"
                 label="SSN"
                 type="password"

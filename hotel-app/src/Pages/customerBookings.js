@@ -9,7 +9,6 @@ import Chips from '../components/Chips.js';
 
 import * as React from 'react';
 
-
 export default function CustomerBookings({auth, setAuth}) {
 
     return (
