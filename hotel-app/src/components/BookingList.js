@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ListItem, ListItemButton, ListItemText, Typography } from '@mui/material';
+import { ListItem, ListItemButton, ListItemText, Typography, Grid } from '@mui/material';
 import { FixedSizeList } from 'react-window';
 import AutoSizer from 'react-virtualized-auto-sizer';
 import CustomScrollbarsVirtualList from './Scrollbar'
@@ -30,8 +30,36 @@ function BookingList( {gutter_size, itemCount, isAdmin, data, bookingClick }) {
                     <ListItemText 
                         primary={
                             <React.Fragment>
-                                <Typography sx={{ fontWeight: 'bold', display: 'inline' }}>{data[index].chainName + ": "}</Typography>
-                                {"Room #" + data[index].room_num} 
+                                <Grid container spacing={0} disableGutters>
+                                    <Grid item xs={12} >
+                                        <Typography sx={{ fontWeight: 'bold', display: 'inline' }}>{data[index].chainName + ": "}</Typography>
+                                        {"Room #" + data[index].room_num}
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <Typography sx={{ display: 'inline', fontStyle: 'italic'}}>{"$" + data[index].price + "/night"}</Typography>
+                                        <Typography sx={{ display: 'inline', fontStyle: 'italic'}}>{", " + data[index].capacity + " rooms"}</Typography>
+                                        {data[index].view_type !== null ? 
+                                            <Typography sx={{ display: 'inline', fontStyle: 'italic'}}>
+                                                {", " + data[index].view_type + " View"}
+                                            </Typography>
+                                            : null
+                                        }
+                                        {data[index].amenities !== null ?               
+                                            <Typography sx={{ display: 'inline', fontStyle: 'italic' }}>
+                                                {", Amenities: " + data[index].amenities}
+                                            </Typography>
+                                            : null
+                                        }
+                                        {data[index].amenities !== null ?
+                                            <Typography sx={{ display: 'inline', fontStyle: 'italic' }}>
+                                                , Expandable
+                                            </Typography>
+                                            : null
+                                        }
+                                    </Grid>
+                                </Grid>
+                                 
+                                
                             </React.Fragment>
                         }
                         secondary={
@@ -72,7 +100,7 @@ function BookingList( {gutter_size, itemCount, isAdmin, data, bookingClick }) {
                     height={height + gutter_size}
                     innerElementType={innerElementType}
                     width={width - 15}
-                    itemSize={90}
+                    itemSize={100}
                     itemCount={itemCount}
                     overscanCount={5}
                     outerElementType={CustomScrollbarsVirtualList}
