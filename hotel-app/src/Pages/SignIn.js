@@ -7,16 +7,36 @@ import SignUpBox from '../components/SignUpBox';
 import { motion } from 'framer-motion';
 import { COLORS } from '../components/consts'
 import * as React from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
-function SignIn() {
+function SignIn({auth, authHandle}) {
 
     const [animate, setAnimate] = React.useState(false);
+    const navigator = useNavigate();
 
     const onSwitchSignUpSignInClick = (() => {
 
         setAnimate(!animate);
 
     });
+
+    const signInClick = async (text) => {
+       try {
+        const res = await axios.post("http://localhost:8800/login", {SSN: text})
+
+        if (res.data[0][0][Object.keys(res.data[0][0])[0]] === 1) {
+            authHandle({SSN: text, isAdmin: false})
+            navigator('/bookings')
+        } else if (res.data[1][0][Object.keys(res.data[1][0])[0]] === 1) {
+            authHandle({SSN: text, isAdmin: true})
+            navigator('/bookings')
+        }
+
+       } catch (err) {
+
+       }
+    };
 
     return (
         <Container fixed
@@ -75,11 +95,15 @@ function SignIn() {
             </motion.div>
 
             {animate 
-            ? <SignUpBox 
-                onBackToSignInClick={onSwitchSignUpSignInClick}
+            ? <SignUpBox
+                authHandle={authHandle}
+                signInClick={signInClick}
+                swapToRegisterClick={onSwitchSignUpSignInClick}
             />
-            :  <SignInBox 
-                onSignInClick={onSwitchSignUpSignInClick}
+            :  <SignInBox
+                authHandle={authHandle}
+                signInClick={signInClick}
+                swapToRegisterClick={onSwitchSignUpSignInClick}
             />}
 
         </Container>

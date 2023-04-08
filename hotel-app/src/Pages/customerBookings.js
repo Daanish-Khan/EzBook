@@ -10,7 +10,7 @@ import Chips from '../components/Chips.js';
 import * as React from 'react';
 
 
-export default function CustomerBookings({isAdmin}) {
+export default function CustomerBookings({auth, setAuth}) {
 
     return (
         <Container disableGutters maxWidth="false"
@@ -60,7 +60,7 @@ export default function CustomerBookings({isAdmin}) {
                         margin: 0,
                         position: "relative",
                     }}
-                    isAdmin={isAdmin}
+                    isAdmin={auth.isAdmin}
                 />
                 
                 <Chips />
@@ -82,7 +82,7 @@ export default function CustomerBookings({isAdmin}) {
                         boxShadow: "0 25px 50px #0000001a",
                     }}
                 >
-                    <BookingList gutter_size={5} itemCount={100} isAdmin={isAdmin} />
+                    <BookingList gutter_size={5} itemCount={100} isAdmin={auth.isAdmin} />
                 </Box>
             </Stack>
         </Container>

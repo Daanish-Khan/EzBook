@@ -1,5 +1,6 @@
   import express from "express"
   import mysql from "mysql"
+  import cors from "cors"
 
   const app = express()
   const db = mysql.createConnection({
@@ -11,6 +12,7 @@
   })
 
   app.use(express.json())
+  app.use(cors())
 
   app.post('/login', (req, res) => {
     const q = `SELECT EXISTS (SELECT * FROM customers WHERE SSN = ${req.body.SSN}); SELECT EXISTS (SELECT * FROM employees WHERE SSN = ${req.body.SSN});`

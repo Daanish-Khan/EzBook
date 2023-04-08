@@ -1,10 +1,14 @@
 import { Box, Button, TextField } from '@mui/material';
-import { COLORS } from '../components/consts'
-import { useNavigate } from 'react-router-dom';
+import { COLORS } from '../components/consts';
+import * as React from 'react';
 
-function SignInBox({ onSignInClick }) {
+function SignInBox({ signInClick, swapToRegisterClick, authHandle }) {
 
-    const navigate = useNavigate();
+    const [text, setText] = React.useState('');
+
+    const onTextChange = e => {
+        setText(e.target.value);
+    }
 
     return (
         <Box sx={{
@@ -29,6 +33,7 @@ function SignInBox({ onSignInClick }) {
                 label="SSN"
                 type="password"
                 variant="filled"
+                onChange={onTextChange}
                 
                 sx={{
                     '& .MuiInputBase-root.Mui-focused': {
@@ -69,7 +74,7 @@ function SignInBox({ onSignInClick }) {
             />
             <Button 
                 variant="contained"
-                onClick={() => {navigate('/bookings')}}
+                onClick={() => signInClick(text)}
                 sx={{
                     marginTop: "30px",
                     backgroundColor:  COLORS.primaryColor,
@@ -81,7 +86,7 @@ function SignInBox({ onSignInClick }) {
             </Button>
             <Button
              variant="contained"
-             onClick={onSignInClick}
+             onClick={swapToRegisterClick}
              sx={{
                  marginTop: "30px",
                  backgroundColor: COLORS.defaultColor,
