@@ -1,7 +1,10 @@
 import { Box, Button, TextField } from '@mui/material';
 import { Grid } from '@mui/material';
 import { COLORS } from '../components/consts'
+import { useNavigate } from 'react-router-dom';
 function SignUpBox({ onBackToSignInClick }) {
+
+    const navigate = useNavigate();
 
     const style = {
         '& .MuiInputBase-root.Mui-focused': {
@@ -104,6 +107,7 @@ function SignUpBox({ onBackToSignInClick }) {
             
             <Button 
                 variant="contained"
+                onClick={navigate('/bookings')}
                 sx={{
                     marginTop: "30px",
                     backgroundColor:  COLORS.primaryColor,
