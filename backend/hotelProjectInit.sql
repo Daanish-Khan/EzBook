@@ -1,4 +1,8 @@
-#CREATE SCHEMA hotelProjectSchema; #NEEDED IF CREATING FROM SCRATCH.
+CREATE SCHEMA hotel_project_db; #NEEDED IF CREATING FROM SCRATCH.
+
+CREATE DATABASE IF NOT EXISTS hotel_project_db;
+USE hotel_project_db;
+
 
 CREATE TABLE hotelChains (
   name VARCHAR(255) PRIMARY KEY NOT NULL,
@@ -62,8 +66,8 @@ CREATE TABLE bookings (
   FOREIGN KEY (customer) REFERENCES customers (SSN),
   PRIMARY KEY (hotel, room_num, startDate),
   isPaid BOOLEAN NOT NULL DEFAULT false,
-  startDate datetime NOT NULL,
-  endDate datetime NOT NULL
+  startDate date NOT NULL,
+  endDate date NOT NULL
 );
 
 CREATE TABLE emails (#stores all emails for chains and hotels
