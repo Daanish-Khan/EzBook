@@ -1,7 +1,10 @@
 import { Box, Button, TextField } from '@mui/material';
 import { COLORS } from '../components/consts'
+import { useNavigate } from 'react-router-dom';
 
 function SignInBox({ onSignInClick }) {
+
+    const navigate = useNavigate();
 
     return (
         <Box sx={{
@@ -66,6 +69,7 @@ function SignInBox({ onSignInClick }) {
             />
             <Button 
                 variant="contained"
+                onClick={() => {navigate('/bookings')}}
                 sx={{
                     marginTop: "30px",
                     backgroundColor:  COLORS.primaryColor,
