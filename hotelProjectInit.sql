@@ -88,6 +88,8 @@ INSERT INTO hotelChains(name, office_address, city, country, num_hotels) VALUES
 ('Bizarre Accommodations', '31 Riverside Drive', 'Alert','Canada', 8),
 ('Horrible Value Hotels', ' 2457 Santa Monica Boulevard', 'Los Angeles','United States', 8);
 
+
+
 #Inserts for Best Western hotels (8) 
 INSERT INTO hotels(address, chainName, city, country, star_rating, num_rooms, phoneNumber) VALUES 
 ('185 Watt Place', 'Best Western', 'Regina', 'Canada', 2, 5, '1-800-604-5668'),
@@ -390,3 +392,51 @@ INSERT INTO employees (SSN, full_name, address,works_at, role) VALUES
 (20003, 'Gabriella Dawson', '21 Hussey Avenue','180 Lundys Avenue','Manager'),
 (10593, 'Aaron Lindsey','215 Saturn Street' ,'192 Crescent Avenue','Manager'),
 (29304, 'Anakin Skywalker', '145 Decker Street','98 Fernandez Avenue','Manager');
+
+SET foreign_key_checks = 0;
+UPDATE hotels SET manager=12345 WHERE address='185 Watt Place';
+UPDATE hotels SET manager=23456 WHERE address='267 Margrave Street';
+UPDATE hotels SET manager=34567 WHERE address='17 Harriet Avenue';
+UPDATE hotels SET manager=45678 WHERE address='240 Denslowe Way';
+UPDATE hotels SET manager=56789 WHERE address='266 Badger Way';
+UPDATE hotels SET manager=67890 WHERE address='256 Bepler Way';
+UPDATE hotels SET manager=78901 WHERE address='114 Parkhurst Way';
+UPDATE hotels SET manager=89012 WHERE address='307 Lily Way';
+#Value Motels
+UPDATE hotels SET manager=90123 WHERE address='293 Girard Avenue';
+UPDATE hotels SET manager=11234 WHERE address='71 Cerritos Place';
+UPDATE hotels SET manager=99999 WHERE address='122 Marcy Boulevard';
+UPDATE hotels SET manager=11111 WHERE address='121 Wheeler Way';
+UPDATE hotels SET manager=22222 WHERE address='244 Modoc Street';
+UPDATE hotels SET manager=33333 WHERE address='253 Wabash Boulevard';
+UPDATE hotels SET manager=44444 WHERE address='56 Circular Boulevard';
+UPDATE hotels SET manager=55555 WHERE address='214 Danton Place';
+UPDATE hotels SET manager=66666 WHERE address='176 Naglee Way';
+#Fairmont
+UPDATE hotels SET manager=77777 WHERE address='127 Hicks Place';
+UPDATE hotels SET manager=88888 WHERE address='220 Baker Street';
+UPDATE hotels SET manager=10101 WHERE address='293 Pizarro Street';
+UPDATE hotels SET manager=12121 WHERE address='261 Miley Avenue';
+UPDATE hotels SET manager=21212 WHERE address='80 28Th Avenue';
+UPDATE hotels SET manager=23232 WHERE address='160 Harding Place';
+UPDATE hotels SET manager=32323 WHERE address='161 Denslowe Avenue';
+UPDATE hotels SET manager=34343 WHERE address='254 Faith Boulevard';
+#Bizarre Accomodations
+UPDATE hotels SET manager=43434 WHERE address='248 Ord Boulevard';
+UPDATE hotels SET manager=45454 WHERE address='122 Bay Place';
+UPDATE hotels SET manager=54545 WHERE address='177 Mirabel Street';
+UPDATE hotels SET manager=56565 WHERE address='84 Aladdin Boulevard';
+UPDATE hotels SET manager=65656 WHERE address='161 Jessie Way';
+UPDATE hotels SET manager=67676 WHERE address='273 Clipper Avenue';
+UPDATE hotels SET manager=76767 WHERE address='314 Burlwood Street';
+UPDATE hotels SET manager=78787 WHERE address='65 Dunnes Boulevard';
+#Horrible Value
+UPDATE hotels SET manager=87878 WHERE address='72 09Th Place';
+UPDATE hotels SET manager=89898 WHERE address='112 Flint Place';
+UPDATE hotels SET manager=98989 WHERE address='18 Muir Way';
+UPDATE hotels SET manager=90909 WHERE address='302 Overlook Boulevard';
+UPDATE hotels SET manager=19090 WHERE address='148 Taylor Avenue';
+UPDATE hotels SET manager=20003 WHERE address='180 Lundys Avenue';
+UPDATE hotels SET manager=10593 WHERE address='192 Crescent Avenue';
+UPDATE hotels SET manager=29304 WHERE address='98 Fernandez Avenue';
+SET foreign_key_checks = 1;
