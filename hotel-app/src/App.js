@@ -1,6 +1,7 @@
 import './App.css';
 import CustomerBookings from './Pages/customerBookings';
 import SignIn from './Pages/SignIn'
+import EmployeeData from './Pages/employeeData'
 import { Routes, Route } from 'react-router-dom';
 import { createTheme } from '@mui/material/styles';
 import { ThemeProvider } from '@emotion/react';
@@ -20,7 +21,7 @@ function App() {
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <ThemeProvider theme={theme}>
           <Routes>
-            <Route path="/" element={<CustomerBookings isAdmin={true}/>} />
+            <Route path="/" element={<EmployeeData isAdmin={true}/>} />
           </Routes>
       </ThemeProvider>
     </LocalizationProvider>
