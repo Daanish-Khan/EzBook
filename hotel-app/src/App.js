@@ -6,6 +6,7 @@ import { createTheme } from '@mui/material/styles';
 import { ThemeProvider } from '@emotion/react';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import * as React from 'react'
 
 const theme = createTheme({
   typography: {
@@ -16,12 +17,15 @@ const theme = createTheme({
 });
 
 function App() {
+
+  const [auth, setAuth] = React.useState({SSN: 0, isAdmin: false})
+
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <ThemeProvider theme={theme}>
           <Routes>
-            <Route path="/" element={<SignIn />} />
-            <Route path="/bookings" element={<CustomerBookings isAdmin={true}/>} />
+            <Route path="/" element={<SignIn auth={auth} authHandle={setAuth}/>} />
+            <Route path="/bookings" element={<CustomerBookings auth={auth} authHandle={setAuth}/>} />
           </Routes>
       </ThemeProvider>
     </LocalizationProvider>
