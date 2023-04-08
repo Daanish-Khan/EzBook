@@ -1,8 +1,17 @@
 #Selects for queries on website
 #1
-SELECT * FROM rooms WHERE hotel = hName AND room_num = num;
-SELECT * FROM hotels WHERE address = hName;
-SELECT * FROM hotelchains WHERE name = chainName;
+SELECT r.*, h.chainName, h.city, h.country, h.star_rating, h.num_rooms
+FROM rooms r
+JOIN hotels h ON r.hotel = h.address
+LEFT JOIN bookings b ON r.room_num = b.room_num AND r.hotel = b.hotel
+WHERE (b.room_num IS NULL OR b.endDate < :startDate OR b.startDate > :endDate)
+AND r.capacity >= :capacity
+AND h.city = :city
+AND h.country = :country
+AND h.star_rating >= :rating
+AND h.num_rooms >= :num_rooms
+AND r.price >= :price_low
+AND r.price <= :price_high
 
 #2 Basic insert, where for a renting isPaid is set as TRUE automatically because it is being RENTED
 INSERT INTO bookings(room_num, hotel, customer, isPaid, startDate, endDate) Value (a1,a2,a3,TRUE,a5,a6);
@@ -69,46 +78,3 @@ select b.address,a.room_num,a.capacity
 from rooms a, hotels b
 where a.hotel = b.address
 group by b.address, a.room_num;
-
-# Search query with ALL parameters. :startDate, :endDate, etc are params you need to use
-SELECT r.*, h.chainName, h.city, h.country, h.star_rating, h.num_rooms
-FROM rooms r
-JOIN hotels h ON r.hotel = h.address
-LEFT JOIN bookings b ON r.room_num = b.room_num AND r.hotel = b.hotel
-WHERE (b.room_num IS NULL OR b.endDate < :startDate OR b.startDate > :endDate)
-AND r.capacity >= :capacity
-AND h.city = :city
-AND h.country = :country
-AND h.star_rating >= :rating
-AND h.num_rooms >= :num_rooms
-AND r.price >= :price_low
-AND r.price <= :price_high
-
-SELECT *
-FROM rooms a, hotels b
-WHERE 
-    b.city = 'Regina' AND b.country = 'Canada' AND a.status = 'Available' AND a.hotel = b.address;
-    
-#Search by chain
-SELECT *
-FROM rooms a, hotels b
-WHERE 
-    b.chainName = 'Value Motels'  AND a.status = 'Available' AND a.hotel = b.address;
-    
-#Search by catagory
-SELECT *
-FROM rooms a, hotels b
-WHERE 
-    b.star_rating = 3  AND a.status = 'Available' AND a.hotel = b.address;
-    
-#Search by # of rooms
-SELECT *
-FROM rooms a, hotels b
-WHERE 
-    b.num_rooms = 3  AND a.status = 'Available' AND a.hotel = b.address;
-    
-#Search by capacity
-SELECT *
-FROM rooms a, hotels b
-WHERE 
-    a.capacity = 2  AND a.status = 'Available' AND a.hotel = b.address;
