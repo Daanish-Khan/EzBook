@@ -6,10 +6,54 @@ import Navbar from '../components/navbar';
 import Waves from '../components/Waves';
 import BookingList from '../components/BookingList';
 import Chips from '../components/Chips.js';
+import axios from 'axios';
 
 import * as React from 'react';
+import BookingModal from '../components/BookingModal';
 
 export default function CustomerBookings({auth, setAuth}) {
+
+    const [data, setData] = React.useState({});
+
+    const [modalOpen, setModalOpen] = React.useState({open: false, title: ""});
+
+    const bookingClick = (booking) => {
+        console.log(booking)
+        setModalOpen({open: true, title: booking});
+    }
+
+    const handleModalClose = () => {
+        setModalOpen({open: false, title: ""})
+    }
+
+
+    React.useEffect(() => {
+
+        const q = {
+            start_date: "",
+            end_date: "",
+            room_capacity: "",
+            city: "",
+            country: "",
+            chain: "",
+            rating: "",
+            num_rooms: "",
+            price_low: "",
+            price_high: ""
+        }
+
+        const fetch = async () => {
+            try {
+                const res = await axios.post("http://localhost:8800/query", q)
+                setData(res.data)
+            } catch (err) {
+                console.log(err)
+            }
+        }
+
+        fetch();
+        
+    }, []);
 
     return (
         <Container disableGutters maxWidth="false"
@@ -81,7 +125,8 @@ export default function CustomerBookings({auth, setAuth}) {
                         boxShadow: "0 25px 50px #0000001a",
                     }}
                 >
-                    <BookingList gutter_size={5} itemCount={100} isAdmin={auth.isAdmin} />
+                    <BookingList gutter_size={5} itemCount={Object.keys(data).length} isAdmin={auth.isAdmin} data={data} bookingClick={bookingClick} />
+                    <BookingModal open={modalOpen} handleClose={handleModalClose} isAdmin={auth.isAdmin}/>
                 </Box>
             </Stack>
         </Container>

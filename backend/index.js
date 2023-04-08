@@ -414,7 +414,7 @@
    * 
    */
 
-  app.post("/bookingquery", (req, res) => {
+  app.post("/query", (req, res) => {
     const q_start = "SELECT r.*, h.chainName, h.city, h.country, h.star_rating, h.num_rooms " +
                     "FROM rooms r " +
                     "JOIN hotels h ON r.hotel = h.address "
@@ -482,7 +482,6 @@
       if (err) {
         return res.json(err)
       }
-
       return res.json(data)
     })
   })

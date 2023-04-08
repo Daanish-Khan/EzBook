@@ -1,23 +1,14 @@
 import * as React from 'react';
-import { ListItem, ListItemButton, ListItemText, Dialog, DialogTitle, DialogContentText, DialogContent, DialogActions, Button, TextField, Stack } from '@mui/material';
+import { ListItem, ListItemButton, ListItemText, Typography } from '@mui/material';
 import { FixedSizeList } from 'react-window';
 import AutoSizer from 'react-virtualized-auto-sizer';
 import CustomScrollbarsVirtualList from './Scrollbar'
 import { COLORS } from './consts';
 
-function BookingList( {gutter_size, itemCount, isAdmin} ) {
-    const [open, setOpen] = React.useState({open: false, index: -1});
-
-    const bookingClick = (index) => {
-        setOpen({open: true, index: index});
-    }
+function BookingList( {gutter_size, itemCount, isAdmin, data, bookingClick }) {
 
     function renderRow(props) {
         const { index, style } = props;
-
-        const handleClose = () => {
-            setOpen({open: false, index: -1})
-        }
     
         return (
             <ListItem style={{
@@ -34,114 +25,30 @@ function BookingList( {gutter_size, itemCount, isAdmin} ) {
                         borderRadius: "30px",
                         height: "100%",
                     }}
-                    onClick={() => bookingClick(index)}
+                    onClick={() => bookingClick(data[index].chainName + ", Room #" + data[index].room_num)}
                 >
-                    <ListItemText primary={`Booking ${index + 1}`}
-                      sx={{
-                          color:'white', 
-                          wordWrap: "break-word"
-                      }}
-                      primaryTypographyProps={{ style: {whiteSpace: "normal"}}}
+                    <ListItemText 
+                        primary={
+                            <React.Fragment>
+                                <Typography sx={{ fontWeight: 'bold', display: 'inline' }}>{data[index].chainName + ": "}</Typography>
+                                {"Room #" + data[index].room_num} 
+                            </React.Fragment>
+                        }
+                        secondary={
+                            <React.Fragment>
+                                <Typography sx={{ fontWeight: 'bold', display: 'inline' }}>
+                                    {data[index].hotel + ", " + data[index].city + ", " + data[index].country}
+                                </Typography>
+                            </React.Fragment>
+                           
+                        }
+                        sx={{
+                            color:'white', 
+                            wordWrap: "break-word"
+                        }}
+                        primaryTypographyProps={{ style: {whiteSpace: "normal"}}}
                     />
                 </ListItemButton>
-                <Dialog
-                
-                    open={open.open && open.index === index}
-                    onClose={handleClose}
-                    aria-labelledby="alert-dialog-title"
-                    aria-describedby="alert-dialog-description"
-                    
-            
-                >
-                    <DialogTitle id="alert-dialog-title" sx={{paddingRight: 0, paddingLeft: 0, backgroundColor: COLORS.defaultColor, color: "white"}}>
-                        {`Booking ${index + 1}`}
-                    </DialogTitle>
-                    <DialogContent sx={{backgroundColor: COLORS.defaultColor, alignItems: "center", display: "flex", justifyContent: "center"}}>
-                        <Stack spacing={2}>
-                            <DialogContentText id="alert-dialog-description" sx={{color: "white"}}>
-                                Would you like to {isAdmin ? "rent" : "book"} this room?
-                            </DialogContentText>
-                            {isAdmin ? 
-                            
-                                <TextField 
-                                    id="filled-password-input"
-                                    label="SSN"
-                                    type="password"
-                                    variant="filled"
-                                    
-                                    sx={{
-                                        
-                                        
-                                        '& .MuiInputBase-root.Mui-focused': {
-                                            backgroundColor: "#ffff"
-                                        },
-                                        '& .MuiInputBase-root': {
-                                            backgroundColor: "#ffff"
-                                        },
-                                        '& .MuiInputBase-root:hover': {
-                                            backgroundColor: "#ffff",
-                                        },
-                                        
-                                        '&:hover label': {
-                                            color: COLORS.focusedColor,
-                                            
-                                        },
-                    
-                                        '& label.Mui-focused': {
-                                            color: COLORS.focusedColor,
-                                            
-                                        },
-                                        '& label': {
-                                            color: COLORS.defaultColor,
-                                        },
-                    
-                                        '&& .MuiFilledInput-underline:hover:before': {
-                                            borderBottomColor: COLORS.focusedColor
-                                        },
-                                        '& .MuiFilledInput-underline:after': {
-                                            borderBottomColor: COLORS.focusedColor
-                                        },
-                                        '& .MuiFilledInput-underline:before': {
-                                            borderBottomColor: COLORS.defaultColor,
-                                        },
-                    
-                                    }}
-                                />
-                                :
-                                null  
-                            }
-                        </Stack>
-                    </DialogContent>
-                    <DialogActions sx={{backgroundColor: COLORS.defaultColor}}>
-                        <Button onClick={handleClose} sx={{color: "white", ':hover': {backgroundColor: COLORS.focusedColor}}}>Cancel</Button>
-                        
-                        {isAdmin ? 
-                            <Button 
-                                onClick={handleClose} 
-                                sx={{
-                                    color: "white", 
-                                    backgroundColor: COLORS.primaryColor, 
-                                    ':hover': {backgroundColor: COLORS.primaryFocusedColor}
-                                }} 
-                                autoFocus
-                            >
-                                Rent Now
-                            </Button> 
-                            : 
-                            <Button 
-                                onClick={handleClose} 
-                                sx={{
-                                    color: "white", 
-                                    backgroundColor: COLORS.primaryColor, 
-                                    ':hover': {backgroundColor: COLORS.primaryFocusedColor}
-                                    }} 
-                                    autoFocus
-                            >
-                                Book Now
-                            </Button>
-                        }
-                    </DialogActions>
-                </Dialog>
             </ListItem>
         );
     }
@@ -172,9 +79,9 @@ function BookingList( {gutter_size, itemCount, isAdmin} ) {
                 >
                     {renderRow}
                     
-                </FixedSizeList> 
+                </FixedSizeList>
+                
             )}
-            
         </AutoSizer>
     );
 
