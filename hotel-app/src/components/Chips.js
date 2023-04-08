@@ -12,17 +12,19 @@ function Chips() {
     //these look at the slider and display the correct value depending on the value between steps
     const [value, setValue] = React.useState([0, 500]);
 
-    const [chip1Anchor, setChip1Anchor] = React.useState(null);
-    const [chip2Anchor, setChip2Anchor] = React.useState(null);
-    const [chip3Anchor, setChip3Anchor] = React.useState(null);
-    const [chip4Anchor, setChip4Anchor] = React.useState(null);
-    const [chip5Anchor, setChip5Anchor] = React.useState(null);
-    const [chip6Anchor, setChip6Anchor] = React.useState(null);
-    const [chip7Anchor, setChip7Anchor] = React.useState(null);
+    const [startAnchor, setStartAnchor] = React.useState(null);
+    const [endAnchor, setEndAnchor] = React.useState(null);
+    const [cityAnchor, setCityAnchor] = React.useState(null);
+    const [countryAnchor, setCountryAnchor] = React.useState(null);
+    const [chainAnchor, setChainAnchor] = React.useState(null);
+    const [categoryAnchor, setCategoryAnchor] = React.useState(null);
+    const [roomAnchor, setRoomAnchor] = React.useState(null);
+    const [priceAnchor, setPriceAnchor] = React.useState(null);
 
     const [startChipText, setStartChipText] = React.useState(dayjs(new Date()));
     const [endChipText, setEndChipText] = React.useState(dayjs(new Date()).add(1,'day'))
-    const [areaChipText, setAreaChipText] = React.useState('');
+    const [cityChipText, setCityChipText] = React.useState('');
+    const [countryChipText, setCountryChipText] = React.useState('');
     const [chainChipText, setChainChipText] = React.useState('');
     const [categoryChipText, setCategoryChipText] = React.useState(2);
     const [roomChipText, setRoomChipText] = React.useState('');
@@ -54,31 +56,31 @@ function Chips() {
             key: 0, label: 'Start Date', 
             component:
             <DateCalendar value={startChipText} maxDate={endChipText} onChange={(newValueStartDate) => {setStartChipText(newValueStartDate)}}/>, 
-            handleClick: (event) => {setChip1Anchor(event.currentTarget)}, 
-            anchor: {get: chip1Anchor, set: setChip1Anchor}, 
-            open: Boolean(chip1Anchor),
+            handleClick: (event) => {setStartAnchor(event.currentTarget)}, 
+            anchor: {get: startAnchor, set: setStartAnchor}, 
+            open: Boolean(startAnchor),
             text: { get: new Date(startChipText).toLocaleDateString('en-ca', { weekday:"short", year:"numeric", month:"short", day:"numeric"}), set: setStartChipText }
             
         },
         {
             key: 1, label: 'End Date', 
             component: <DateCalendar value={endChipText} minDate={startChipText} onChange={(newValueEndDate) => {setEndChipText(newValueEndDate)}}/>, 
-            handleClick: (event) => {setChip2Anchor(event.currentTarget)}, 
-            anchor: {get: chip2Anchor, set: setChip2Anchor}, 
-            open: Boolean(chip2Anchor),
+            handleClick: (event) => {setEndAnchor(event.currentTarget)}, 
+            anchor: {get: endAnchor, set: setEndAnchor}, 
+            open: Boolean(endAnchor),
             text: { get: new Date(endChipText).toLocaleDateString('en-ca', { weekday:"short", year:"numeric", month:"short", day:"numeric"}), set: setEndChipText}
         },
         {
-            key: 2, label: 'Area', 
+            key: 2, label: 'City', 
             component: <Box sx={{minWidth: 100, padding: 1}}>
                             <FormControl fullWidth>
-                                <InputLabel sx={{marginTop: 0.5}}>Area</InputLabel>
+                                <InputLabel sx={{marginTop: 0.5}}>City</InputLabel>
                                 <Select
                                       
-                                    value={areaChipText}
-                                    label="Area"
+                                    value={cityChipText}
+                                    label="City"
                                     sx={{color: COLORS.defaultColor}}
-                                    onChange={(event) => {setAreaChipText(event.target.value)}}
+                                    onChange={(event) => {setCityChipText(event.target.value)}}
                                 >
                                     <MenuItem value="Test">Test1</MenuItem>
                                     <MenuItem value="Test2">Test2</MenuItem>
@@ -86,13 +88,36 @@ function Chips() {
                                 </Select>
                             </FormControl>
                         </Box>, 
-            handleClick: (event) => {setChip3Anchor(event.currentTarget)}, 
-            anchor: {get: chip3Anchor, set: setChip3Anchor}, 
-            open: Boolean(chip3Anchor),
-            text: { get: areaChipText, set: setAreaChipText }
+            handleClick: (event) => {setCityAnchor(event.currentTarget)}, 
+            anchor: {get: cityAnchor, set: setCityAnchor}, 
+            open: Boolean(cityAnchor),
+            text: { get: cityChipText, set: setCityChipText }
         },
         {
-            key: 3, label: 'Chain', 
+            key: 3, label: 'Country', 
+            component: <Box sx={{minWidth: 100, padding: 1}}>
+                            <FormControl fullWidth>
+                                <InputLabel sx={{marginTop: 0.5}}>Country</InputLabel>
+                                <Select
+                                      
+                                    value={countryChipText}
+                                    label="Country"
+                                    sx={{color: COLORS.defaultColor}}
+                                    onChange={(event) => {setCountryChipText(event.target.value)}}
+                                >
+                                    <MenuItem value="Test">Test1</MenuItem>
+                                    <MenuItem value="Test2">Test2</MenuItem>
+                                    <MenuItem value="Test3">Test3</MenuItem>
+                                </Select>
+                            </FormControl>
+                        </Box>, 
+            handleClick: (event) => {setCountryAnchor(event.currentTarget)}, 
+            anchor: {get: countryAnchor, set: setCountryAnchor}, 
+            open: Boolean(countryAnchor),
+            text: { get: countryChipText, set: setCountryChipText }
+        },
+        {
+            key: 4, label: 'Chain', 
             component: <Box sx={{minWidth: 100, padding: 1}}>
                             <FormControl fullWidth>
                                 <InputLabel sx={{marginTop: 0.5}}>Chain</InputLabel>
@@ -109,13 +134,13 @@ function Chips() {
                                 </Select>
                             </FormControl>
                         </Box>,
-            handleClick: (event) => {setChip4Anchor(event.currentTarget)}, 
-            anchor: {get: chip4Anchor, set: setChip4Anchor}, 
-            open: Boolean(chip4Anchor),
+            handleClick: (event) => {setChainAnchor(event.currentTarget)}, 
+            anchor: {get: chainAnchor, set: setChainAnchor}, 
+            open: Boolean(chainAnchor),
             text: { get: chainChipText, set: setChainChipText }
         },
         {
-            key: 4, label: 'Category', 
+            key: 5, label: 'Category', 
             component: <Box sx={{minWidth: 100, padding: 1}}>
                             <FormControl fullWidth>
                                     <Rating 
@@ -132,13 +157,13 @@ function Chips() {
                                     />
                             </FormControl>
                         </Box>,
-            handleClick: (event) => {setChip5Anchor(event.currentTarget)}, 
-            anchor: {get: chip5Anchor, set: setChip5Anchor},    
-            open: Boolean(chip5Anchor),
+            handleClick: (event) => {setCategoryAnchor(event.currentTarget)}, 
+            anchor: {get: categoryAnchor, set: setCategoryAnchor},    
+            open: Boolean(categoryAnchor),
             text: { get: categoryChipText, set: setCategoryChipText }
         },
         {
-            key: 5, label: '# of Rooms', 
+            key: 6, label: '# of Rooms', 
             component: <Box sx={{minWidth: 100, padding: 1}}>
                             <FormControl fullWidth>
                                 <InputLabel sx={{marginTop: 0.5}}># of Rooms</InputLabel>
@@ -155,13 +180,13 @@ function Chips() {
                                 </Select>
                             </FormControl>
                         </Box>, 
-            handleClick: (event) => {setChip6Anchor(event.currentTarget)}, 
-            anchor: {get: chip6Anchor, set: setChip6Anchor}, 
-            open: Boolean(chip6Anchor),
+            handleClick: (event) => {setRoomAnchor(event.currentTarget)}, 
+            anchor: {get: roomAnchor, set: setRoomAnchor}, 
+            open: Boolean(roomAnchor),
             text: { get: roomChipText, set: setRoomChipText }
         },
         {
-            key: 6, label: 'Price', 
+            key: 7, label: 'Price', 
             component: <Box minWidth={200} minHeight={50} sx={{position: "relative", marginX: 2, overflow: "visible"}}>
                             
                             <Slider
@@ -177,9 +202,9 @@ function Chips() {
                                 sx={{ '& .MuiSlider-thumb::after': {width:0}, position: "static"}}
                             /> 
                         </Box>, 
-            handleClick: (event) => {setChip7Anchor(event.currentTarget)}, 
-            anchor: {get: chip7Anchor, set: setChip7Anchor}, 
-            open: Boolean(chip7Anchor),
+            handleClick: (event) => {setPriceAnchor(event.currentTarget)}, 
+            anchor: {get: priceAnchor, set: setPriceAnchor}, 
+            open: Boolean(priceAnchor),
             text: { get: priceChipText, set: setPriceChipText }
         },
     ];

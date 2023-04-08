@@ -100,7 +100,7 @@ function BookingList( {gutter_size, itemCount, isAdmin, data, bookingClick }) {
                     height={height + gutter_size}
                     innerElementType={innerElementType}
                     width={width - 15}
-                    itemSize={100}
+                    itemSize={105}
                     itemCount={itemCount}
                     overscanCount={5}
                     outerElementType={CustomScrollbarsVirtualList}
