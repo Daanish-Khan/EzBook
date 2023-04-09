@@ -1,7 +1,7 @@
 import Button from '@mui/material/Button';
 import * as React from 'react';
 import { Chip, Stack } from '@mui/material';
-import { COLORS } from '../components/consts'
+import { COLORS } from './../../consts'
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
@@ -22,10 +22,23 @@ export default function BookingsUpdate() {
     const [open, setOpen] = React.useState('');
 
     return (
-        <Box justifyContent={'center'} alignItems={'center'}>
-            <Chip label="Update"
+        <Box>
+            <Button 
+                variant="contained"
                 onClick={handleClickOpen}
-                sx={{ backgroundColor: COLORS.primaryColor, color: 'white' }} />
+                sx={{
+                    color: 'white', 
+                    display: 'inline', 
+                    backgroundColor: COLORS.defaultColor, 
+                    borderRadius:"15px",
+                    ':hover': {
+                        backgroundColor: COLORS.focusedColor
+                    },
+                    margin: "2px"
+                }}
+            >
+                Update
+            </Button>
 
             <Dialog
                 open={open}
@@ -41,13 +54,13 @@ export default function BookingsUpdate() {
                         <Stack direction={"row"}>
                             <Stack direction={"column"}>
                                 <DialogContentText>
-                                    SSN
+                                    Room Number
                                 </DialogContentText>
                                 <TextField />
                             </Stack>
                             <Stack direction={"column"}>
                                 <DialogContentText>
-                                    Previous SSN
+                                    Previous Room Number
                                 </DialogContentText>
                                 <TextField />
                             </Stack>
@@ -56,7 +69,13 @@ export default function BookingsUpdate() {
                         <Stack direction={"row"}>
                             <Stack direction={"column"}>
                                 <DialogContentText>
-                                    Full Name
+                                    Hotel
+                                </DialogContentText>
+                                <TextField />
+                            </Stack>
+                            <Stack direction={"column"}>
+                                <DialogContentText>
+                                    Previous Hotel
                                 </DialogContentText>
                                 <TextField />
                             </Stack>
@@ -64,7 +83,13 @@ export default function BookingsUpdate() {
                         <Stack direction={"row"}>
                             <Stack direction={"column"}>
                                 <DialogContentText>
-                                    Address
+                                    Start Date
+                                </DialogContentText>
+                                <TextField />
+                            </Stack>
+                            <Stack direction={"column"}>
+                                <DialogContentText>
+                                    Previous Start Date
                                 </DialogContentText>
                                 <TextField />
                             </Stack>
@@ -72,7 +97,23 @@ export default function BookingsUpdate() {
                         <Stack direction={"row"}>
                             <Stack direction={"column"}>
                                 <DialogContentText>
-                                    Registration Date
+                                    End Date
+                                </DialogContentText>
+                                <TextField />
+                            </Stack>
+                        </Stack>
+                        <Stack direction={"row"}>
+                            <Stack direction={"column"}>
+                                <DialogContentText>
+                                    Paid Status
+                                </DialogContentText>
+                                <TextField />
+                            </Stack>
+                        </Stack>
+                        <Stack direction={"row"}>
+                            <Stack direction={"column"}>
+                                <DialogContentText>
+                                    Customer
                                 </DialogContentText>
                                 <TextField />
                             </Stack>

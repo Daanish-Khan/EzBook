@@ -5,8 +5,8 @@ import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 
-const pages = ['Book Now', 'My Trips'];
-const settings = ['Profile', 'Dashboard', 'Logout'];
+const pages = ['Book Now', 'My Trips', 'Employee Dashboard'];
+const settings = ['Logout'];
 
 function Navbar({sx, isAdmin, authHandle}) {
     const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -84,11 +84,28 @@ function Navbar({sx, isAdmin, authHandle}) {
                         display: { xs: 'block', md: 'none' },
                     }}
                 >
-                {pages.map((page) => (
-                    <MenuItem key={page} onClick={handleCloseNavMenu}>
-                        <Typography textAlign="center">{page}</Typography>
-                    </MenuItem>
-                ))}
+                {pages.map((page) => {
+                    if (page === "Book Now") {
+                        return (
+                            <MenuItem key={page} onClick={() => {navigator('/bookings'); handleCloseNavMenu()}}>
+                                <Typography textAlign="center">{page}</Typography>
+                            </MenuItem>
+                        );
+                    } else if (isAdmin && page === "Employee Dashboard") {
+                        return (
+                            <MenuItem key={page} onClick={() => {navigator('/employees'); handleCloseNavMenu()}}>
+                                <Typography textAlign="center">{page}</Typography>
+                            </MenuItem>
+                        );
+                    } else {
+                        return (
+                            <MenuItem key={page} onClick={handleCloseNavMenu}>
+                                <Typography textAlign="center">{page}</Typography>
+                            </MenuItem>
+                        );
+                    }
+                    
+                })}
                 </Menu>
             </Box>
 
@@ -111,7 +128,7 @@ function Navbar({sx, isAdmin, authHandle}) {
             <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
                
                 <Button
-                    onClick={handleCloseNavMenu}
+                    onClick={() => {navigator('/bookings'); handleCloseNavMenu()}}
                     sx={{ 
                         my: 2,
                         marginRight: 2,
@@ -122,7 +139,7 @@ function Navbar({sx, isAdmin, authHandle}) {
                         ':hover': {
                             backgroundColor: COLORS.primaryFocusedColor
                         }
-                     }}
+                    }}
                 >
                     {isAdmin ? "Rent Now" : "Book Now" }
                 </Button>
@@ -141,6 +158,23 @@ function Navbar({sx, isAdmin, authHandle}) {
                 >
                     My Trips
                 </Button>
+                {isAdmin ? 
+                    <Button
+                        onClick={() => {navigator('/employees'); handleCloseNavMenu()}}
+                        sx={{ 
+                            my: 2,
+                            color: 'white', 
+                            display: 'block',
+                            borderRadius:"15px",
+                            ':hover': {
+                                backgroundColor: COLORS.focusedColor
+                            } 
+                        }}
+                        
+                    >
+                        Employee Dashboard
+                    </Button>
+                : null}
 
             </Box>
     

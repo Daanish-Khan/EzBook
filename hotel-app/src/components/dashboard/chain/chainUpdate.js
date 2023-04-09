@@ -1,7 +1,7 @@
 import Button from '@mui/material/Button';
 import * as React from 'react';
 import { Chip, Stack } from '@mui/material';
-import { COLORS } from '../components/consts'
+import { COLORS } from './../../consts'
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
@@ -11,7 +11,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
 
-export default function RoomAdd() {
+export default function ChainUpdate() {
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -23,29 +23,43 @@ export default function RoomAdd() {
 
     return (
         <Box justifyContent={'center'} alignItems={'center'}>
-            <Chip label="Add"
+            <Button 
+                variant="contained"
                 onClick={handleClickOpen}
-                sx={{ backgroundColor: COLORS.primaryColor, color: 'white' }} />
+                sx={{
+                    color: 'white', 
+                    display: 'inline', 
+                    backgroundColor: COLORS.defaultColor, 
+                    borderRadius:"15px",
+                    ':hover': {
+                        backgroundColor: COLORS.focusedColor
+                    },
+                    margin: "2px"
+                }}
+            >
+                Update
+            </Button>
 
             <Dialog
                 open={open}
                 onClose={handleClose}>
 
                 <DialogTitle>
-                    Add Room
+                    Update Chain
                 </DialogTitle>
                 <DialogContent>
-                    <Stack direction={"column"}>
+
+                    <Stack direction={"column"} alignItems={'center'}>
                         <Stack direction={"row"}>
                             <Stack direction={"column"}>
                                 <DialogContentText>
-                                    Room Number
+                                    Name
                                 </DialogContentText>
                                 <TextField />
                             </Stack>
                             <Stack direction={"column"}>
                                 <DialogContentText>
-                                    Hotel
+                                    Previous Name
                                 </DialogContentText>
                                 <TextField />
                             </Stack>
@@ -54,13 +68,7 @@ export default function RoomAdd() {
                         <Stack direction={"row"}>
                             <Stack direction={"column"}>
                                 <DialogContentText>
-                                    Price
-                                </DialogContentText>
-                                <TextField />
-                            </Stack>
-                            <Stack direction={"column"}>
-                                <DialogContentText>
-                                    Capacity
+                                    Address
                                 </DialogContentText>
                                 <TextField />
                             </Stack>
@@ -68,35 +76,30 @@ export default function RoomAdd() {
                         <Stack direction={"row"}>
                             <Stack direction={"column"}>
                                 <DialogContentText>
-                                    Type of View
+                                    City
                                 </DialogContentText>
                                 <TextField />
-                            </Stack>
-                            <Stack direction={"column"}>
-                            <DialogContentText>
-                                Amenities
-                            </DialogContentText>
-                            <TextField />
                             </Stack>
                         </Stack>
                         <Stack direction={"row"}>
                             <Stack direction={"column"}>
                                 <DialogContentText>
-                                    Possible Expansion
+                                    Country
                                 </DialogContentText>
                                 <TextField />
                             </Stack>
+
+                        </Stack>
+                        <Stack direction={"row"}>
                             <Stack direction={"column"}>
-                            <DialogContentText>
-                                Status
-                            </DialogContentText>
-                            <TextField />
+                                <DialogContentText>
+                                    Number of Hotels
+                                </DialogContentText>
+                                <TextField />
                             </Stack>
+
                         </Stack>
                     </Stack>
-
-
-
                 </DialogContent>
                 <DialogActions>
                     <Button>Submit</Button>

@@ -1,7 +1,7 @@
 import Button from '@mui/material/Button';
 import * as React from 'react';
 import { Chip, Stack } from '@mui/material';
-import { COLORS } from '../components/consts'
+import { COLORS } from './../../consts'
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
@@ -23,29 +23,42 @@ export default function BookingsAdd() {
 
     return (
         <Box justifyContent={'center'} alignItems={'center'}>
-            <Chip label="Add"
+            <Button 
+                variant="contained"
                 onClick={handleClickOpen}
-                sx={{ backgroundColor: COLORS.primaryColor, color: 'white' }} />
+                sx={{
+                    color: 'white', 
+                    display: 'inline', 
+                    backgroundColor: COLORS.defaultColor, 
+                    borderRadius:"15px",
+                    ':hover': {
+                        backgroundColor: COLORS.focusedColor
+                    },
+                    margin: "2px"
+                }}
+            >
+                Add
+            </Button>
 
             <Dialog
                 open={open}
                 onClose={handleClose}>
 
                 <DialogTitle>
-                    Add Booking
+                    Add Customer
                 </DialogTitle>
                 <DialogContent>
                     <Stack direction={"column"}>
                         <Stack direction={"row"}>
                             <Stack direction={"column"}>
                                 <DialogContentText>
-                                    Room Number
+                                    SSN
                                 </DialogContentText>
                                 <TextField />
                             </Stack>
                             <Stack direction={"column"}>
                                 <DialogContentText>
-                                    Hotel
+                                    Full Name
                                 </DialogContentText>
                                 <TextField />
                             </Stack>
@@ -54,29 +67,15 @@ export default function BookingsAdd() {
                         <Stack direction={"row"}>
                             <Stack direction={"column"}>
                                 <DialogContentText>
-                                    Customer
+                                    Address
                                 </DialogContentText>
                                 <TextField />
                             </Stack>
                             <Stack direction={"column"}>
                                 <DialogContentText>
-                                    Paid Status
+                                    Registration Date
                                 </DialogContentText>
                                 <TextField />
-                            </Stack>
-                        </Stack>
-                        <Stack direction={"row"}>
-                            <Stack direction={"column"}>
-                                <DialogContentText>
-                                    Start Date
-                                </DialogContentText>
-                                <TextField />
-                            </Stack>
-                            <Stack direction={"column"}>
-                            <DialogContentText>
-                                End Date
-                            </DialogContentText>
-                            <TextField />
                             </Stack>
                         </Stack>
                     </Stack>

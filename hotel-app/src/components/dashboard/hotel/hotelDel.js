@@ -1,7 +1,7 @@
 import Button from '@mui/material/Button';
 import * as React from 'react';
 import { Chip, Stack } from '@mui/material';
-import { COLORS } from '../components/consts'
+import { COLORS } from './../../consts'
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
@@ -24,20 +24,33 @@ export default function BookingsDel() {
 
     return (
         <Box justifyContent={'center'} alignItems={'center'}>
-        <Chip label="Delete"
-        onClick={handleClickOpen}
-        sx={{ backgroundColor: COLORS.primaryColor, color: 'white' }}/>
+        <Button 
+                variant="contained"
+                onClick={handleClickOpen}
+                sx={{
+                    color: 'white', 
+                    display: 'inline', 
+                    backgroundColor: COLORS.defaultColor, 
+                    borderRadius:"15px",
+                    ':hover': {
+                        backgroundColor: COLORS.focusedColor
+                    },
+                    margin: "2px"
+                }}
+            >
+                Delete
+            </Button>
 
         <Dialog
             open={open}
             onClose={handleClose}>
 
             <DialogTitle>
-                Delete Chain
+                Delete Hotel
             </DialogTitle>
             <DialogContent>
                 <DialogContentText>
-                    Chain Name
+                    Hotel Address
                 </DialogContentText>
                 <TextField />
             </DialogContent>
