@@ -325,7 +325,7 @@
   app.post('/book', (req, res) => {
 
     const q = "INSERT INTO bookings(room_num, hotel, customer, isPaid, startDate, endDate) " +
-              `Value (${req.body.room_num},${req.body.hotel},${req.body.customer},FALSE,${req.body.start_date},${req.body.end_date})`;
+              `Value (${req.body.room_num},'${req.body.hotel}','${req.body.customer}',FALSE,'${req.body.start_date}','${req.body.end_date}')`;
 
     db.query(q, (err, data) => {
       if (err) {
@@ -414,7 +414,7 @@
    * 
    */
 
-  app.post("/bookingquery", (req, res) => {
+  app.post("/query", (req, res) => {
     const q_start = "SELECT r.*, h.chainName, h.city, h.country, h.star_rating, h.num_rooms " +
                     "FROM rooms r " +
                     "JOIN hotels h ON r.hotel = h.address "
@@ -461,6 +461,11 @@
       q_middle += ` AND h.star_rating >= '${req.body.rating}'`
     }
     
+    // chain name
+    if (req.body.chain !== "") {
+      q_middle += ` AND h.chainName = '${req.body.chain}'`
+    }
+
     // num_rooms
     if (req.body.num_rooms !== "") {
       q_middle += ` AND h.num_rooms >= '${req.body.num_rooms}'`
@@ -482,7 +487,6 @@
       if (err) {
         return res.json(err)
       }
-
       return res.json(data)
     })
   })
@@ -490,6 +494,7 @@
   app.get('/categories', (req, res) => {
   
     const q_area = "SELECT DISTINCT city, country FROM hotels;"
+    const q_countries = "SELECT DISTINCT country FROM hotels;"
     const q_chain = "SELECT DISTINCT chainName FROM hotels;"
     const q_variable = "SELECT MIN(price) AS min_price, " + 
                         "MAX(price) AS max_price, " +
@@ -499,7 +504,7 @@
                         "MAX(capacity) AS max_capacity " +
                         "FROM rooms r JOIN hotels h ON r.hotel = h.address;"
 
-    db.query(q_area + q_chain + q_variable, (err, data) => {
+    db.query(q_area + q_countries + q_chain + q_variable, (err, data) => {
       if (err) {
         return res.json(err)
       }
