@@ -27,7 +27,7 @@ function App() {
           <Routes>
             <Route path="/" element={<SignIn auth={auth} authHandle={setAuth}/>} />
             <Route path="/bookings" element={<CustomerBookings auth={auth} authHandle={setAuth}/>} />
-            <Route path="/employees" element={<EmployeeData isAdmin={auth.isAdmin}} />
+            <Route path="/employees" element={<EmployeeData isAdmin={auth.isAdmin}/>} />
           </Routes>
       </ThemeProvider>
     </LocalizationProvider>
