@@ -12,7 +12,7 @@ import * as React from 'react';
 import BookingModal from '../components/BookingModal';
 import { useNavigate } from 'react-router-dom';
 
-export default function CustomerBookings({auth, setAuth}) {
+export default function CustomerBookings({auth, authHandle}) {
 
     const [data, setData] = React.useState([]);
     const [modalOpen, setModalOpen] = React.useState({open: false, title: ""});
@@ -149,6 +149,7 @@ export default function CustomerBookings({auth, setAuth}) {
                         position: "relative",
                     }}
                     isAdmin={auth.isAdmin}
+                    authHandle={authHandle}
                 />
                 
                 <Chips chipHandle={setChipData} chipCategories={chipCategories} />

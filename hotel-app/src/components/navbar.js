@@ -1,16 +1,18 @@
 import { AppBar, Typography, Container, Toolbar, Box, IconButton, Menu, MenuItem, Button, Tooltip, Avatar } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import { Stack } from '@mui/system';
 import { COLORS } from './consts';
 import * as React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 
 const pages = ['Book Now', 'My Trips'];
 const settings = ['Profile', 'Dashboard', 'Logout'];
 
-function Navbar({sx, isAdmin}) {
+function Navbar({sx, isAdmin, authHandle}) {
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
+
+    const navigator = useNavigate();
     
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
@@ -26,6 +28,12 @@ function Navbar({sx, isAdmin}) {
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
     };
+
+    const handleLogOut = () => {
+        authHandle({SSN: 0, isAdmin: false});
+        setAnchorElUser(null);
+        navigator('/');
+    }
     
     return (
         <AppBar position="static" sx={sx}>
@@ -49,12 +57,12 @@ function Navbar({sx, isAdmin}) {
     
             <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
                 <IconButton
-                size="large"
-                aria-label="account of current user"
-                aria-controls="menu-appbar"
-                aria-haspopup="true"
-                onClick={handleOpenNavMenu}
-                color="inherit"
+                    size="large"
+                    aria-label="account of current user"
+                    aria-controls="menu-appbar"
+                    aria-haspopup="true"
+                    onClick={handleOpenNavMenu}
+                    color="inherit"
                 >
                 <MenuIcon />
                 </IconButton>
@@ -78,7 +86,7 @@ function Navbar({sx, isAdmin}) {
                 >
                 {pages.map((page) => (
                     <MenuItem key={page} onClick={handleCloseNavMenu}>
-                    <Typography textAlign="center">{page}</Typography>
+                        <Typography textAlign="center">{page}</Typography>
                     </MenuItem>
                 ))}
                 </Menu>
@@ -158,11 +166,24 @@ function Navbar({sx, isAdmin}) {
                     open={Boolean(anchorElUser)}
                     onClose={handleCloseUserMenu}
                     >
-                    {settings.map((setting) => (
-                        <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                        <Typography textAlign="center">{setting}</Typography>
-                        </MenuItem>
-                    ))}
+                    {settings.map((setting) => {
+                        console.log(setting)
+                        if (setting === 'Logout') {
+                            return (
+                                <MenuItem key={setting} onClick={handleLogOut}>
+                                    <Typography textAlign="center">{setting}</Typography>
+                                </MenuItem>
+                            );
+                        } else {
+                            return (
+                                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                                    <Typography textAlign="center">{setting}</Typography>
+                                </MenuItem>
+                            );
+                            
+                        }
+                        
+                    })}
                 </Menu>
             </Box>
             </Toolbar>
