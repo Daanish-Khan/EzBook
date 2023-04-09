@@ -1,7 +1,24 @@
 import { Box, Button, TextField } from '@mui/material';
 import { Grid } from '@mui/material';
 import { COLORS } from '../components/consts'
-function SignUpBox({ onBackToSignInClick }) {
+import * as React from 'react'
+
+function SignUpBox({ signInClick, swapToSignInClick, authHandle, isError }) {
+
+    const [text, setText] = React.useState({first: "", last: "", address: "", SSN: ""});
+
+    const onFirstChange = e => {
+        setText({...text, first: e.target.value});
+    }
+    const onLastChange = e => {
+        setText({...text, last: e.target.value});
+    }
+    const onAddressChange = e => {
+        setText({...text, address: e.target.value});
+    }
+    const onSSNChange = e => {
+        setText({...text, SSN: e.target.value});
+    }
 
     const style = {
         '& .MuiInputBase-root.Mui-focused': {
@@ -63,6 +80,9 @@ function SignUpBox({ onBackToSignInClick }) {
                         fullWidth
                         label="First Name"
                         variant="filled"
+                        onChange={onFirstChange}
+                        error={isError.first !== ""}
+                        helperText={isError.first}
                         
                         sx={style}
                     />
@@ -73,6 +93,22 @@ function SignUpBox({ onBackToSignInClick }) {
                         fullWidth
                         label="Last Name"
                         variant="filled"
+                        onChange={onLastChange}
+                        error={isError.last !== ""}
+                        helperText={isError.last}
+                        
+                        sx={style}
+                    />
+                </Grid>
+                <Grid item xs={12}>
+                    <TextField
+                        required
+                        fullWidth
+                        label="Address"
+                        variant="filled"
+                        onChange={onAddressChange}
+                        error={isError.address !== ""}
+                        helperText={isError.address}
                         
                         sx={style}
                     />
@@ -83,6 +119,10 @@ function SignUpBox({ onBackToSignInClick }) {
                         fullWidth
                         label="SSN"
                         variant="filled"
+                        type="password"
+                        onChange={onSSNChange}
+                        error={isError.SSN !== ""}
+                        helperText={isError.SSN}
                         
                         sx={style}
                     />
@@ -93,6 +133,7 @@ function SignUpBox({ onBackToSignInClick }) {
             
             <Button 
                 variant="contained"
+                onClick={() => signInClick(text)}
                 sx={{
                     marginTop: "30px",
                     backgroundColor:  COLORS.primaryColor,
@@ -104,7 +145,7 @@ function SignUpBox({ onBackToSignInClick }) {
             </Button>
             <Button
              variant="contained"
-             onClick={onBackToSignInClick}
+             onClick={swapToSignInClick}
              sx={{
                  marginTop: "30px",
                  backgroundColor: COLORS.defaultColor,
