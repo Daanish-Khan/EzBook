@@ -32,6 +32,8 @@ export default function CustomerBookings({auth, setAuth}) {
         }
     );
     const [chipCategories, setChipCategories] = React.useState({});
+    const [rentText, setRentText] = React.useState('');
+    const [rentError, setRentError] = React.useState(false)
 
     const bookingClick = (booking, data) => {
         data.start_date=chipData.start_date
@@ -50,9 +52,25 @@ export default function CustomerBookings({auth, setAuth}) {
             try {
                 const res = await axios.post('http://localhost:8800/book', currentSelection)
                 setModalOpen({open: false, title: ""})
-                console.log(res)
             } catch (err) {
                 console.log(err)
+            }
+        } else {
+            if (rentText === "" || !/^\d+$/.test(rentText)) {
+                setRentError(true);
+                return;
+            } else {
+                setRentError(false);
+
+                try {
+                    let q = currentSelection;
+                    q.rent_now = true
+                    q.customer = rentText
+                    const res = await axios.post('http://localhost:8800/rent', q)
+                    setModalOpen({open: false, title: ""})
+                } catch (err) {
+                    console.log(err)
+                }
             }
         }
     }
@@ -80,7 +98,7 @@ export default function CustomerBookings({auth, setAuth}) {
 
         fetch();
         
-    }, [chipData]);
+    }, [chipData, modalOpen]);
 
     return (
         <Container disableGutters maxWidth="false"
@@ -153,7 +171,7 @@ export default function CustomerBookings({auth, setAuth}) {
                     }}
                 >
                     <BookingList gutter_size={5} itemCount={Object.keys(data).length} auth={auth} data={data} bookingClick={bookingClick} />
-                    <BookingModal open={modalOpen} handleClose={handleModalClose} isAdmin={auth.isAdmin} bookClick={onBookNowClick}/>
+                    <BookingModal open={modalOpen} handleClose={handleModalClose} isAdmin={auth.isAdmin} bookClick={onBookNowClick} setText={setRentText} isError={rentError}/>
                 </Box>
             </Stack>
         </Container>

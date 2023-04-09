@@ -1,7 +1,13 @@
 import { Dialog, DialogTitle, DialogContentText, DialogContent, DialogActions, Button, TextField, Stack } from '@mui/material';
 import { COLORS } from './consts';
+import * as React from 'react';
 
-function BookingModal({open, handleClose, isAdmin, bookClick}) {
+function BookingModal({open, handleClose, isAdmin, bookClick, setText, isError}) {
+
+    const onTextChange = e => {
+        setText(e.target.value);
+    }
+
     return(
         <Dialog
                 
@@ -25,9 +31,13 @@ function BookingModal({open, handleClose, isAdmin, bookClick}) {
                             label="SSN"
                             type="password"
                             variant="filled"
-                            
+                            onChange={onTextChange}
+                            error={isError}
+                            helperText={isError ? "SSN must not be empty and only contain digits." : ""}
                             sx={{
-                                
+                                '& .MuiFormHelperText-root': {
+                                    color: "#ffff"
+                                },
                                 '& .MuiInputBase-root.Mui-focused': {
                                     backgroundColor: "#ffff"
                                 },
@@ -72,7 +82,7 @@ function BookingModal({open, handleClose, isAdmin, bookClick}) {
                 
                 {isAdmin ? 
                     <Button 
-                        onClick={handleClose} 
+                        onClick={bookClick} 
                         sx={{
                             color: "white", 
                             backgroundColor: COLORS.primaryColor, 
