@@ -4,10 +4,24 @@ import { COLORS } from '../components/consts'
 import { Box, Chip, Stack } from '@mui/material';
 import * as React from 'react';
 import Typography from '@mui/material/Typography';
-import EmployeeStepper from '../components/EmployeeStepper.js';
+import BookingsAdd from '../components/bookingsAdd'
+import BookingsUpdate from '../components/bookingsUpdate'
+import BookingsDel from '../components/bookingsDel'
+import ChainAdd from '../components/chainAdd'
+import ChainUpdate from '../components/chainUpdate'
+import ChainDel from '../components/chainDel'
+import HotelAdd from '../components/hotelAdd'
+import HotelUpdate from '../components/hotelUpdate'
+import HotelDel from '../components/hotelDel'
+import RoomAdd from '../components/roomAdd'
+import RoomUpdate from '../components/roomUpdate'
+import RoomDel from '../components/roomDel'
+import CustAdd from '../components/custAdd'
+import CustUpdate from '../components/custUpdate'
+import CustDel from '../components/custDel'
+
 
 export default function EmployeeData({ isAdmin }) {
-
     return (
         <Container disableGutters maxWidth="false"
             sx={{
@@ -33,11 +47,11 @@ export default function EmployeeData({ isAdmin }) {
                     }}>
 
                     <Stack direction={'column'} alignItems={'center'}>
-                    <Typography sx={{ color: 'white', top: 0, left: 0 }}>Bookings</Typography>
+                        <Typography sx={{ color: 'white', top: 0, left: 0 }}>Bookings</Typography>
                         <Stack direction={'row'} spacing={1}>
-                        <Chip label="Add" sx={{backgroundColor:COLORS.primaryColor, color:'white'}}/>
-                            <Chip label="Update" sx={{backgroundColor:COLORS.primaryColor, color:'white'}}/>
-                            <Chip label="Delete" sx={{backgroundColor:COLORS.primaryColor, color:'white'}}/>
+                            <BookingsAdd/>
+                            <BookingsUpdate/>
+                            <BookingsDel/>
                         </Stack>
                     </Stack>
 
@@ -55,11 +69,11 @@ export default function EmployeeData({ isAdmin }) {
                     }}>
 
                     <Stack direction={'column'} alignItems={'center'}>
-                    <Typography sx={{ color: 'white', top: 0, left: 0, position: 'relative' }}>Hotel Chains</Typography>
+                        <Typography sx={{ color: 'white', top: 0, left: 0, position: 'relative' }}>Hotel Chains</Typography>
                         <Stack direction={'row'} spacing={1}>
-                        <Chip label="Add" sx={{backgroundColor:COLORS.primaryColor, color:'white'}}/>
-                            <Chip label="Update" sx={{backgroundColor:COLORS.primaryColor, color:'white'}}/>
-                            <Chip label="Delete" sx={{backgroundColor:COLORS.primaryColor, color:'white'}}/>
+                            <ChainAdd/>
+                            <ChainUpdate/>
+                            <ChainDel/>
                         </Stack>
                     </Stack>
                 </Box>
@@ -77,9 +91,10 @@ export default function EmployeeData({ isAdmin }) {
                     <Stack direction={'column'} alignItems={'center'}>
                         <Typography sx={{ color: 'white', top: 0, left: 0, position: 'relative' }}>Hotels</Typography>
                         <Stack direction={'row'} spacing={1}>
-                        <Chip label="Add" sx={{backgroundColor:COLORS.primaryColor, color:'white'}}/>
-                            <Chip label="Update" sx={{backgroundColor:COLORS.primaryColor, color:'white'}}/>
-                            <Chip label="Delete" sx={{backgroundColor:COLORS.primaryColor, color:'white'}}/>
+                            <HotelAdd/>
+                            <HotelUpdate/>
+                            <HotelDel/>
+                            
                         </Stack>
                     </Stack>
                 </Box>
@@ -97,9 +112,9 @@ export default function EmployeeData({ isAdmin }) {
                     <Stack direction={'column'} alignItems={'center'}>
                         <Typography sx={{ color: 'white', top: 0, left: 0, position: 'relative' }}>Rooms</Typography>
                         <Stack direction={'row'} spacing={1} >
-                        <Chip label="Add" sx={{backgroundColor:COLORS.primaryColor, color:'white'}}/>
-                            <Chip label="Update" sx={{backgroundColor:COLORS.primaryColor, color:'white'}}/>
-                            <Chip label="Delete" sx={{backgroundColor:COLORS.primaryColor, color:'white'}}/>
+                            <RoomAdd/>
+                            <RoomUpdate/>
+                            <RoomDel/>
                         </Stack>
                     </Stack>
                 </Box>
@@ -117,9 +132,10 @@ export default function EmployeeData({ isAdmin }) {
                     <Stack direction={'column'} alignItems={'center'}>
                         <Typography sx={{ color: 'white', top: 0, left: 0, position: 'relative' }}>Customers</Typography>
                         <Stack direction={'row'} spacing={1} justifyContent={'center'}>
-                            <Chip label="Add" sx={{backgroundColor:COLORS.primaryColor, color:'white'}}/>
-                            <Chip label="Update" sx={{backgroundColor:COLORS.primaryColor, color:'white'}}/>
-                            <Chip label="Delete" sx={{backgroundColor:COLORS.primaryColor, color:'white'}}/>
+                        <CustAdd/>
+                        <CustUpdate/>
+                        <CustDel/>
+
                         </Stack>
                     </Stack>
 
