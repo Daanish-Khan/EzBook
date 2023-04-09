@@ -1,7 +1,14 @@
 import { Box, Button, TextField } from '@mui/material';
-import { COLORS } from '../components/consts'
+import { COLORS } from '../components/consts';
+import * as React from 'react';
 
-function SignInBox({ onSignInClick }) {
+function SignInBox({ signInClick, swapToRegisterClick, authHandle, isError }) {
+
+    const [text, setText] = React.useState('');
+
+    const onTextChange = e => {
+        setText(e.target.value);
+    }
 
     return (
         <Box sx={{
@@ -20,11 +27,15 @@ function SignInBox({ onSignInClick }) {
             boxShadow: "0 25px 50px #0000001a"
         }}>
             <h2>Sign In</h2>
-            <TextField 
+            <TextField
+                required
+                error={isError !== ""}
+                helperText={isError}
                 id="filled-password-input"
                 label="SSN"
                 type="password"
                 variant="filled"
+                onChange={onTextChange}
                 
                 sx={{
                     '& .MuiInputBase-root.Mui-focused': {
@@ -65,6 +76,7 @@ function SignInBox({ onSignInClick }) {
             />
             <Button 
                 variant="contained"
+                onClick={() => signInClick(text)}
                 sx={{
                     marginTop: "30px",
                     backgroundColor:  COLORS.primaryColor,
@@ -76,7 +88,7 @@ function SignInBox({ onSignInClick }) {
             </Button>
             <Button
              variant="contained"
-             onClick={onSignInClick}
+             onClick={swapToRegisterClick}
              sx={{
                  marginTop: "30px",
                  backgroundColor: COLORS.defaultColor,
