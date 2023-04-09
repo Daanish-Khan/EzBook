@@ -5,7 +5,7 @@ import AutoSizer from 'react-virtualized-auto-sizer';
 import CustomScrollbarsVirtualList from './Scrollbar'
 import { COLORS } from './consts';
 
-function BookingList( {gutter_size, itemCount, isAdmin, data, bookingClick }) {
+function BookingList( {gutter_size, itemCount, auth, data, bookingClick }) {
 
     function renderRow(props) {
         const { index, style } = props;
@@ -25,7 +25,13 @@ function BookingList( {gutter_size, itemCount, isAdmin, data, bookingClick }) {
                         borderRadius: "30px",
                         height: "100%",
                     }}
-                    onClick={() => bookingClick(data[index].chainName + ", Room #" + data[index].room_num)}
+                    onClick={() => bookingClick(
+                        data[index].chainName + ", Room #" + data[index].room_num,
+                        {
+                            room_num: data[index].room_num,
+                            hotel: data[index].hotel,
+                            customer: auth.SSN,
+                        })}
                 >
                     <ListItemText 
                         primary={

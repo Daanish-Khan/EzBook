@@ -1,7 +1,7 @@
 import { Dialog, DialogTitle, DialogContentText, DialogContent, DialogActions, Button, TextField, Stack } from '@mui/material';
 import { COLORS } from './consts';
 
-function BookingModal({open, handleClose, isAdmin}) {
+function BookingModal({open, handleClose, isAdmin, bookClick}) {
     return(
         <Dialog
                 
@@ -84,7 +84,7 @@ function BookingModal({open, handleClose, isAdmin}) {
                     </Button> 
                     : 
                     <Button 
-                        onClick={handleClose} 
+                        onClick={bookClick} 
                         sx={{
                             color: "white", 
                             backgroundColor: COLORS.primaryColor, 

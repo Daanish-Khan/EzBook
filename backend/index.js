@@ -325,7 +325,7 @@
   app.post('/book', (req, res) => {
 
     const q = "INSERT INTO bookings(room_num, hotel, customer, isPaid, startDate, endDate) " +
-              `Value (${req.body.room_num},${req.body.hotel},${req.body.customer},FALSE,${req.body.start_date},${req.body.end_date})`;
+              `Value (${req.body.room_num},'${req.body.hotel}','${req.body.customer}',FALSE,'${req.body.start_date}','${req.body.end_date}')`;
 
     db.query(q, (err, data) => {
       if (err) {

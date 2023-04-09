@@ -10,11 +10,13 @@ import axios from 'axios';
 
 import * as React from 'react';
 import BookingModal from '../components/BookingModal';
+import { useNavigate } from 'react-router-dom';
 
 export default function CustomerBookings({auth, setAuth}) {
 
     const [data, setData] = React.useState([]);
     const [modalOpen, setModalOpen] = React.useState({open: false, title: ""});
+    const [currentSelection, setCurrentSelection] = React.useState({});
     const [chipData, setChipData] = React.useState(
         {
             start_date: "",
@@ -31,7 +33,10 @@ export default function CustomerBookings({auth, setAuth}) {
     );
     const [chipCategories, setChipCategories] = React.useState({});
 
-    const bookingClick = (booking) => {
+    const bookingClick = (booking, data) => {
+        data.start_date=chipData.start_date
+        data.end_date=chipData.end_date
+        setCurrentSelection(data);
         setModalOpen({open: true, title: booking});
     }
 
@@ -39,13 +44,33 @@ export default function CustomerBookings({auth, setAuth}) {
         setModalOpen({open: false, title: ""})
     }
 
+    const onBookNowClick = async () => {
+
+        if (!auth.isAdmin) {
+            try {
+                const res = await axios.post('http://localhost:8800/book', currentSelection)
+                setModalOpen({open: false, title: ""})
+                console.log(res)
+            } catch (err) {
+                console.log(err)
+            }
+        }
+    }
+
+    const navigator = useNavigate();
+
+    React.useEffect(() => {
+        if (auth.SSN === 0) {
+            navigator('/');
+        }
+    })
+
     React.useEffect(() => {
 
         const fetch = async () => {
             try {
                 const bookings = await axios.post("http://localhost:8800/query", chipData)
                 const categories = await axios.get("http://localhost:8800/categories")
-                console.log(categories.data[3][0])
                 setData(bookings.data)
                 setChipCategories(categories.data)
             } catch (err) {
@@ -127,8 +152,8 @@ export default function CustomerBookings({auth, setAuth}) {
                         boxShadow: "0 25px 50px #0000001a",
                     }}
                 >
-                    <BookingList gutter_size={5} itemCount={Object.keys(data).length} isAdmin={auth.isAdmin} data={data} bookingClick={bookingClick} />
-                    <BookingModal open={modalOpen} handleClose={handleModalClose} isAdmin={auth.isAdmin}/>
+                    <BookingList gutter_size={5} itemCount={Object.keys(data).length} auth={auth} data={data} bookingClick={bookingClick} />
+                    <BookingModal open={modalOpen} handleClose={handleModalClose} isAdmin={auth.isAdmin} bookClick={onBookNowClick}/>
                 </Box>
             </Stack>
         </Container>
