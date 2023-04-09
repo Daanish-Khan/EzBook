@@ -4,7 +4,7 @@ import { DateCalendar } from '@mui/x-date-pickers';
 import dayjs from 'dayjs';
 import { COLORS } from './consts'
 
-function Chips({chipHandle}) {
+function Chips({chipHandle, chipCategories}) {
 
     //minDistance and valuetext are for displaying values on the price slider
     const minDistance = 100;
@@ -36,20 +36,20 @@ function Chips({chipHandle}) {
         const data = {
             start_date: new Date(startChipText).toLocaleString('en-CA', {timeZone: "America/Toronto"}).split(',')[0],
             end_date: new Date(endChipText).toLocaleString('en-CA', {timeZone: "America/Toronto"}).split(',')[0],
-            room_capacity: roomChipText,
+            room_capacity: capacityChipText,
             city: cityChipText,
             country: countryChipText,
             chain: chainChipText,
             rating: categoryChipText,
-            num_room: roomChipText,
+            num_rooms: roomChipText,
             price_low: priceChipText.split(",")[0],
             price_high: priceChipText.split(",")[1] === undefined ? "" : priceChipText.split(",")[1],
         }
         chipHandle(data);
-    }, [startChipText, endChipText, cityChipText, countryChipText, chainChipText, categoryChipText, roomChipText, priceChipText, chipHandle])
+    }, [startChipText, endChipText, cityChipText, countryChipText, chainChipText, categoryChipText, roomChipText, priceChipText, chipHandle, capacityChipText])
 
 
-    const sliderHandleChange = (event, newValue, activeThumb) => {
+    const sliderHandlePriceChange = (event, newValue, activeThumb) => {
         if (!Array.isArray(newValue)) {
             return;
         }
@@ -61,6 +61,14 @@ function Chips({chipHandle}) {
             setValue([value[0], Math.max(newValue[1], value[0] + minDistance)]);
             setPriceChipText([value[0], Math.max(newValue[1], value[0] + minDistance)].toString());
         }
+    };
+
+    const sliderHandleRoomChange = (event, newValue) => {
+        setRoomChipText(newValue);
+    };
+
+    const sliderHandleCapacityChange = (event, newValue) => {
+        setCapacityChipText(newValue);
     };
 
     const handleClose = () => {
@@ -98,11 +106,28 @@ function Chips({chipHandle}) {
                                     value={cityChipText}
                                     label="City"
                                     sx={{color: COLORS.defaultColor}}
+                                    MenuProps={{
+                                        style: {
+                                            maxHeight: 600,
+                                        },
+                                    }}
                                     onChange={(event) => {setCityChipText(event.target.value)}}
                                 >
-                                    <MenuItem value="Test">Test1</MenuItem>
-                                    <MenuItem value="Test2">Test2</MenuItem>
-                                    <MenuItem value="Test3">Test3</MenuItem>
+                                    <MenuItem value="">All</MenuItem>
+                                    {chipCategories[0]?.map((data, index) => {
+                                        if (countryChipText !== "") {
+                                            if (countryChipText === data.country) {
+                                                return (
+                                                    <MenuItem key={index} value={data.city}>{data.city}</MenuItem>
+                                                );
+                                            }
+                                        } else {
+                                            return (
+                                                <MenuItem key={index} value={data.city}>{data.city}</MenuItem>
+                                            )
+                                        }
+                                        
+                                    })}
                                 </Select>
                             </FormControl>
                         </Box>, 
@@ -121,11 +146,33 @@ function Chips({chipHandle}) {
                                     value={countryChipText}
                                     label="Country"
                                     sx={{color: COLORS.defaultColor}}
+                                    MenuProps={{
+                                        style: {
+                                            maxHeight: 600,
+                                        },
+                                    }}
                                     onChange={(event) => {setCountryChipText(event.target.value)}}
                                 >
-                                    <MenuItem value="Test">Test1</MenuItem>
-                                    <MenuItem value="Test2">Test2</MenuItem>
-                                    <MenuItem value="Test3">Test3</MenuItem>
+                                    <MenuItem value="">All</MenuItem>
+                                    {cityChipText !== "" ? 
+                                    
+                                        chipCategories[0]?.map((data, index) => {
+
+                                            if (cityChipText === data.city) {
+                                                return (
+                                                    <MenuItem key={index} value={data.country}>{data.country}</MenuItem>
+                                                );
+                                            }
+                                            
+                                        })
+                                        :
+                                        chipCategories[1]?.map((data, index) => {
+                                            return(
+                                                <MenuItem key={index} value={data.country}>{data.country}</MenuItem>
+                                            );
+                                        })
+
+                                    }
                                 </Select>
                             </FormControl>
                         </Box>, 
@@ -146,9 +193,10 @@ function Chips({chipHandle}) {
                                     sx={{color: COLORS.defaultColor}}
                                     onChange={(event) => {setChainChipText(event.target.value)}}
                                 >
-                                    <MenuItem value="Test">Test1</MenuItem>
-                                    <MenuItem value="Test2">Test2</MenuItem>
-                                    <MenuItem value="Test3">Test3</MenuItem>
+                                    <MenuItem value="">All</MenuItem>
+                                    {chipCategories[2]?.map((data, index) => {
+                                        return (<MenuItem key={index} value={data.chainName}>{data.chainName}</MenuItem>)
+                                    })}
                                 </Select>
                             </FormControl>
                         </Box>,
@@ -182,21 +230,17 @@ function Chips({chipHandle}) {
         },
         {
             key: 6, label: '# of Rooms in Hotel', 
-            component: <Box sx={{minWidth: 100, padding: 1}}>
-                            <FormControl fullWidth>
-                                <InputLabel sx={{marginTop: 0.5}}># of Rooms</InputLabel>
-                                <Select
-                                    
-                                    value={roomChipText}
-                                    label="# of Rooms"
-                                    sx={{color: COLORS.defaultColor}}
-                                    onChange={(event) => {setRoomChipText(event.target.value)}}
-                                >
-                                    <MenuItem value="Test1">Test1</MenuItem>
-                                    <MenuItem value="Test2">Test2</MenuItem>
-                                    <MenuItem value="Test3">Test3</MenuItem>
-                                </Select>
-                            </FormControl>
+            component: <Box minWidth={200} minHeight={50} sx={{position: "relative", marginX: 3, overflow: "visible"}}>
+                            <Slider
+                                step={1}
+                                marks
+                                min={chipCategories[3] !== undefined ? chipCategories[3][0]?.min_num_rooms : 0}
+                                max={chipCategories[3] !== undefined ? chipCategories[3][0]?.max_num_rooms : 2}
+                                onChange={sliderHandleRoomChange}
+                                valueLabelDisplay="auto"
+                                value={roomChipText}
+                                sx={{ '& .MuiSlider-thumb::after': {width:0}, position: "static"}}
+                            /> 
                         </Box>, 
             handleClick: (event) => {setRoomAnchor(event.currentTarget)}, 
             anchor: {get: roomAnchor, set: setRoomAnchor}, 
@@ -205,21 +249,17 @@ function Chips({chipHandle}) {
         },
         {
             key: 7, label: 'Capacity', 
-            component: <Box sx={{minWidth: 100, padding: 1}}>
-                            <FormControl fullWidth>
-                                <InputLabel sx={{marginTop: 0.5}}>Capacity</InputLabel>
-                                <Select
-                                    
-                                    value={capacityChipText}
-                                    label="Capacity"
-                                    sx={{color: COLORS.defaultColor}}
-                                    onChange={(event) => {setCapacityChipText(event.target.value)}}
-                                >
-                                    <MenuItem value="Test1">Test1</MenuItem>
-                                    <MenuItem value="Test2">Test2</MenuItem>
-                                    <MenuItem value="Test3">Test3</MenuItem>
-                                </Select>
-                            </FormControl>
+            component: <Box minWidth={200} minHeight={50} sx={{position: "relative", marginX: 3, overflow: "visible"}}>
+                            <Slider
+                                step={1}
+                                marks
+                                min={chipCategories[3] !== undefined ? chipCategories[3][0]?.min_capacity : 0}
+                                max={chipCategories[3] !== undefined ? chipCategories[3][0]?.max_capacity : 2}
+                                onChange={sliderHandleCapacityChange}
+                                valueLabelDisplay="auto"
+                                value={capacityChipText}
+                                sx={{ '& .MuiSlider-thumb::after': {width:0}, position: "static"}}
+                            /> 
                         </Box>, 
             handleClick: (event) => {setCapacityAnchor(event.currentTarget)}, 
             anchor: {get: capacityAnchor, set: setCapacityAnchor}, 
@@ -229,14 +269,13 @@ function Chips({chipHandle}) {
         {
             key: 8, label: 'Price', 
             component: <Box minWidth={200} minHeight={50} sx={{position: "relative", marginX: 2, overflow: "visible"}}>
-                            
                             <Slider
-                                step={100}
+                                step={50}
                                 marks
-                                min={0}
-                                max={1000}
+                                min={chipCategories[3] !== undefined ? Math.floor(chipCategories[3][0]?.min_price) : 0}
+                                max={chipCategories[3] !== undefined ? Math.ceil(chipCategories[3][0]?.max_price) : 1000}
                                 getAriaLabel={() => 'Price Range'}
-                                onChange={sliderHandleChange}
+                                onChange={sliderHandlePriceChange}
                                 valueLabelDisplay="auto"
                                 value={value}
                                 disableSwap

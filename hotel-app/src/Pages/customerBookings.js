@@ -13,9 +13,23 @@ import BookingModal from '../components/BookingModal';
 
 export default function CustomerBookings({auth, setAuth}) {
 
-    const [data, setData] = React.useState({});
+    const [data, setData] = React.useState([]);
     const [modalOpen, setModalOpen] = React.useState({open: false, title: ""});
-    const [chipData, setChipData] = React.useState({});
+    const [chipData, setChipData] = React.useState(
+        {
+            start_date: "",
+            end_date: "",
+            room_capacity: "",
+            city: "",
+            country: "",
+            chain: "",
+            rating: "",
+            num_rooms: "",
+            price_low: "",
+            price_high: ""
+        }
+    );
+    const [chipCategories, setChipCategories] = React.useState({});
 
     const bookingClick = (booking) => {
         setModalOpen({open: true, title: booking});
@@ -29,8 +43,11 @@ export default function CustomerBookings({auth, setAuth}) {
 
         const fetch = async () => {
             try {
-                const res = await axios.post("http://localhost:8800/query", chipData)
-                setData(res.data)
+                const bookings = await axios.post("http://localhost:8800/query", chipData)
+                const categories = await axios.get("http://localhost:8800/categories")
+                console.log(categories.data[3][0])
+                setData(bookings.data)
+                setChipCategories(categories.data)
             } catch (err) {
                 console.log(err)
             }
@@ -91,7 +108,7 @@ export default function CustomerBookings({auth, setAuth}) {
                     isAdmin={auth.isAdmin}
                 />
                 
-                <Chips chipHandle={setChipData} />
+                <Chips chipHandle={setChipData} chipCategories={chipCategories} />
                 
                 <Box
                     sx={{
