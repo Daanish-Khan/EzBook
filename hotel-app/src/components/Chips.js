@@ -4,7 +4,7 @@ import { DateCalendar } from '@mui/x-date-pickers';
 import dayjs from 'dayjs';
 import { COLORS } from './consts'
 
-function Chips() {
+function Chips({chipHandle}) {
 
     //minDistance and valuetext are for displaying values on the price slider
     const minDistance = 100;
@@ -19,6 +19,7 @@ function Chips() {
     const [chainAnchor, setChainAnchor] = React.useState(null);
     const [categoryAnchor, setCategoryAnchor] = React.useState(null);
     const [roomAnchor, setRoomAnchor] = React.useState(null);
+    const [capacityAnchor, setCapacityAnchor] = React.useState(null);
     const [priceAnchor, setPriceAnchor] = React.useState(null);
 
     const [startChipText, setStartChipText] = React.useState(dayjs(new Date()));
@@ -28,7 +29,24 @@ function Chips() {
     const [chainChipText, setChainChipText] = React.useState('');
     const [categoryChipText, setCategoryChipText] = React.useState(2);
     const [roomChipText, setRoomChipText] = React.useState('');
+    const [capacityChipText, setCapacityChipText] = React.useState('');
     const [priceChipText, setPriceChipText] = React.useState('');
+
+    React.useEffect(() => {
+        const data = {
+            start_date: new Date(startChipText).toLocaleString('en-CA', {timeZone: "America/Toronto"}).split(',')[0],
+            end_date: new Date(endChipText).toLocaleString('en-CA', {timeZone: "America/Toronto"}).split(',')[0],
+            room_capacity: roomChipText,
+            city: cityChipText,
+            country: countryChipText,
+            chain: chainChipText,
+            rating: categoryChipText,
+            num_room: roomChipText,
+            price_low: priceChipText.split(",")[0],
+            price_high: priceChipText.split(",")[1] === undefined ? "" : priceChipText.split(",")[1],
+        }
+        chipHandle(data);
+    }, [startChipText, endChipText, cityChipText, countryChipText, chainChipText, categoryChipText, roomChipText, priceChipText, chipHandle])
 
 
     const sliderHandleChange = (event, newValue, activeThumb) => {
@@ -163,7 +181,7 @@ function Chips() {
             text: { get: categoryChipText, set: setCategoryChipText }
         },
         {
-            key: 6, label: '# of Rooms', 
+            key: 6, label: '# of Rooms in Hotel', 
             component: <Box sx={{minWidth: 100, padding: 1}}>
                             <FormControl fullWidth>
                                 <InputLabel sx={{marginTop: 0.5}}># of Rooms</InputLabel>
@@ -172,7 +190,7 @@ function Chips() {
                                     value={roomChipText}
                                     label="# of Rooms"
                                     sx={{color: COLORS.defaultColor}}
-                                    onChange={(event) => {console.log("test"); setRoomChipText(event.target.value)}}
+                                    onChange={(event) => {setRoomChipText(event.target.value)}}
                                 >
                                     <MenuItem value="Test1">Test1</MenuItem>
                                     <MenuItem value="Test2">Test2</MenuItem>
@@ -186,7 +204,30 @@ function Chips() {
             text: { get: roomChipText, set: setRoomChipText }
         },
         {
-            key: 7, label: 'Price', 
+            key: 7, label: 'Capacity', 
+            component: <Box sx={{minWidth: 100, padding: 1}}>
+                            <FormControl fullWidth>
+                                <InputLabel sx={{marginTop: 0.5}}>Capacity</InputLabel>
+                                <Select
+                                    
+                                    value={capacityChipText}
+                                    label="Capacity"
+                                    sx={{color: COLORS.defaultColor}}
+                                    onChange={(event) => {setCapacityChipText(event.target.value)}}
+                                >
+                                    <MenuItem value="Test1">Test1</MenuItem>
+                                    <MenuItem value="Test2">Test2</MenuItem>
+                                    <MenuItem value="Test3">Test3</MenuItem>
+                                </Select>
+                            </FormControl>
+                        </Box>, 
+            handleClick: (event) => {setCapacityAnchor(event.currentTarget)}, 
+            anchor: {get: capacityAnchor, set: setCapacityAnchor}, 
+            open: Boolean(capacityAnchor),
+            text: { get: capacityChipText, set: setCapacityChipText }
+        },
+        {
+            key: 8, label: 'Price', 
             component: <Box minWidth={200} minHeight={50} sx={{position: "relative", marginX: 2, overflow: "visible"}}>
                             
                             <Slider
@@ -220,7 +261,7 @@ function Chips() {
         >
             {chips.map((data) => {
                 return (
-                    <div style={{width:"max-content", display: "inline-block", margin: 0}}>
+                    <div style={{width:"max-content", display: "inline-block", margin: 0}} key={data.key}>
                         <Chip 
                             label={data.text.get === '' ? data.label : data.label + ": " + data.text.get}
                             onClick={data.handleClick}
@@ -249,22 +290,6 @@ function Chips() {
                     </div>
                 );
             })}
-             <div style={{width:"max-content", display: "inline-block", margin: 0}}>
-                <Button
-                        sx={{
-                            color: 'white',  
-                            backgroundColor: COLORS.primaryColor, 
-                            borderRadius:"15px",
-                            margin: "8px",
-                            ':hover': {
-                                backgroundColor: COLORS.primaryFocusedColor
-                            }
-                        }}
-                    >
-                        Search
-                    </Button>
-             </div>
-            
         </Box>
         
     );

@@ -14,11 +14,10 @@ import BookingModal from '../components/BookingModal';
 export default function CustomerBookings({auth, setAuth}) {
 
     const [data, setData] = React.useState({});
-
     const [modalOpen, setModalOpen] = React.useState({open: false, title: ""});
+    const [chipData, setChipData] = React.useState({});
 
     const bookingClick = (booking) => {
-        console.log(booking)
         setModalOpen({open: true, title: booking});
     }
 
@@ -26,25 +25,11 @@ export default function CustomerBookings({auth, setAuth}) {
         setModalOpen({open: false, title: ""})
     }
 
-
     React.useEffect(() => {
-
-        const q = {
-            start_date: "",
-            end_date: "",
-            room_capacity: "",
-            city: "",
-            country: "",
-            chain: "",
-            rating: "",
-            num_rooms: "",
-            price_low: "",
-            price_high: ""
-        }
 
         const fetch = async () => {
             try {
-                const res = await axios.post("http://localhost:8800/query", q)
+                const res = await axios.post("http://localhost:8800/query", chipData)
                 setData(res.data)
             } catch (err) {
                 console.log(err)
@@ -53,7 +38,7 @@ export default function CustomerBookings({auth, setAuth}) {
 
         fetch();
         
-    }, []);
+    }, [chipData]);
 
     return (
         <Container disableGutters maxWidth="false"
@@ -106,7 +91,7 @@ export default function CustomerBookings({auth, setAuth}) {
                     isAdmin={auth.isAdmin}
                 />
                 
-                <Chips />
+                <Chips chipHandle={setChipData} />
                 
                 <Box
                     sx={{

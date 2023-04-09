@@ -30,10 +30,10 @@ function BookingList( {gutter_size, itemCount, isAdmin, data, bookingClick }) {
                     <ListItemText 
                         primary={
                             <React.Fragment>
-                                <Grid container spacing={0} disableGutters>
+                                <Grid container spacing={0}>
                                     <Grid item xs={12} >
                                         <Typography sx={{ fontWeight: 'bold', display: 'inline' }}>{data[index].chainName + ": "}</Typography>
-                                        {"Room #" + data[index].room_num}
+                                        <Typography sx={{ display: 'inline' }}>{"Room #" + data[index].room_num}</Typography>
                                     </Grid>
                                     <Grid item xs={12}>
                                         <Typography sx={{ display: 'inline', fontStyle: 'italic'}}>{"$" + data[index].price + "/night"}</Typography>
@@ -67,8 +67,7 @@ function BookingList( {gutter_size, itemCount, isAdmin, data, bookingClick }) {
                                 <Typography sx={{ fontWeight: 'bold', display: 'inline' }}>
                                     {data[index].hotel + ", " + data[index].city + ", " + data[index].country}
                                 </Typography>
-                            </React.Fragment>
-                           
+                            </React.Fragment>  
                         }
                         sx={{
                             color:'white', 
