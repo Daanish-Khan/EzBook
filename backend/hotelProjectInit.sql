@@ -3,6 +3,7 @@ CREATE SCHEMA hotel_project_db; #NEEDED IF CREATING FROM SCRATCH.
 CREATE DATABASE IF NOT EXISTS hotel_project_db;
 USE hotel_project_db;
 
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';
 
 CREATE TABLE hotelChains (
   name VARCHAR(255) PRIMARY KEY NOT NULL,
@@ -31,7 +32,6 @@ CREATE TABLE employees (
   full_name VARCHAR(255) NOT NULL,
   address VARCHAR(255) NOT NULL,
   works_at VARCHAR (255) NOT NULL,
-  FOREIGN KEY (works_at) REFERENCES hotels (address),
   role VARCHAR (255) NOT NULL
 );
 
@@ -444,3 +444,28 @@ UPDATE hotels SET manager=20003 WHERE address='180 Lundys Avenue';
 UPDATE hotels SET manager=10593 WHERE address='192 Crescent Avenue';
 UPDATE hotels SET manager=29304 WHERE address='98 Fernandez Avenue';
 SET foreign_key_checks = 1;
+
+DELIMITER $$
+CREATE TRIGGER delHotels  BEFORE DELETE ON hotelchains
+       FOR EACH ROW 
+       BEGIN
+			delete from hotels where chainName = old.name;
+	   END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE TRIGGER delRooms  BEFORE DELETE ON hotels
+       FOR EACH ROW 
+       BEGIN
+			delete from rooms where hotel = old.address;
+	   END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE TRIGGER delWorksAt BEFORE DELETE ON hotels
+      FOR EACH ROW
+      BEGIN
+    UPDATE employees SET role = "Unassigned" WHERE works_at = old.address;
+    UPDATE employees SET works_at = "Unassigned" WHERE works_at = old.address;
+    END$$
+DELIMITER ;
