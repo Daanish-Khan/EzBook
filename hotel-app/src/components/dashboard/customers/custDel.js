@@ -1,6 +1,6 @@
 import Button from '@mui/material/Button';
 import * as React from 'react';
-import { Grid, Stack, Divider, Typography, Box, TextField, FormControlLabel, Checkbox, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
+import { Typography, Box, TextField, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
 import { COLORS } from './../../consts'
 
 export default function CustomerDel() {
@@ -71,8 +71,9 @@ export default function CustomerDel() {
 
         <Dialog
             open={open}
-            onClose={handleClose}sx={{'& .MuiPaper-root': {backgroundColor: COLORS.defaultColor, overflow: "hidden", padding: 2}}}
-            >
+            onClose={handleClose}
+            sx={{'& .MuiPaper-root': {backgroundColor: COLORS.defaultColor, overflow: "hidden", padding: 2}}}
+        >
             <DialogTitle sx={{ padding: 0, paddingTop: 2, paddingBottom: 3}}>
                 <Typography variant="h4" sx={{ top: 0, left: 0, color: "white"}}>Delete Customer</Typography>
             </DialogTitle>

@@ -3,7 +3,6 @@ import * as React from 'react';
 import { Typography, Grid, Box, TextField, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
 import { COLORS } from './../../consts'
 
-
 export default function ChainAdd() {
 
     const handleClickOpen = () => {

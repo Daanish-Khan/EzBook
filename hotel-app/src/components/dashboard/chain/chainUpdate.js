@@ -1,6 +1,6 @@
 import Button from '@mui/material/Button';
 import * as React from 'react';
-import { Divider, Typography, FormControlLabel, Grid, Checkbox, Box, TextField, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
+import { Divider, Typography, Grid, Box, TextField, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
 import { COLORS } from './../../consts'
 
 export default function ChainUpdate() {

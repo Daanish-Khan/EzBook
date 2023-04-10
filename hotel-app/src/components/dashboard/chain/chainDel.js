@@ -1,10 +1,9 @@
 import Button from '@mui/material/Button';
 import * as React from 'react';
-import { Grid, Stack, Divider, Typography, Box, TextField, FormControlLabel, Checkbox, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
+import { Typography, Box, TextField, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
 import { COLORS } from './../../consts'
-import { DatePicker } from '@mui/x-date-pickers'
 
-export default function BookingsDel() {
+export default function ChainDel() {
 
     const handleClickOpen = () => {
         setOpen(true);

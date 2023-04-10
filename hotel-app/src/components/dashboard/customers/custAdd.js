@@ -1,6 +1,6 @@
 import Button from '@mui/material/Button';
 import * as React from 'react';
-import { DialogContentText, Stack, Typography, FormControlLabel, Grid, Checkbox, Box, TextField, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
+import { Typography, Grid, Box, TextField, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
 import { COLORS } from './../../consts'
 
 
