@@ -1,6 +1,6 @@
 import Button from '@mui/material/Button';
 import * as React from 'react';
-import { Typography, FormControlLabel, Grid, Checkbox, Box, TextField, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
+import { Typography, Grid, Box, TextField, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
 import { COLORS } from './../../consts'
 import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 
@@ -105,7 +105,7 @@ export default function BookingsDel() {
                 sx={{'& .MuiPaper-root': {backgroundColor: COLORS.defaultColor, overflow: "hidden", padding: 2}}}
             >
                 <DialogTitle sx={{ padding: 0, paddingTop: 2, paddingBottom: 3}}>
-                <Typography variant="h4" sx={{ top: 0, left: 0, color: "white"}}>Delete Booking</Typography>
+                    <Typography variant="h4" sx={{ top: 0, left: 0, color: "white"}}>Delete Booking</Typography>
                 </DialogTitle>
                 <DialogContent>
                     <Grid container spacing={2}>

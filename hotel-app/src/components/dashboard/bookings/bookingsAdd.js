@@ -26,11 +26,9 @@ export default function BookingsAdd() {
         '& .MuiInputBase-root:hover': {
             backgroundColor: "#ffff",
         },
-        
         '&:hover label': {
             color: COLORS.focusedColor,
         },
-
         '& label.Mui-focused': {
             color: COLORS.focusedColor,
             
@@ -48,7 +46,6 @@ export default function BookingsAdd() {
         '& .MuiFilledInput-underline:before': {
             borderBottomColor: COLORS.defaultColor,
         },
-        
     }
     const datesx={
         '& .MuiInputAdornment-root': {
@@ -60,7 +57,6 @@ export default function BookingsAdd() {
         },
         '& input': {
             color: COLORS.defaultColor,
-            
         },
         '&:hover label': {
             color: COLORS.focusedColor,
@@ -75,8 +71,7 @@ export default function BookingsAdd() {
         },
         '& .MuiOutlinedInput-notchedOutline': {
             borderColor: COLORS.primaryColor + " !important",
-        },
-        
+        }, 
     }
 
     return (
@@ -104,7 +99,7 @@ export default function BookingsAdd() {
                 sx={{'& .MuiPaper-root': {backgroundColor: COLORS.defaultColor, overflow: "hidden", padding: 2}}}
             >
                 <DialogTitle sx={{ padding: 0, paddingTop: 2, paddingBottom: 3}}>
-                <Typography variant="h4" sx={{ top: 0, left: 0, color: "white"}}>Add Booking</Typography>
+                    <Typography variant="h4" sx={{ top: 0, left: 0, color: "white"}}>Add Booking</Typography>
                 </DialogTitle>
                 <DialogContent>
                     <Grid container spacing={2}>

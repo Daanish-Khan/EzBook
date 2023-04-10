@@ -1,14 +1,7 @@
 import Button from '@mui/material/Button';
 import * as React from 'react';
-import { Chip, Stack } from '@mui/material';
+import { Typography, Grid, Box, TextField, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
 import { COLORS } from './../../consts'
-import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
 
 
 export default function ChainAdd() {
@@ -20,6 +13,66 @@ export default function ChainAdd() {
         setOpen(false);
     };
     const [open, setOpen] = React.useState('');
+    const textsx ={
+        '& .MuiFormHelperText-root': {
+            color: "#ffff"
+        },
+        '& .MuiInputBase-root.Mui-focused': {
+            backgroundColor: "#ffff"
+        },
+        '& .MuiInputBase-root': {
+            backgroundColor: "#ffff"
+        },
+        '& .MuiInputBase-root:hover': {
+            backgroundColor: "#ffff",
+        },
+        '&:hover label': {
+            color: COLORS.focusedColor,
+        },
+        '& label.Mui-focused': {
+            color: COLORS.focusedColor,
+            
+        },
+        '& label': {
+            color: COLORS.defaultColor,
+        },
+
+        '&& .MuiFilledInput-underline:hover:before': {
+            borderBottomColor: COLORS.focusedColor
+        },
+        '& .MuiFilledInput-underline:after': {
+            borderBottomColor: COLORS.focusedColor
+        },
+        '& .MuiFilledInput-underline:before': {
+            borderBottomColor: COLORS.defaultColor,
+        },
+    }
+    const datesx={
+        '& .MuiInputAdornment-root': {
+            display: "contents",
+            colors: COLORS.defaultColor,
+        },
+        '& .MuiInputBase-root': {
+            backgroundColor: "white",
+        },
+        '& input': {
+            color: COLORS.defaultColor,
+        },
+        '&:hover label': {
+            color: COLORS.focusedColor,
+        },
+
+        '& label.Mui-focused': {
+            color: COLORS.focusedColor,
+            
+        },
+        '& label': {
+            color: COLORS.defaultColor,
+        },
+        '& .MuiOutlinedInput-notchedOutline': {
+            borderColor: COLORS.primaryColor + " !important",
+        }, 
+    }
 
     return (
         <Box justifyContent={'center'} alignItems={'center'}>
@@ -42,54 +95,72 @@ export default function ChainAdd() {
 
             <Dialog
                 open={open}
-                onClose={handleClose}>
-
-                <DialogTitle>
-                    Add Chain
+                onClose={handleClose}
+                sx={{'& .MuiPaper-root': {backgroundColor: COLORS.defaultColor, overflow: "hidden", padding: 2}}}
+            >
+                <DialogTitle sx={{ padding: 0, paddingTop: 2, paddingBottom: 3}}>
+                    <Typography variant="h4" sx={{ top: 0, left: 0, color: "white"}}>Add Chain</Typography>
                 </DialogTitle>
                 <DialogContent>
-                    <Stack direction={"column"} alignItems={'center'}>
-                        <Stack direction={"row"}>
-                            <Stack direction={"column"}>
-                                <DialogContentText>
-                                    Name
-                                </DialogContentText>
-                                <TextField />
-                            </Stack>
-                            <Stack direction={"column"}>
-                                <DialogContentText>
-                                    Address
-                                </DialogContentText>
-                                <TextField />
-                            </Stack>
-
-                        </Stack>
-                        <Stack direction={"row"}>
-                            <Stack direction={"column"}>
-                                <DialogContentText>
-                                    City
-                                </DialogContentText>
-                                <TextField />
-                            </Stack>
-                            <Stack direction={"column"}>
-                                <DialogContentText>
-                                    Country
-                                </DialogContentText>
-                                <TextField />
-                            </Stack>
-                        </Stack>
-                        <Stack direction={"row"}>
-                            <Stack direction={"column"}>
-                                <DialogContentText>
-                                    Number of Hotels
-                                </DialogContentText>
-                                <TextField />
-                            </Stack>
-                        </Stack>
-                    </Stack>
+                    <Grid container spacing={2}>
+                        <Grid item xs={6}>
+                            <TextField
+                                required
+                                fullWidth
+                                label="Name"
+                                variant="filled"
+                                sx={textsx}
+                            />
+                        </Grid>
+                        <Grid item xs={6}>
+                            <TextField
+                                required
+                                fullWidth
+                                label="Office Address"
+                                variant="filled"
+                                sx={textsx}
+                            />
+                        </Grid>
+                        <Grid item xs={6}>
+                            <TextField
+                                required
+                                fullWidth
+                                label="City"
+                                variant="filled"
+                                sx={textsx}
+                            />
+                        </Grid>
+                        <Grid item xs={6}>
+                            <TextField
+                                required
+                                fullWidth
+                                label="Country"
+                                variant="filled"
+                                sx={textsx}
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                required
+                                fullWidth
+                                label="# of Hotels"
+                                variant="filled"
+                                sx={textsx}
+                            />
+                        </Grid>
+                    </Grid>
                 </DialogContent>
                 <DialogActions>
-                    <Button>Submit</Button>
+                    <Button 
+                        variant="contained"
+                        sx={{
+                            backgroundColor:  COLORS.primaryColor,
+                            ':hover': {
+                                backgroundColor: COLORS.primaryFocusedColor
+                            }
+                        }}>
+                        Submit
+                    </Button>
                 </DialogActions>
             </Dialog>
         </Box>

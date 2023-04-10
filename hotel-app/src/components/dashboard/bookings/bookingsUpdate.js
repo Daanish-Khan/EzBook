@@ -3,7 +3,6 @@ import * as React from 'react';
 import { Grid, Stack, Divider, Typography, Box, TextField, FormControlLabel, Checkbox, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 import { COLORS } from './../../consts'
 import { DatePicker } from '@mui/x-date-pickers'
-import { cyan } from '@mui/material/colors'
 
 export default function BookingsUpdate() {
 
@@ -14,7 +13,7 @@ export default function BookingsUpdate() {
         setOpen(false);
     };
     const [open, setOpen] = React.useState('');
-    const textsx ={
+    const textsx={
         '& .MuiFormHelperText-root': {
             color: "#ffff"
         },
