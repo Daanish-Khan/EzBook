@@ -1,15 +1,8 @@
 import Button from '@mui/material/Button';
 import * as React from 'react';
-import { Chip, Stack } from '@mui/material';
+import { Typography, FormControlLabel, Grid, Checkbox, Box, TextField, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
 import { COLORS } from './../../consts'
-import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-
+import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 
 export default function BookingsAdd() {
 
@@ -20,6 +13,71 @@ export default function BookingsAdd() {
         setOpen(false);
     };
     const [open, setOpen] = React.useState('');
+    const textsx ={
+        '& .MuiFormHelperText-root': {
+            color: "#ffff"
+        },
+        '& .MuiInputBase-root.Mui-focused': {
+            backgroundColor: "#ffff"
+        },
+        '& .MuiInputBase-root': {
+            backgroundColor: "#ffff"
+        },
+        '& .MuiInputBase-root:hover': {
+            backgroundColor: "#ffff",
+        },
+        
+        '&:hover label': {
+            color: COLORS.focusedColor,
+        },
+
+        '& label.Mui-focused': {
+            color: COLORS.focusedColor,
+            
+        },
+        '& label': {
+            color: COLORS.defaultColor,
+        },
+
+        '&& .MuiFilledInput-underline:hover:before': {
+            borderBottomColor: COLORS.focusedColor
+        },
+        '& .MuiFilledInput-underline:after': {
+            borderBottomColor: COLORS.focusedColor
+        },
+        '& .MuiFilledInput-underline:before': {
+            borderBottomColor: COLORS.defaultColor,
+        },
+        
+    }
+    const datesx={
+        '& .MuiInputAdornment-root': {
+            display: "contents",
+            colors: COLORS.defaultColor,
+        },
+        '& .MuiInputBase-root': {
+            backgroundColor: "white",
+        },
+        '& input': {
+            color: COLORS.defaultColor,
+            
+        },
+        '&:hover label': {
+            color: COLORS.focusedColor,
+        },
+
+        '& label.Mui-focused': {
+            color: COLORS.focusedColor,
+            
+        },
+        '& label': {
+            color: COLORS.defaultColor,
+        },
+        '& .MuiOutlinedInput-notchedOutline': {
+            borderColor: COLORS.primaryColor + " !important",
+        },
+        
+    }
 
     return (
         <Box>
@@ -42,63 +100,70 @@ export default function BookingsAdd() {
 
             <Dialog
                 open={open}
-                onClose={handleClose}>
-
-                <DialogTitle>
-                    Add Booking
+                onClose={handleClose}
+                sx={{'& .MuiPaper-root': {backgroundColor: COLORS.defaultColor, overflow: "hidden", padding: 2}}}
+            >
+                <DialogTitle sx={{ padding: 0, paddingTop: 2, paddingBottom: 3}}>
+                <Typography variant="h4" sx={{ top: 0, left: 0, color: "white"}}>Add Booking</Typography>
                 </DialogTitle>
                 <DialogContent>
-                    <Stack direction={"column"}>
-                        <Stack direction={"row"}>
-                            <Stack direction={"column"}>
-                                <DialogContentText>
-                                    Room Number
-                                </DialogContentText>
-                                <TextField />
-                            </Stack>
-                            <Stack direction={"column"}>
-                                <DialogContentText>
-                                    Hotel
-                                </DialogContentText>
-                                <TextField />
-                            </Stack>
-
-                        </Stack>
-                        <Stack direction={"row"}>
-                            <Stack direction={"column"}>
-                                <DialogContentText>
-                                    Customer
-                                </DialogContentText>
-                                <TextField />
-                            </Stack>
-                            <Stack direction={"column"}>
-                                <DialogContentText>
-                                    Paid Status
-                                </DialogContentText>
-                                <TextField />
-                            </Stack>
-                        </Stack>
-                        <Stack direction={"row"}>
-                            <Stack direction={"column"}>
-                                <DialogContentText>
-                                    Start Date
-                                </DialogContentText>
-                                <TextField />
-                            </Stack>
-                            <Stack direction={"column"}>
-                            <DialogContentText>
-                                End Date
-                            </DialogContentText>
-                            <TextField />
-                            </Stack>
-                        </Stack>
-                    </Stack>
-
-
+                    <Grid container spacing={2}>
+                        <Grid item xs={6}>
+                            <TextField
+                                required
+                                fullWidth
+                                label="Room #"
+                                variant="filled"
+                                sx={textsx}
+                            />
+                        </Grid>
+                        <Grid item xs={6}>
+                            <TextField
+                                required
+                                fullWidth
+                                label="Hotel Address"
+                                variant="filled"
+                                sx={textsx}
+                            />
+                        </Grid>
+                        <Grid item xs={6}>
+                            <DatePicker 
+                                label="Start Date" 
+                                sx={datesx}
+                            />
+                        </Grid>
+                        <Grid item xs={6}>
+                            <TextField
+                                required
+                                fullWidth
+                                label="Customer SSN"
+                                variant="filled"
+                                sx={textsx}
+                            />
+                        </Grid>
+                        <Grid item xs={6}>
+                            <DatePicker 
+                                label="End Date" 
+                                sx={datesx}
+                            />
+                        </Grid>
+                        <Grid item xs={6} display="flex" justifyContent="center">
+                            <FormControlLabel sx={{color: "white"}}control={<Checkbox sx={{color: "white", '& .MuiSvgIcon-root': {fontSize: 28, color:"white"}}}/>} label="Paid for Room" />
+                        </Grid>
+                    </Grid>
 
                 </DialogContent>
                 <DialogActions>
-                    <Button>Submit</Button>
+                    <Button 
+                        variant="contained"
+                        sx={{
+                            backgroundColor:  COLORS.primaryColor,
+                            ':hover': {
+                                backgroundColor: COLORS.primaryFocusedColor
+                            }
+                        }}>
+                        Submit
+                    </Button>
                 </DialogActions>
             </Dialog>
         </Box>
