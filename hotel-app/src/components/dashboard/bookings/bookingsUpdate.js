@@ -13,7 +13,17 @@ export default function BookingsUpdate() {
     };
     const handleClose = () => {
         setOpen(false);
+        setUpdateText({
+            updates: "booking",
+            room_num: "",
+            hotel: "",
+            customer: "",
+            start_date: "",
+            end_date: "",
+            isPaid: 0
+        })
         setSearchError('')
+        setSubmitError('')
     };
     const [open, setOpen] = React.useState(false);
     const textsx={
