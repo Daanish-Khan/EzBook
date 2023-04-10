@@ -16,9 +16,9 @@ import HotelDel from '../components/dashboard/hotel/hotelDel'
 import RoomAdd from '../components/dashboard/room/roomAdd'
 import RoomUpdate from '../components/dashboard/room/roomUpdate'
 import RoomDel from '../components/dashboard/room/roomDel'
-import CustAdd from '../components/dashboard/customers/custAdd'
-import CustUpdate from '../components/dashboard/customers/custUpdate'
-import CustDel from '../components/dashboard/customers/custDel'
+import CustomerAdd from '../components/dashboard/customers/custAdd'
+import CustomerUpdate from '../components/dashboard/customers/custUpdate'
+import CustomerDel from '../components/dashboard/customers/custDel'
 import Waves from '../components/Waves';
 import Navbar from '../components/navbar';
 
@@ -174,6 +174,27 @@ export default function EmployeeDashboard({ auth, authHandle }) {
                             <RoomAdd/>
                             <RoomUpdate/>
                             <RoomDel/>
+                        </Stack>
+
+                        <Divider 
+                                sx={{
+                                    '&:before': {borderColor: "white", borderWidth: "2px"}, 
+                                    '&:after': {borderColor: "white", borderWidth: "2px"},
+                                    '& .MuiDivider-wrapper': {  
+                                        paddingLeft: "calc(2px * 10)",
+                                        paddingRight: "calc(2px * 10)",
+                                        overflow: "visible"
+                                    },
+                                    color: "white",
+                                    width: "100%"
+                                    
+                                }}>
+                                    <Typography variant="h6" sx={{ color: 'white', top: 0, left: 0 }}>Customers</Typography>
+                        </Divider>
+                        <Stack direction={'row'} spacing={2}>
+                            <CustomerAdd/>
+                            <CustomerUpdate/>
+                            <CustomerDel/>
                         </Stack>
                     </Stack>
                 </Box>

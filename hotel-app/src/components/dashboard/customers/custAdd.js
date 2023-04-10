@@ -1,17 +1,10 @@
 import Button from '@mui/material/Button';
 import * as React from 'react';
-import { Chip, Stack } from '@mui/material';
+import { DialogContentText, Stack, Typography, FormControlLabel, Grid, Checkbox, Box, TextField, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
 import { COLORS } from './../../consts'
-import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
 
 
-export default function BookingsAdd() {
+export default function CustomerAdd() {
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -20,6 +13,40 @@ export default function BookingsAdd() {
         setOpen(false);
     };
     const [open, setOpen] = React.useState('');
+     const textsx ={
+        '& .MuiFormHelperText-root': {
+            color: "#ffff"
+        },
+        '& .MuiInputBase-root.Mui-focused': {
+            backgroundColor: "#ffff"
+        },
+        '& .MuiInputBase-root': {
+            backgroundColor: "#ffff"
+        },
+        '& .MuiInputBase-root:hover': {
+            backgroundColor: "#ffff",
+        },
+        '&:hover label': {
+            color: COLORS.focusedColor,
+        },
+        '& label.Mui-focused': {
+            color: COLORS.focusedColor,
+            
+        },
+        '& label': {
+            color: COLORS.defaultColor,
+        },
+
+        '&& .MuiFilledInput-underline:hover:before': {
+            borderBottomColor: COLORS.focusedColor
+        },
+        '& .MuiFilledInput-underline:after': {
+            borderBottomColor: COLORS.focusedColor
+        },
+        '& .MuiFilledInput-underline:before': {
+            borderBottomColor: COLORS.defaultColor,
+        },
+    }
 
     return (
         <Box justifyContent={'center'} alignItems={'center'}>
@@ -42,49 +69,65 @@ export default function BookingsAdd() {
 
             <Dialog
                 open={open}
-                onClose={handleClose}>
-
-                <DialogTitle>
-                    Add Customer
+                onClose={handleClose}
+                sx={{'& .MuiPaper-root': {backgroundColor: COLORS.defaultColor, overflow: "hidden", padding: 2}}}
+            >
+                <DialogTitle sx={{ padding: 0, paddingTop: 2, paddingBottom: 3}}>
+                    <Typography variant="h4" sx={{ top: 0, left: 0, color: "white"}}>Add Customer</Typography>
                 </DialogTitle>
                 <DialogContent>
-                    <Stack direction={"column"}>
-                        <Stack direction={"row"}>
-                            <Stack direction={"column"}>
-                                <DialogContentText>
-                                    SSN
-                                </DialogContentText>
-                                <TextField />
-                            </Stack>
-                            <Stack direction={"column"}>
-                                <DialogContentText>
-                                    Full Name
-                                </DialogContentText>
-                                <TextField />
-                            </Stack>
 
-                        </Stack>
-                        <Stack direction={"row"}>
-                            <Stack direction={"column"}>
-                                <DialogContentText>
-                                    Address
-                                </DialogContentText>
-                                <TextField />
-                            </Stack>
-                            <Stack direction={"column"}>
-                                <DialogContentText>
-                                    Registration Date
-                                </DialogContentText>
-                                <TextField />
-                            </Stack>
-                        </Stack>
-                    </Stack>
-
-
+                <Grid container spacing={2}>
+                        <Grid item xs={6}>
+                            <TextField
+                                required
+                                fullWidth
+                                label="SSN"
+                                variant="filled"
+                                sx={textsx}
+                            />
+                        </Grid>
+                        <Grid item xs={6}>
+                            <TextField
+                                required
+                                fullWidth
+                                label="Address"
+                                variant="filled"
+                                sx={textsx}
+                            />
+                        </Grid>
+                        <Grid item xs={6}>
+                            <TextField
+                                required
+                                fullWidth
+                                label="First Name"
+                                variant="filled"
+                                sx={textsx}
+                            />
+                        </Grid>
+                        <Grid item xs={6}>
+                            <TextField
+                                required
+                                fullWidth
+                                label="Last Name"
+                                variant="filled"
+                                sx={textsx}
+                            />
+                        </Grid>
+                    </Grid>
 
                 </DialogContent>
                 <DialogActions>
-                    <Button>Submit</Button>
+                    <Button 
+                        variant="contained"
+                        sx={{
+                            backgroundColor:  COLORS.primaryColor,
+                            ':hover': {
+                                backgroundColor: COLORS.primaryFocusedColor
+                            }
+                        }}>
+                        Submit
+                    </Button>
                 </DialogActions>
             </Dialog>
         </Box>

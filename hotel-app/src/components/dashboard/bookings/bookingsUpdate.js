@@ -238,16 +238,16 @@ export default function BookingsUpdate() {
                     </Grid>
                 </DialogContent>
                 <DialogActions>
-                <Button 
-                    variant="contained"
-                    sx={{
-                        backgroundColor:  COLORS.primaryColor,
-                        ':hover': {
-                            backgroundColor: COLORS.primaryFocusedColor
-                        }
-                    }}>
-                    Submit
-                </Button>
+                    <Button 
+                        variant="contained"
+                        sx={{
+                            backgroundColor:  COLORS.primaryColor,
+                            ':hover': {
+                                backgroundColor: COLORS.primaryFocusedColor
+                            }
+                        }}>
+                        Submit
+                    </Button>
                 </DialogActions>
             </Dialog>
         </Box >
