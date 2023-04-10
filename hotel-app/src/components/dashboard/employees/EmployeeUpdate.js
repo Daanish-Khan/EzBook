@@ -1,9 +1,11 @@
 import Button from '@mui/material/Button';
 import * as React from 'react';
-import { Grid, Divider, Typography, Box, TextField, FormControlLabel, Checkbox, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
-import { COLORS } from './../../consts'
+import { Grid, Divider, Typography, Box, TextField, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
+import { COLORS } from '../../consts'
+import { DatePicker } from '@mui/x-date-pickers'
 
-export default function BookingsUpdate() {
+
+export default function EmployeeUpdate() {
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -49,6 +51,34 @@ export default function BookingsUpdate() {
         },
         
     }
+    const datesx={
+        '& .MuiInputAdornment-root': {
+            display: "contents",
+            colors: COLORS.defaultColor,
+        },
+        '& .MuiInputBase-root': {
+            backgroundColor: "white",
+        },
+        '& input': {
+            color: COLORS.defaultColor,
+            
+        },
+        '&:hover label': {
+            color: COLORS.focusedColor,
+        },
+
+        '& label.Mui-focused': {
+            color: COLORS.focusedColor,
+            
+        },
+        '& label': {
+            color: COLORS.defaultColor,
+        },
+        '& .MuiOutlinedInput-notchedOutline': {
+            borderColor: COLORS.primaryColor + " !important",
+        },
+        
+    }
 
     return (
         <Box justifyContent={'center'} alignItems={'center'}>
@@ -76,7 +106,7 @@ export default function BookingsUpdate() {
                 sx={{'& .MuiPaper-root': {backgroundColor: COLORS.defaultColor, overflow: "hidden", padding: 2}}}
             >
                 <DialogTitle sx={{ padding: 0, paddingTop: 2, paddingBottom: 3}}>
-                    <Typography variant="h4" sx={{ top: 0, left: 0, color: "white"}}>Update Room</Typography>
+                    <Typography variant="h4" sx={{ top: 0, left: 0, color: "white"}}>Update Employee</Typography>
                 </DialogTitle>
                 <DialogContent>
 
@@ -99,25 +129,15 @@ export default function BookingsUpdate() {
                             </Divider>
                         </Grid>
                         
-                        <Grid item xs={6}>
+                        <Grid item xs={12}>
                             <TextField
                                 required
                                 fullWidth
-                                label="Room #"
+                                label="SSN"
                                 variant="filled"
                                 sx={textsx}
                             />
                         </Grid>
-                        <Grid item xs={6}>
-                            <TextField
-                                required
-                                fullWidth
-                                label="Hotel Address"
-                                variant="filled"
-                                sx={textsx}
-                            />
-                        </Grid>
-
                         <Grid item xs={12}>
                             <Button
                                 fullWidth 
@@ -137,7 +157,6 @@ export default function BookingsUpdate() {
                                 Search Records
                             </Button>
                         </Grid>
-
                         <Grid item xs={12}>
                             <Divider 
                                 sx={{
@@ -160,7 +179,7 @@ export default function BookingsUpdate() {
                             <TextField
                                 required
                                 fullWidth
-                                label="Room #"
+                                label="SSN"
                                 variant="filled"
                                 sx={textsx}
                             />
@@ -169,7 +188,7 @@ export default function BookingsUpdate() {
                             <TextField
                                 required
                                 fullWidth
-                                label="Hotel Address"
+                                label="Address"
                                 variant="filled"
                                 sx={textsx}
                             />
@@ -178,17 +197,7 @@ export default function BookingsUpdate() {
                             <TextField
                                 required
                                 fullWidth
-                                label="Price"
-                                variant="filled"
-                                sx={textsx}
-                            />
-                        </Grid>
-
-                        <Grid item xs={6}>
-                            <TextField
-                                required
-                                fullWidth
-                                label="Capacity"
+                                label="First Name"
                                 variant="filled"
                                 sx={textsx}
                             />
@@ -197,7 +206,7 @@ export default function BookingsUpdate() {
                             <TextField
                                 required
                                 fullWidth
-                                label="Type of View"
+                                label="Last Name"
                                 variant="filled"
                                 sx={textsx}
                             />
@@ -206,13 +215,19 @@ export default function BookingsUpdate() {
                             <TextField
                                 required
                                 fullWidth
-                                label="Amenities"
+                                label="Works At"
                                 variant="filled"
                                 sx={textsx}
                             />
                         </Grid>
-                        <Grid item xs={12}>
-                            <FormControlLabel sx={{color: "white"}}control={<Checkbox sx={{color: "white", '& .MuiSvgIcon-root': {fontSize: 28, color:"white"}}}/>} label="Expansion Available" />
+                        <Grid item xs={6}>
+                            <TextField
+                                required
+                                fullWidth
+                                label="Role"
+                                variant="filled"
+                                sx={textsx}
+                            />
                         </Grid>
                     </Grid>
                 </DialogContent>

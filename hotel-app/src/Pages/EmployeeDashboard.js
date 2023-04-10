@@ -1,7 +1,7 @@
 import { Container } from '@mui/system';
 import './EmployeeDashboard.css';
 import { COLORS } from '../components/consts'
-import { Box, Divider, Stack, Grid } from '@mui/material';
+import { Box, Divider, Stack } from '@mui/material';
 import * as React from 'react';
 import Typography from '@mui/material/Typography';
 import BookingsAdd from '../components/dashboard/bookings/bookingsAdd'
@@ -19,11 +19,26 @@ import RoomDel from '../components/dashboard/room/roomDel'
 import CustomerAdd from '../components/dashboard/customers/custAdd'
 import CustomerUpdate from '../components/dashboard/customers/custUpdate'
 import CustomerDel from '../components/dashboard/customers/custDel'
+import EmployeeAdd from '../components/dashboard/employees/EmployeeAdd';
+import EmployeeDel from '../components/dashboard/employees/EmployeeDelete';
+import EmployeeUpdate from '../components/dashboard/employees/EmployeeUpdate';
 import Waves from '../components/Waves';
 import Navbar from '../components/navbar';
+import { useNavigate } from 'react-router-dom';
 
 
 export default function EmployeeDashboard({ auth, authHandle }) {
+
+    const navigator = useNavigate();
+
+    React.useEffect(() => {
+        if (auth.SSN === 0) {
+            navigator('/')
+        } else if (!auth.isAdmin) {
+            navigator('/bookings')
+        }
+    })
+
     return (
         <Container disableGutters maxWidth="false"
             sx={{
@@ -88,6 +103,7 @@ export default function EmployeeDashboard({ auth, authHandle }) {
                         borderRight: "1px solid #ffffff80",
                         borderRadius: "20px",
                         boxShadow: "0 25px 50px #0000001a",
+                        overflowY: "auto"
                     }}
                 >
                     <Typography variant="h2" sx={{ color: COLORS.defaultColor, top: 0, left: 0, paddingBottom: "30px", paddingTop:"30px" }}>Edit Info</Typography>
@@ -195,6 +211,27 @@ export default function EmployeeDashboard({ auth, authHandle }) {
                             <CustomerAdd/>
                             <CustomerUpdate/>
                             <CustomerDel/>
+                        </Stack>
+
+                        <Divider 
+                                sx={{
+                                    '&:before': {borderColor: "white", borderWidth: "2px"}, 
+                                    '&:after': {borderColor: "white", borderWidth: "2px"},
+                                    '& .MuiDivider-wrapper': {  
+                                        paddingLeft: "calc(2px * 10)",
+                                        paddingRight: "calc(2px * 10)",
+                                        overflow: "visible"
+                                    },
+                                    color: "white",
+                                    width: "100%"
+                                    
+                                }}>
+                                    <Typography variant="h6" sx={{ color: 'white', top: 0, left: 0 }}>Employees</Typography>
+                        </Divider>
+                        <Stack direction={'row'} spacing={2}>
+                            <EmployeeAdd/>
+                            <EmployeeUpdate/>
+                            <EmployeeDel/>
                         </Stack>
                     </Stack>
                 </Box>

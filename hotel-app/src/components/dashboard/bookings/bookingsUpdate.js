@@ -2,7 +2,9 @@ import Button from '@mui/material/Button';
 import * as React from 'react';
 import { Grid, Divider, Typography, Box, TextField, FormControlLabel, Checkbox, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
 import { COLORS } from './../../consts'
-import { DatePicker } from '@mui/x-date-pickers'
+import { DatePicker, dayCalendarSkeletonClasses } from '@mui/x-date-pickers'
+import axios from 'axios';
+import dayjs from 'dayjs';
 
 export default function BookingsUpdate() {
 
@@ -11,8 +13,9 @@ export default function BookingsUpdate() {
     };
     const handleClose = () => {
         setOpen(false);
+        setSearchError('')
     };
-    const [open, setOpen] = React.useState('');
+    const [open, setOpen] = React.useState(false);
     const textsx={
         '& .MuiFormHelperText-root': {
             color: "#ffff"
@@ -79,6 +82,135 @@ export default function BookingsUpdate() {
         
     }
 
+    const [searchText, setSearchText] = React.useState({search: "booking", room_num: "", hotel: "", start_date: ""});
+    const [updateText, setUpdateText] = React.useState({
+        updates: "booking",
+        room_num: "",
+        hotel: "",
+        customer: "",
+        start_date: "",
+        end_date: "",
+        isPaid: 0
+    })
+    const [searchError, setSearchError] = React.useState('')
+    const [submitError, setSubmitError] = React.useState('')
+
+    const onSearchRoomChange = e => {
+        setSearchText({...searchText, room_num: e.target.value});
+    }
+    const onSearchAddressChange = e => {
+        setSearchText({...searchText, hotel: e.target.value});
+    }
+    const onSearchDateChange = e => {
+        setSearchText({...searchText, start_date: new Date(e).toLocaleString('en-CA', {timeZone: "America/Toronto"}).split(',')[0]});
+    }
+    const onUpdateRoomChange = e => {
+        setUpdateText({...updateText, room_num: e.target.value});
+        console.log(updateText)
+    }
+    const onUpdateAddressChange = e => {
+        setUpdateText({...updateText, hotel: e.target.value});
+    }
+    const onUpdateCustomerChange = e => {
+        setUpdateText({...updateText, customer: e.target.value});
+    }
+    const onUpdateStartDateChange = e => {
+        setUpdateText({...updateText, start_date: new Date(e).toLocaleString('en-CA', {timeZone: "America/Toronto"}).split(',')[0]});
+    }
+    const onUpdateEndDateChange = e => {
+        setUpdateText({...updateText, end_date: new Date(e).toLocaleString('en-CA', {timeZone: "America/Toronto"}).split(',')[0]});
+    }
+    const onUpdatePaidChange = e => {
+        setUpdateText({...updateText, isPaid: e.target.checked ? 1 : 0});
+    }
+
+    const search = async () => {
+        
+        if (searchText.room_num === "" ||
+            searchText.hotel === "" || 
+            searchText.start_date === "") {
+            setSearchError('Fields must not be empty!')
+            return
+        }
+        
+        if (!/^\d+$/.test(searchText.room_num)) {
+            setSearchError('Room # must only contain digits.')
+            return
+        }
+        try {
+            const res = await axios.post('http://localhost:8800/updatesearch', searchText)
+            if (Object.keys(res.data)["code"] !== undefined || res.data.length === 0) {
+                setSearchError('Something went wrong with the search. Please try again.')
+                return
+            }
+            setSearchError('')
+            setUpdateText({
+                updates: "booking",
+                room_num: res.data[0].room_num,
+                hotel: res.data[0].hotel,
+                customer: res.data[0].customer,
+                start_date: new Date(res.data[0].startDate).toLocaleString('en-CA', {timeZone: "America/Toronto"}).split(',')[0],
+                end_date: new Date(res.data[0].startDate).toLocaleString('en-CA', {timeZone: "America/Toronto"}).split(',')[0],
+                isPaid: res.data[0].isPaid
+            })
+
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    const submit = async () => {
+        if (updateText.room_num === "" ||
+            updateText.hotel === "" || 
+            updateText.customer === "" ||
+            updateText.start_date === "" ||
+            updateText.end_date === "") {
+            setSubmitError('Fields must not be empty!')
+            return
+        }
+
+        if (searchText.room_num === "" ||
+            searchText.hotel === "" || 
+            searchText.start_date === "") {
+            setSearchError('Fields must not be empty!')
+            return
+        }
+
+        if (!/^\d+$/.test(updateText.room_num)) {
+            setSubmitError('Room # must only contain digits.')
+            return
+        }
+
+        if (!/^\d+$/.test(searchText.room_num)) {
+            setSearchError('Room # must only contain digits.')
+            return
+        }
+
+        try {
+            console.log(updateText)
+            const res = await axios.post('http://localhost:8800/update', updateText)
+            if (Object.keys(res.data)["code"] !== undefined || res.data.length === 0) {
+                setSubmitError('Something went wrong with the search. Please try again.')
+                return
+            }
+            setSubmitError('')
+            setSearchError('')
+            setUpdateText({
+                updates: "booking",
+                room_num: "",
+                hotel: "",
+                customer: "",
+                start_date: "",
+                end_date: "",
+                isPaid: 0
+            })
+            setOpen(false)
+        } catch (err) {
+            console.log(err);
+        }
+
+    }
+
     return (
         <Box>
             <Button 
@@ -101,7 +233,6 @@ export default function BookingsUpdate() {
             <Dialog
                 open={open}
                 onClose={handleClose}
-                alignItems='center'
                 sx={{'& .MuiPaper-root': {backgroundColor: COLORS.defaultColor, overflow: "hidden", padding: 2}}}
             >
                 <DialogTitle sx={{ padding: 0, paddingTop: 2, paddingBottom: 3}}>
@@ -134,6 +265,7 @@ export default function BookingsUpdate() {
                                 fullWidth
                                 label="Room #"
                                 variant="filled"
+                                onChange={onSearchRoomChange}
                                 sx={textsx}
                             />
                         </Grid>
@@ -143,21 +275,27 @@ export default function BookingsUpdate() {
                                 fullWidth
                                 label="Hotel Address"
                                 variant="filled"
+                                onChange={onSearchAddressChange}
                                 sx={textsx}
                             />
                         </Grid>
                         <Grid item xs={4}>
                             <DatePicker 
-                                label="Start Date" 
+                                label="Start Date"
+                                onChange={onSearchDateChange} 
                                 sx={datesx}
                             />
                         </Grid>
-
+                        {searchError !== '' &&
+                            <Grid item xs={12} color="white" display="flex" justifyContent="center">
+                                <Typography variant="h7" fontWeight="bold" sx={{ top: 0, left: 0, }}>{searchError}</Typography>
+                            </Grid>
+                        }
                         <Grid item xs={12}>
                             <Button
                                 fullWidth 
                                 variant="contained"
-                                onClick={handleClickOpen}
+                                onClick={search}
                                 sx={{
                                     overflow: "visible",
                                     color: 'white', 
@@ -197,6 +335,8 @@ export default function BookingsUpdate() {
                                 fullWidth
                                 label="Room #"
                                 variant="filled"
+                                value={updateText.room_num}
+                                onChange={onUpdateRoomChange}
                                 sx={textsx}
                             />
                         </Grid>
@@ -206,6 +346,8 @@ export default function BookingsUpdate() {
                                 fullWidth
                                 label="Hotel Address"
                                 variant="filled"
+                                value={updateText.hotel}
+                                onChange={onUpdateAddressChange}
                                 sx={textsx}
                             />
                         </Grid>
@@ -215,31 +357,54 @@ export default function BookingsUpdate() {
                                 fullWidth
                                 label="Customer"
                                 variant="filled"
+                                value={updateText.customer}
+                                onChange={onUpdateCustomerChange}
                                 sx={textsx}
                             />
                         </Grid>
                         <Grid item xs={4}>
                             <DatePicker 
-                                label="Start Date" 
+                                label="Start Date"
+                                value={dayjs(updateText.start_date)}
+                                onChange={onUpdateStartDateChange} 
                                 sx={datesx}
                             />
                         </Grid>
 
                         <Grid item xs={4}>
                             <DatePicker 
-                                label="End Date" 
+                                label="End Date"
+                                value={dayjs(updateText.end_date)}
+                                onChange={onUpdateEndDateChange} 
                                 sx={datesx}
                             />
                         </Grid>
                        
                         <Grid item xs={4} display="flex" justifyContent="center">
-                            <FormControlLabel sx={{color: "white"}}control={<Checkbox sx={{color: "white", '& .MuiSvgIcon-root': {fontSize: 28, color:"white"}}}/>} label="Paid for Room" />
+                            <FormControlLabel 
+                                sx={{color: "white"}}
+                                control={
+                                    <Checkbox 
+                                        onChange={onUpdatePaidChange}
+                                        checked={Boolean(updateText.isPaid)} 
+                                        sx={{
+                                            color: "white", 
+                                            '& .MuiSvgIcon-root': {fontSize: 28, color:"white"}
+                                        }}
+                                    />
+                                } 
+                                label="Paid for Room" 
+                            />
                         </Grid>
                     </Grid>
                 </DialogContent>
                 <DialogActions>
+                    {submitError !== '' &&
+                        <Typography variant="h7" fontWeight="bold" sx={{ top: 0, left: 0, color: "white", paddingRight: "10px"}}>{submitError}</Typography>
+                    }
                     <Button 
                         variant="contained"
+                        onClick={submit}
                         sx={{
                             backgroundColor:  COLORS.primaryColor,
                             ':hover': {

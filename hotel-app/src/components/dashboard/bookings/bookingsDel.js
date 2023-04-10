@@ -12,8 +12,8 @@ export default function BookingsDel() {
     const handleClose = () => {
         setOpen(false);
     };
-    const [open, setOpen] = React.useState('');
-    const textsx ={
+    const [open, setOpen] = React.useState(false);
+    const textsx={
         '& .MuiFormHelperText-root': {
             color: "#ffff"
         },

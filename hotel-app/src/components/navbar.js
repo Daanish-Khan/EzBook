@@ -201,7 +201,6 @@ function Navbar({sx, isAdmin, authHandle}) {
                     onClose={handleCloseUserMenu}
                     >
                     {settings.map((setting) => {
-                        console.log(setting)
                         if (setting === 'Logout') {
                             return (
                                 <MenuItem key={setting} onClick={handleLogOut}>

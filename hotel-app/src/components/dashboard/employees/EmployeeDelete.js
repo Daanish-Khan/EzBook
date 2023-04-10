@@ -1,9 +1,9 @@
 import Button from '@mui/material/Button';
 import * as React from 'react';
 import { Typography, Box, TextField, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
-import { COLORS } from './../../consts'
+import { COLORS } from '../../consts'
 
-export default function ChainDel() {
+export default function EmployeeDel() {
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -67,7 +67,7 @@ export default function ChainDel() {
                 }}
             >
                 Delete
-        </Button>
+            </Button>
 
         <Dialog
             open={open}
@@ -75,13 +75,13 @@ export default function ChainDel() {
             sx={{'& .MuiPaper-root': {backgroundColor: COLORS.defaultColor, overflow: "hidden", padding: 2}}}
         >
             <DialogTitle sx={{ padding: 0, paddingTop: 2, paddingBottom: 3}}>
-                <Typography variant="h4" sx={{ top: 0, left: 0, color: "white"}}>Delete Chain</Typography>
+                <Typography variant="h4" sx={{ top: 0, left: 0, color: "white"}}>Delete Employee</Typography>
             </DialogTitle>
             <DialogContent>
                 <TextField
                     required
                     fullWidth
-                    label="Chain Name"
+                    label="SSN"
                     variant="filled"
                     sx={textsx}
                 />

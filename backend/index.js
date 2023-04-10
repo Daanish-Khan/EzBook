@@ -26,6 +26,22 @@
     })
   })
 
+  app.post('/updatesearch', (req, res) => {
+    let q = ""
+
+    if (req.body.search === "booking") {
+      q = `SELECT * FROM bookings WHERE room_num = ${req.body.room_num} AND hotel = '${req.body.hotel}' AND startDate = '${req.body.start_date}';`
+    }
+
+    db.query(q, (err, data) => {
+      if (err) {
+        return res.json(err)
+      }
+
+      return res.json(data)
+    })
+  })
+
   /** Update customer, employee, hotels, rooms
    * 
    * {
@@ -132,7 +148,26 @@
         q += `UPDATE rooms SET 'status' = '${req.body.status}' WHERE room_num = ${req.body.room_num} AND hotel = '${req.body.address}';`
       }
 
-    } 
+    } else if (req.body.updates === "booking") {
+      if ("room_num" in req.body) {
+        q+= `UPDATE bookings SET room_num = ${req.body.room_num} WHERE room_num = ${req.body.room_num} AND hotel = '${req.body.hotel}' AND startDate = '${req.body.start_date}';`
+      }
+      if ("hotel" in req.body) {
+        q+= `UPDATE bookings SET hotel = '${req.body.hotel}' WHERE room_num = ${req.body.room_num} AND hotel = '${req.body.hotel}' AND startDate = '${req.body.start_date}';`
+      }
+      if ("customer" in req.body) {
+        q+= `UPDATE bookings SET customer = ${req.body.customer} WHERE room_num = ${req.body.room_num} AND hotel = '${req.body.hotel}' AND startDate = '${req.body.start_date}';`
+      }
+      if ("start_date" in req.body) {
+        q+= `UPDATE bookings SET startDate = '${req.body.start_date}' WHERE room_num = ${req.body.room_num} AND hotel = '${req.body.hotel}' AND startDate = '${req.body.start_date}';`
+      }
+      if ("end_date" in req.body) {
+        q+= `UPDATE bookings SET endDate = '${req.body.end_date}' WHERE room_num = ${req.body.room_num} AND hotel = '${req.body.hotel}' AND startDate = '${req.body.start_date}';`
+      }
+      if ("isPaid" in req.body) {
+        q+= `UPDATE bookings SET isPaid = ${req.body.isPaid} WHERE room_num = ${req.body.room_num} AND hotel = '${req.body.hotel}' AND startDate = '${req.body.start_date}';`
+      }
+    }
 
     db.query(q, (err, data) => {
       if (err) {

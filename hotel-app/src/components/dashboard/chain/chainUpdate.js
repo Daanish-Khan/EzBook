@@ -11,7 +11,7 @@ export default function ChainUpdate() {
     const handleClose = () => {
         setOpen(false);
     };
-    const [open, setOpen] = React.useState('');
+    const [open, setOpen] = React.useState(false);
     const textsx={
         '& .MuiFormHelperText-root': {
             color: "#ffff"

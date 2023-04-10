@@ -1,10 +1,10 @@
 import Button from '@mui/material/Button';
 import * as React from 'react';
 import { Typography, Grid, Box, TextField, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
-import { COLORS } from './../../consts'
+import { COLORS } from '../../consts'
 
 
-export default function CustomerAdd() {
+export default function EmployeeAdd() {
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -73,7 +73,7 @@ export default function CustomerAdd() {
                 sx={{'& .MuiPaper-root': {backgroundColor: COLORS.defaultColor, overflow: "hidden", padding: 2}}}
             >
                 <DialogTitle sx={{ padding: 0, paddingTop: 2, paddingBottom: 3}}>
-                    <Typography variant="h4" sx={{ top: 0, left: 0, color: "white"}}>Add Customer</Typography>
+                    <Typography variant="h4" sx={{ top: 0, left: 0, color: "white"}}>Add Employee</Typography>
                 </DialogTitle>
                 <DialogContent>
 
@@ -110,6 +110,24 @@ export default function CustomerAdd() {
                                 required
                                 fullWidth
                                 label="Last Name"
+                                variant="filled"
+                                sx={textsx}
+                            />
+                        </Grid>
+                        <Grid item xs={6}>
+                            <TextField
+                                required
+                                fullWidth
+                                label="Works At"
+                                variant="filled"
+                                sx={textsx}
+                            />
+                        </Grid>
+                        <Grid item xs={6}>
+                            <TextField
+                                required
+                                fullWidth
+                                label="Role"
                                 variant="filled"
                                 sx={textsx}
                             />
