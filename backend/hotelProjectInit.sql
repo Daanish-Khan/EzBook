@@ -32,7 +32,6 @@ CREATE TABLE employees (
   full_name VARCHAR(255) NOT NULL,
   address VARCHAR(255) NOT NULL,
   works_at VARCHAR (255) NOT NULL,
-  FOREIGN KEY (works_at) REFERENCES hotels (address),
   role VARCHAR (255) NOT NULL
 );
 
