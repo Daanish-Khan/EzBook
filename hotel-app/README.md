@@ -31,4 +31,12 @@ npm start
 
 The website should now be running on [http://localhost:3000/](http://localhost:3000/)
 
+## Debugging
+
+If there are any issues with the database, run this SQL query:
+```
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';
+```
+This already exists in the SQL script, but sometimes for new installations it doesn't execute. Restarting the workstation also seems to fix some problems. 
+
 
