@@ -1,3 +1,4 @@
+![image](https://user-images.githubusercontent.com/55165113/231558038-5dd91da1-36d3-41fa-a0a9-11307973d295.png)
 # EzBook.: Your one stop hotel booking app
 
 ## Installation
