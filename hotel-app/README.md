@@ -1,70 +1,34 @@
-# Getting Started with Create React App
+# EzBook.: Your one stop hotel booking app
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Installation
+Make sure the repo is locally cloned before installation.
+### NodeJS + NPM
+Install [npm](https://nodejs.org/en/download) here if it is not installed on your system.\
+To verify the installation, use `node -v` and `npm -v` in your terminal. 
 
-## Available Scripts
+### MySQL
+Install [MySQL](https://dev.mysql.com/downloads/installer/) if it not on your system.\
+During setup, **make sure the username and password is root and password, respectively. The DB may not work properly if you do not. All settings are default.**
 
-In the project directory, you can run:
+Once the wizard is completed, you should have MySQL Workbench on your station. 
 
-### `npm start`
+In workbench, login to the default database that was created. Then goto `File > Open SQL Script` Navigate to `backend/hotelProjectInit.sql` and load the script. Execute the script once loaded by clicking on the lighting bolt symbol. This should create the database with the needed data, views, and triggers. 
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Start the backend
+Navigate to `backend` in your terminal. Then run:
+```
+npm i
+npm start
+```
+This should start the backend. To verify, make sure the terminal says `Connected to db!`
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Start the frontend
+Navigate to `hotel-app` in your terminal. Then run:
+```
+npm i
+npm start
+```
 
-### `npm test`
+The website should now be running on [http://localhost:3000/](http://localhost:3000/)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)

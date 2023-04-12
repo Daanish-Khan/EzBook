@@ -1,4 +1,9 @@
-#CREATE SCHEMA hotelProjectSchema; #NEEDED IF CREATING FROM SCRATCH.
+CREATE SCHEMA hotel_project_db; #NEEDED IF CREATING FROM SCRATCH.
+
+CREATE DATABASE IF NOT EXISTS hotel_project_db;
+USE hotel_project_db;
+
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';
 
 CREATE TABLE hotelChains (
   name VARCHAR(255) PRIMARY KEY NOT NULL,
@@ -62,8 +67,8 @@ CREATE TABLE bookings (
   FOREIGN KEY (customer) REFERENCES customers (SSN),
   PRIMARY KEY (hotel, room_num, startDate),
   isPaid BOOLEAN NOT NULL DEFAULT false,
-  startDate datetime NOT NULL,
-  endDate datetime NOT NULL
+  startDate date NOT NULL,
+  endDate date NOT NULL
 );
 
 CREATE TABLE emails (#stores all emails for chains and hotels
@@ -444,5 +449,30 @@ SET foreign_key_checks = 1;
 create index room_status_index on rooms (status);
 create index hotel_city_index on hotels (city);
 create index room_capacity_index on rooms (capacity);
+
+DELIMITER $$
+CREATE TRIGGER delHotels  BEFORE DELETE ON hotelchains
+       FOR EACH ROW 
+       BEGIN
+			delete from hotels where chainName = old.name;
+	   END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE TRIGGER delRooms  BEFORE DELETE ON hotels
+       FOR EACH ROW 
+       BEGIN
+			delete from rooms where hotel = old.address;
+	   END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE TRIGGER delWorksAt BEFORE DELETE ON hotels
+      FOR EACH ROW
+      BEGIN
+    UPDATE employees SET role = "Unassigned" WHERE works_at = old.address;
+    UPDATE employees SET works_at = "Unassigned" WHERE works_at = old.address;
+    END$$
+DELIMITER ;
 
 
