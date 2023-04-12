@@ -2,6 +2,7 @@ import Button from '@mui/material/Button';
 import * as React from 'react';
 import { Typography, Box, TextField, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
 import { COLORS } from '../../consts'
+import axios from 'axios';
 
 export default function EmployeeDel() {
 
@@ -49,6 +50,55 @@ export default function EmployeeDel() {
         },
         
     }
+    const [updateText, setUpdateText] = React.useState({
+        delete: "employees",
+        SSN: "",
+    })
+    const [submitError, setSubmitError] = React.useState('')
+
+
+    const onUpdateSSNChange = e => {
+        setUpdateText({ ...updateText, SSN: e.target.value });
+    }
+
+
+
+
+
+
+    const submit = async () => {
+        if (
+            updateText.SSN==="") {
+            setSubmitError('Fields must not be empty!')
+            return
+        }
+
+
+        if (!/^\d+$/.test(updateText.SSN)) {
+            setSubmitError('SSN must only contain digits.')
+            return
+        }
+
+        try {
+            console.log(updateText)
+            const res = await axios.post('http://localhost:8800/delete', updateText)
+            console.log(res.data)
+            if (Object.keys(res.data)["code"] !== undefined || res.data.length === 0) {
+                setSubmitError('Something went wrong with the search. Please try again.')
+                return
+            }
+            setSubmitError('')
+            setUpdateText({
+                delete: "employees",
+                SSN: "",
+
+            })
+            setOpen(false)
+        } catch (err) {
+            console.log(err);
+        }
+
+    }
 
     return (
         <Box justifyContent={'center'} alignItems={'center'}>
@@ -83,12 +133,18 @@ export default function EmployeeDel() {
                     fullWidth
                     label="SSN"
                     variant="filled"
+                    onChange={onUpdateSSNChange}
+                    value={updateText.SSN}
                     sx={textsx}
                 />
             </DialogContent>
             <DialogActions>
+            {submitError !== '' &&
+                        <Typography variant="h7" fontWeight="bold" sx={{ top: 0, left: 0, color: "white", paddingRight: "10px"}}>{submitError}</Typography>
+                    }
                 <Button 
                     variant="contained"
+                    onClick={submit}
                     sx={{
                         backgroundColor:  COLORS.primaryColor,
                         ':hover': {

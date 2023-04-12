@@ -2,6 +2,7 @@ import Button from '@mui/material/Button';
 import * as React from 'react';
 import { Typography, Grid, Box, TextField, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
 import { COLORS } from './../../consts'
+import axios from 'axios';
 
 export default function ChainAdd() {
 
@@ -10,6 +11,15 @@ export default function ChainAdd() {
     };
     const handleClose = () => {
         setOpen(false);
+        setUpdateText({
+            insert: "chain",
+            chain_name:"",
+            address:"",
+            city:"",
+            country:"",
+            num_hotels:""
+        })
+        setSubmitError('')
     };
     const [open, setOpen] = React.useState(false);
     const textsx ={
@@ -72,6 +82,75 @@ export default function ChainAdd() {
             borderColor: COLORS.primaryColor + " !important",
         }, 
     }
+    const [updateText, setUpdateText] = React.useState({
+        insert: "chain",
+        chain_name:"",
+        address:"",
+        city:"",
+        country:"",
+        num_hotels:""
+    })
+    const [submitError, setSubmitError] = React.useState('')
+
+    const onUpdateAddressChange = e => {
+        setUpdateText({ ...updateText, address: e.target.value });
+    }
+    const onUpdateChainNameChange = e => {
+        setUpdateText({ ...updateText, chain_name: e.target.value });
+    }
+    const onUpdateCityChange = e => {
+        setUpdateText({...updateText, city: e.target.value});
+    }
+    const onUpdateCountryChange = e => {
+        setUpdateText({...updateText, country: e.target.value});
+    }
+    const onUpdateNumHotelsChange = e =>{
+        setUpdateText({...updateText, num_hotels: e.target.value});
+        
+    }
+
+
+
+    const submit = async () => {
+        if (
+            updateText.address === "" ||
+            updateText.chain_name === "" ||
+            updateText.country === "" ||
+            updateText.city === ""||
+            updateText.num_hotels==="") {
+            setSubmitError('Fields must not be empty!')
+            return
+        }
+
+
+        if (!/^\d+$/.test(updateText.num_hotels)) {
+            setSubmitError('SSN must only contain digits.')
+            return
+        }
+
+        try {
+            console.log(updateText)
+            const res = await axios.post('http://localhost:8800/insert', updateText)
+            console.log(res.data)
+            if (Object.keys(res.data)["code"] !== undefined || res.data.length === 0) {
+                setSubmitError('Something went wrong with the search. Please try again.')
+                return
+            }
+            setSubmitError('')
+            setUpdateText({
+                insert: "chain",
+                chain_name:"",
+                address:"",
+                city:"",
+                country:"",
+                num_hotels:""
+            })
+            setOpen(false)
+        } catch (err) {
+            console.log(err);
+        }
+
+    }
 
     return (
         <Box justifyContent={'center'} alignItems={'center'}>
@@ -108,6 +187,8 @@ export default function ChainAdd() {
                                 fullWidth
                                 label="Name"
                                 variant="filled"
+                                onChange={onUpdateChainNameChange}
+                                value={updateText.chain_name}
                                 sx={textsx}
                             />
                         </Grid>
@@ -116,6 +197,8 @@ export default function ChainAdd() {
                                 required
                                 fullWidth
                                 label="Office Address"
+                                onChange={onUpdateAddressChange}
+                                value={updateText.address}
                                 variant="filled"
                                 sx={textsx}
                             />
@@ -125,6 +208,8 @@ export default function ChainAdd() {
                                 required
                                 fullWidth
                                 label="City"
+                                onChange={onUpdateCityChange}
+                                value={updateText.city}
                                 variant="filled"
                                 sx={textsx}
                             />
@@ -135,6 +220,8 @@ export default function ChainAdd() {
                                 fullWidth
                                 label="Country"
                                 variant="filled"
+                                onChange={onUpdateCountryChange}
+                                value={updateText.country}
                                 sx={textsx}
                             />
                         </Grid>
@@ -143,6 +230,8 @@ export default function ChainAdd() {
                                 required
                                 fullWidth
                                 label="# of Hotels"
+                                onChange={onUpdateNumHotelsChange}
+                                value={updateText.num_hotels}
                                 variant="filled"
                                 sx={textsx}
                             />
@@ -150,9 +239,14 @@ export default function ChainAdd() {
                     </Grid>
                 </DialogContent>
                 <DialogActions>
+                {submitError !== '' &&
+                        <Typography variant="h7" fontWeight="bold" sx={{ top: 0, left: 0, color: "white", paddingRight: "10px"}}>{submitError}</Typography>
+                    }
                     <Button 
                         variant="contained"
+                        onClick={submit}
                         sx={{
+                            
                             backgroundColor:  COLORS.primaryColor,
                             ':hover': {
                                 backgroundColor: COLORS.primaryFocusedColor

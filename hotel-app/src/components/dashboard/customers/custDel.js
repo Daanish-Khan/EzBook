@@ -2,6 +2,7 @@ import Button from '@mui/material/Button';
 import * as React from 'react';
 import { Typography, Box, TextField, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
 import { COLORS } from './../../consts'
+import axios from 'axios';
 
 export default function CustomerDel() {
 
@@ -10,6 +11,7 @@ export default function CustomerDel() {
       };
     const handleClose = () => {
         setOpen(false);
+        setUpdateText({SSN:"" })
     };
     const [open, setOpen] = React.useState(false);
     const textsx={
@@ -49,6 +51,57 @@ export default function CustomerDel() {
         },
         
     }
+    const [updateText, setUpdateText] = React.useState({
+        delete: "customer",
+        SSN: "",
+    })
+    const [submitError, setSubmitError] = React.useState('')
+
+
+    const onUpdateSSNChange = e => {
+        setUpdateText({ ...updateText, SSN: e.target.value });
+    }
+
+
+
+
+
+
+    const submit = async () => {
+        if (
+            updateText.address === "" ||
+            updateText.startDate === "" ||
+            updateText.SSN==="") {
+            setSubmitError('Fields must not be empty!')
+            return
+        }
+
+
+        if (!/^\d+$/.test(updateText.SSN)) {
+            setSubmitError('SSN must only contain digits.')
+            return
+        }
+
+        try {
+            console.log(updateText)
+            const res = await axios.post('http://localhost:8800/delete', updateText)
+            console.log(res.data)
+            if (Object.keys(res.data)["code"] !== undefined || res.data.length === 0) {
+                setSubmitError('Something went wrong with the search. Please try again.')
+                return
+            }
+            setSubmitError('')
+            setUpdateText({
+                delete: "customer",
+                SSN: "",
+
+            })
+            setOpen(false)
+        } catch (err) {
+            console.log(err);
+        }
+
+    }
 
     return (
         <Box justifyContent={'center'} alignItems={'center'}>
@@ -83,11 +136,17 @@ export default function CustomerDel() {
                     fullWidth
                     label="SSN"
                     variant="filled"
+                    value={updateText.SSN}
+                    onChange={onUpdateSSNChange}
                     sx={textsx}
                 />
             </DialogContent>
             <DialogActions>
+            {submitError !== '' &&
+                        <Typography variant="h7" fontWeight="bold" sx={{ top: 0, left: 0, color: "white", paddingRight: "10px"}}>{submitError}</Typography>
+                    }
                 <Button 
+                    onClick={submit}
                     variant="contained"
                     sx={{
                         backgroundColor:  COLORS.primaryColor,

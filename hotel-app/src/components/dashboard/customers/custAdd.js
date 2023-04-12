@@ -2,7 +2,8 @@ import Button from '@mui/material/Button';
 import * as React from 'react';
 import { Typography, Grid, Box, TextField, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
 import { COLORS } from './../../consts'
-
+import axios from 'axios';
+import dayjs from 'dayjs';
 
 export default function CustomerAdd() {
 
@@ -11,6 +12,13 @@ export default function CustomerAdd() {
     };
     const handleClose = () => {
         setOpen(false);
+        setUpdateText({
+            insert:"customer",
+            name: "",
+            address: "",
+            startDate: dayjs(new Date()),
+            SSN: "",
+        })
     };
     const [open, setOpen] = React.useState(false);
      const textsx ={
@@ -46,6 +54,67 @@ export default function CustomerAdd() {
         '& .MuiFilledInput-underline:before': {
             borderBottomColor: COLORS.defaultColor,
         },
+    }
+    const [updateText, setUpdateText] = React.useState({
+        insert: "customer",
+        name: "",
+        address: "",
+        startDate: new Date().toLocaleString('en-CA', {timeZone: "America/Toronto"}).split(',')[0],
+        SSN: "",
+    })
+    const [submitError, setSubmitError] = React.useState('')
+
+    const onUpdateAddressChange = e => {
+        setUpdateText({ ...updateText, address: e.target.value });
+    }
+    const onUpdateSSNChange = e => {
+        setUpdateText({ ...updateText, SSN: e.target.value });
+    }
+    const onUpdateNameChange = e => {
+        setUpdateText({...updateText, name: e.target.value});
+    }
+
+
+
+
+
+    const submit = async () => {
+        if (
+            updateText.address === "" ||
+            updateText.startDate === "" ||
+            updateText.SSN==="") {
+            setSubmitError('Fields must not be empty!')
+            return
+        }
+
+
+        if (!/^\d+$/.test(updateText.SSN)) {
+            setSubmitError('SSN must only contain digits.')
+            return
+        }
+
+        try {
+            console.log(updateText)
+            const res = await axios.post('http://localhost:8800/insert', updateText)
+            console.log(res.data)
+            if (Object.keys(res.data)["code"] !== undefined || res.data.length === 0) {
+                setSubmitError('Something went wrong with the search. Please try again.')
+                return
+            }
+            setSubmitError('')
+            setUpdateText({
+                insert: "customer",
+                name: "",
+                address: "",
+                startDate: new Date().toLocaleString('en-CA', {timeZone: "America/Toronto"}).split(',')[0],
+                SSN: "",
+
+            })
+            setOpen(false)
+        } catch (err) {
+            console.log(err);
+        }
+
     }
 
     return (
@@ -83,6 +152,8 @@ export default function CustomerAdd() {
                                 required
                                 fullWidth
                                 label="SSN"
+                                onChange={onUpdateSSNChange}
+                                value={updateText.SSN}
                                 variant="filled"
                                 sx={textsx}
                             />
@@ -91,25 +162,20 @@ export default function CustomerAdd() {
                             <TextField
                                 required
                                 fullWidth
+                                onChange={onUpdateAddressChange}
+                                value={updateText.address}
                                 label="Address"
                                 variant="filled"
                                 sx={textsx}
                             />
                         </Grid>
-                        <Grid item xs={6}>
+                        <Grid item xs={12}>
                             <TextField
                                 required
                                 fullWidth
-                                label="First Name"
-                                variant="filled"
-                                sx={textsx}
-                            />
-                        </Grid>
-                        <Grid item xs={6}>
-                            <TextField
-                                required
-                                fullWidth
-                                label="Last Name"
+                                onChange={onUpdateNameChange}
+                                value={updateText.name}
+                                label="Full Name"
                                 variant="filled"
                                 sx={textsx}
                             />
@@ -118,7 +184,11 @@ export default function CustomerAdd() {
 
                 </DialogContent>
                 <DialogActions>
+                {submitError !== '' &&
+                        <Typography variant="h7" fontWeight="bold" sx={{ top: 0, left: 0, color: "white", paddingRight: "10px"}}>{submitError}</Typography>
+                    }
                     <Button 
+                    onClick={submit}
                         variant="contained"
                         sx={{
                             backgroundColor:  COLORS.primaryColor,

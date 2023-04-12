@@ -2,6 +2,7 @@ import Button from '@mui/material/Button';
 import * as React from 'react';
 import { Typography, Box, TextField, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
 import { COLORS } from './../../consts'
+import axios from 'axios';
 
 export default function ChainDel() {
 
@@ -49,6 +50,50 @@ export default function ChainDel() {
         },
         
     }
+    const [updateText, setUpdateText] = React.useState({
+        delete: "chain",
+        name: "",
+    })
+    const [submitError, setSubmitError] = React.useState('')
+
+
+    const onUpdateNameChange = e => {
+        setUpdateText({ ...updateText, name: e.target.value });
+    }
+
+
+
+
+
+
+    const submit = async () => {
+        if (
+            updateText.name==="") {
+            setSubmitError('Fields must not be empty!')
+            return
+        }
+
+
+        try {
+            console.log(updateText)
+            const res = await axios.post('http://localhost:8800/delete', updateText)
+            console.log(res.data)
+            if (Object.keys(res.data)["code"] !== undefined || res.data.length === 0) {
+                setSubmitError('Something went wrong with the search. Please try again.')
+                return
+            }
+            setSubmitError('')
+            setUpdateText({
+                delete: "chain",
+                name: "",
+
+            })
+            setOpen(false)
+        } catch (err) {
+            console.log(err);
+        }
+
+    }
 
     return (
         <Box justifyContent={'center'} alignItems={'center'}>
@@ -81,14 +126,20 @@ export default function ChainDel() {
                 <TextField
                     required
                     fullWidth
+                    value={updateText.name}
+                    onChange={onUpdateNameChange}
                     label="Chain Name"
                     variant="filled"
                     sx={textsx}
                 />
             </DialogContent>
             <DialogActions>
+            {submitError !== '' &&
+                        <Typography variant="h7" fontWeight="bold" sx={{ top: 0, left: 0, color: "white", paddingRight: "10px"}}>{submitError}</Typography>
+                    }
                 <Button 
                     variant="contained"
+                    onClick={submit}
                     sx={{
                         backgroundColor:  COLORS.primaryColor,
                         ':hover': {

@@ -2,6 +2,7 @@ import Button from '@mui/material/Button';
 import * as React from 'react';
 import { Grid, Typography, Box, TextField, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
 import { COLORS } from './../../consts'
+import axios from 'axios';
 
 export default function RoomDel() {
 
@@ -49,6 +50,55 @@ export default function RoomDel() {
         },
         
     }
+    const [updateText, setUpdateText] = React.useState({
+        delete: "room",
+        room_num: "",
+        address:""
+    })
+    const [submitError, setSubmitError] = React.useState('')
+
+
+    const onUpdateRoomNumChange = e => {
+        setUpdateText({ ...updateText, room_num: e.target.value });
+    }
+    const onUpdateAddressChange = e => {
+        setUpdateText({ ...updateText, address: e.target.value });
+    }
+
+
+
+
+
+
+    const submit = async () => {
+        if (
+            updateText.room_num==="") {
+            setSubmitError('Fields must not be empty!')
+            return
+        }
+
+
+        try {
+            console.log(updateText)
+            const res = await axios.post('http://localhost:8800/delete', updateText)
+            console.log(res.data)
+            if (Object.keys(res.data)["code"] !== undefined || res.data.length === 0) {
+                setSubmitError('Something went wrong with the search. Please try again.')
+                return
+            }
+            setSubmitError('')
+            setUpdateText({
+                delete: "room",
+                room_num: "",
+                address:""
+
+            })
+            setOpen(false)
+        } catch (err) {
+            console.log(err);
+        }
+
+    }
 
     return (
         <Box justifyContent={'center'} alignItems={'center'}>
@@ -85,6 +135,8 @@ export default function RoomDel() {
                                 fullWidth
                                 label="Room #"
                                 variant="filled"
+                                value={updateText.room_num}
+                                onChange={onUpdateRoomNumChange}
                                 sx={textsx}
                             />
                         </Grid>
@@ -93,6 +145,8 @@ export default function RoomDel() {
                                 required
                                 fullWidth
                                 label="Hotel Address"
+                                value={updateText.address}
+                                onChange={onUpdateAddressChange}
                                 variant="filled"
                                 sx={textsx}
                             />
@@ -101,7 +155,11 @@ export default function RoomDel() {
                     
                 </DialogContent>
                 <DialogActions>
+                {submitError !== '' &&
+                        <Typography variant="h7" fontWeight="bold" sx={{ top: 0, left: 0, color: "white", paddingRight: "10px"}}>{submitError}</Typography>
+                    }
                     <Button 
+                        onClick={submit}
                         variant="contained"
                         sx={{
                             backgroundColor:  COLORS.primaryColor,

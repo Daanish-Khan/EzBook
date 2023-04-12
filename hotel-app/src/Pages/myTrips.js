@@ -1,5 +1,5 @@
 import { Container } from '@mui/system';
-import './customerBookings.css';
+import './myTrips.css';
 import { COLORS } from '../components/consts'
 import { Stack, Box } from '@mui/material';
 import Navbar from '../components/navbar';
@@ -13,70 +13,12 @@ import BookingModal from '../components/BookingModal';
 import { useNavigate } from 'react-router-dom';
 
 export default function CustomerBookings({auth, authHandle}) {
-
+    const handleClickBooking = () => {
+        console.log(":)")
+    };
     const [data, setData] = React.useState([]);
-    const [modalOpen, setModalOpen] = React.useState({open: false, title: ""});
-    const [currentSelection, setCurrentSelection] = React.useState({});
-    const [chipData, setChipData] = React.useState(
-        {
-            start_date: "",
-            end_date: "",
-            room_capacity: "",
-            city: "",
-            country: "",
-            chain: "",
-            rating: "",
-            num_rooms: "",
-            price_low: "",
-            price_high: ""
-        }
-    );
-    const [chipCategories, setChipCategories] = React.useState({});
-    const [rentText, setRentText] = React.useState('');
-    const [rentError, setRentError] = React.useState(false)
-
-    const bookingClick = (booking, data) => {
-        data.start_date=chipData.start_date
-        data.end_date=chipData.end_date
-        setCurrentSelection(data);
-        setModalOpen({open: true, title: booking});
-    }
-
-    const handleModalClose = () => {
-        setModalOpen({open: false, title: ""})
-    }
-
-    const onBookNowClick = async () => {
-
-        if (!auth.isAdmin) {
-            try {
-                const res = await axios.post('http://localhost:8800/book', currentSelection)
-                setModalOpen({open: false, title: ""})
-            } catch (err) {
-                console.log(err)
-            }
-        } else {
-            if (rentText === "" || !/^\d+$/.test(rentText)) {
-                setRentError(true);
-                return;
-            } else {
-                setRentError(false);
-
-                try {
-                    let q = currentSelection;
-                    q.rent_now = true
-                    q.customer = rentText
-                    const res = await axios.post('http://localhost:8800/rent', q)
-                    setModalOpen({open: false, title: ""})
-                } catch (err) {
-                    console.log(err)
-                }
-            }
-        }
-    }
-
     const navigator = useNavigate();
-
+    const myTripsData = {SSN:auth.SSN}
     React.useEffect(() => {
         if (auth.SSN === 0) {
             navigator('/');
@@ -87,18 +29,19 @@ export default function CustomerBookings({auth, authHandle}) {
 
         const fetch = async () => {
             try {
-                const bookings = await axios.post("http://localhost:8800/query", chipData)
-                const categories = await axios.get("http://localhost:8800/categories")
+                console.log()
+                const bookings = await axios.post("http://localhost:8800/myTrips", myTripsData )
+                console.log(bookings.data)
                 setData(bookings.data)
-                setChipCategories(categories.data)
             } catch (err) {
-                console.log(err)
+                console.log(err.message)
+                console.log("hi :)")
             }
         }
 
         fetch();
         
-    }, [chipData, modalOpen]);
+    }, []);
 
     return (
         <Container disableGutters maxWidth="false"
@@ -137,7 +80,7 @@ export default function CustomerBookings({auth, authHandle}) {
                 />
             
             <Stack useFlexGap sx={{width: "100vw", height: "100vh"}} spacing={0} >
-                <Navbar onBookingsPage={true}
+                <Navbar onBookingsPage={false}
                     sx={{
                         borderBottomLeftRadius: "20px", 
                         borderBottomRightRadius: "20px", 
@@ -152,7 +95,6 @@ export default function CustomerBookings({auth, authHandle}) {
                     authHandle={authHandle}
                 />
                 
-                <Chips chipHandle={setChipData} chipCategories={chipCategories} />
                 
                 <Box
                     sx={{
@@ -171,8 +113,7 @@ export default function CustomerBookings({auth, authHandle}) {
                         boxShadow: "0 25px 50px #0000001a",
                     }}
                 >
-                    <BookingList gutter_size={5} itemCount={Object.keys(data).length} auth={auth} data={data} bookingClick={bookingClick} />
-                    <BookingModal open={modalOpen} handleClose={handleModalClose} isAdmin={auth.isAdmin} bookClick={onBookNowClick} setText={setRentText} isError={rentError}/>
+                    <BookingList gutter_size={5} itemCount={Object.keys(data).length} auth={auth} data={data} bookingClick={handleClickBooking}/>
                 </Box>
             </Stack>
         </Container>
