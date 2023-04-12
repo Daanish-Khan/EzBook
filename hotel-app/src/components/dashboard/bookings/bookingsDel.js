@@ -3,6 +3,8 @@ import * as React from 'react';
 import { Typography, Grid, Box, TextField, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
 import { COLORS } from './../../consts'
 import { DatePicker } from '@mui/x-date-pickers/DatePicker'
+import axios from 'axios';
+import dayjs from 'dayjs';
 
 export default function BookingsDel() {
 
@@ -78,6 +80,64 @@ export default function BookingsDel() {
         },
         
     }
+    const [updateText, setUpdateText] = React.useState({
+        delete: "booking",
+        room_num: "",
+        address:"",
+        startDate:""
+    })
+    const [submitError, setSubmitError] = React.useState('')
+
+
+    const onUpdateRoomNumChange = e => {
+        setUpdateText({ ...updateText, room_num: e.target.value });
+    }
+    const onUpdateAddressChange = e => {
+        setUpdateText({ ...updateText, address: e.target.value });
+    }
+    const onUpdateStartDateChange = e => {
+        setUpdateText({...updateText, startDate: new Date(e).toLocaleString('en-CA', {timeZone: "America/Toronto"}).split(',')[0]});
+    }
+
+
+
+
+
+    const submit = async () => {
+        if (
+            updateText.room_num===""|| updateText.address===""||updateText.startDate==="") {
+            setSubmitError('Fields must not be empty!')
+            return
+        }
+
+
+        if (!/^\d+$/.test(updateText.room_num)) {
+            setSubmitError('Room Number must only contain digits.')
+            return
+        }
+
+        try {
+            console.log(updateText)
+            const res = await axios.post('http://localhost:8800/delete', updateText)
+            console.log(res.data)
+            if (Object.keys(res.data)["code"] !== undefined || res.data.length === 0) {
+                setSubmitError('Something went wrong with the search. Please try again.')
+                return
+            }
+            setSubmitError('')
+            setUpdateText({
+                delete: "booking",
+                room_num: "",
+                address:"",
+                startDate:""
+
+            })
+            setOpen(false)
+        } catch (err) {
+            console.log(err);
+        }
+
+    }
 
 
     return (
@@ -115,6 +175,8 @@ export default function BookingsDel() {
                                 fullWidth
                                 label="Room #"
                                 variant="filled"
+                                value={updateText.room_num}
+                                onChange={onUpdateRoomNumChange} 
                                 sx={textsx}
                             />
                         </Grid>
@@ -124,12 +186,16 @@ export default function BookingsDel() {
                                 fullWidth
                                 label="Hotel Address"
                                 variant="filled"
+                                value={updateText.address}
+                                onChange={onUpdateAddressChange} 
                                 sx={textsx}
                             />
                         </Grid>
                         <Grid item xs={4}>
                             <DatePicker 
                                 label="Start Date" 
+                                value={dayjs(updateText.startDate)}
+                                onChange={onUpdateStartDateChange} 
                                 sx={datesx}
                             />
                         </Grid>
@@ -137,8 +203,12 @@ export default function BookingsDel() {
 
                 </DialogContent>
                 <DialogActions>
+                {submitError !== '' &&
+                        <Typography variant="h7" fontWeight="bold" sx={{ top: 0, left: 0, color: "white", paddingRight: "10px"}}>{submitError}</Typography>
+                    }
                     <Button 
                         variant="contained"
+                        onClick={submit}
                         sx={{
                             backgroundColor:  COLORS.primaryColor,
                             ':hover': {

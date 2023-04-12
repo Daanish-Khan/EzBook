@@ -3,6 +3,8 @@ import * as React from 'react';
 import { Grid, Divider, Typography, Box, TextField, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
 import { COLORS } from '../../consts'
 import { DatePicker } from '@mui/x-date-pickers'
+import axios from 'axios';
+import { onSpaceOrEnter } from '@mui/x-date-pickers/internals';
 
 
 export default function EmployeeUpdate() {
@@ -12,6 +14,16 @@ export default function EmployeeUpdate() {
     };
     const handleClose = () => {
         setOpen(false);
+        setUpdateText({
+            updates: "employee",
+            SSN:"",
+            address:"",
+            full_name:"",
+            role:"",
+            worksat:""
+        })
+        setSearchError('')
+        setSubmitError('')
     };
     const [open, setOpen] = React.useState(false);
     const textsx={
@@ -79,6 +91,116 @@ export default function EmployeeUpdate() {
         },
         
     }
+    const [searchText, setSearchText] = React.useState({search: "employee", SSN: ""});
+    const [updateText, setUpdateText] = React.useState({
+        updates: "employee",
+        SSN:"",
+        address:"",
+        full_name:"",
+        worksat:"",
+        role:""
+    })
+    const [searchError, setSearchError] = React.useState('')
+    const [submitError, setSubmitError] = React.useState('')
+
+    const onSearchSSN = e => {
+        setSearchText({...searchText, SSN: e.target.value});
+    }
+    const onUpdateAddressChange = e => {
+        setUpdateText({...updateText, address: e.target.value});
+    }
+    const onUpdateNameChange = e => {
+        setUpdateText({...updateText, full_name: e.target.value});
+    }
+    const onUpdateRoleChange = e => {
+        setUpdateText({...updateText, role : e.target.value});
+    }
+    const onUpdateWorkChange = e => {
+        setUpdateText({...updateText, worksat : e.target.value});
+    }
+
+
+    const search = async () => {
+        
+        if (searchText.chain_name === "") {
+            setSearchError('Field must not be empty!')
+            return
+        }
+        if (!/^\d+$/.test(searchText.SSN)) {
+            setSearchError('# of Hotels must only contain digits.')
+            return
+        }
+
+        try {
+            console.log(searchText)
+            const res = await axios.post('http://localhost:8800/updatesearch', searchText)
+            if (Object.keys(res.data)["code"] !== undefined || res.data.length === 0) {
+                setSearchError('Something went wrong with the search. Please try again.')
+                return
+            }
+            setSearchError('')
+            setUpdateText({
+                updates: "employee",
+                SSN:res.data[0].SSN,
+                address:res.data[0].address,
+                full_name:res.data[0].full_name,
+                worksat:res.data[0].works_at,
+                role:res.data[0].role
+                
+                
+            })
+
+        } catch (err) {
+            console.log(err);
+            
+        }
+    }
+
+    const submit = async () => {
+        if (
+            searchText.SSN === "" || 
+            updateText.address === "" ||
+            updateText.full_name === "" ||
+            updateText.role === ""||
+            updateText.worksat==="") {
+            setSubmitError('Fields must not be empty!')
+            return
+        }
+
+
+        if (!/^\d+$/.test(searchText.SSN)) {
+            setSubmitError('SSN must only contain digits.')
+            return
+        }
+        if (searchText.SSN === "") {
+            setSearchError('SSN must not be empty!')
+            return
+        }
+
+        try {
+            console.log(updateText)
+            const res = await axios.post('http://localhost:8800/update', updateText)
+            console.log(res.data)
+            if (Object.keys(res.data)["code"] !== undefined || res.data.length === 0) {
+                setSubmitError('Something went wrong with the search. Please try again.')
+                return
+            }
+            setSubmitError('')
+            setSearchError('')
+            setUpdateText({
+                updates: "employee",
+                SSN:"",
+                address:"",
+                full_name:"",
+                role:"",
+                worksat:""
+            })
+            setOpen(false)
+        } catch (err) {
+            console.log(err);
+        }
+
+    }
 
     return (
         <Box justifyContent={'center'} alignItems={'center'}>
@@ -135,6 +257,7 @@ export default function EmployeeUpdate() {
                                 fullWidth
                                 label="SSN"
                                 variant="filled"
+                                onChange={onSearchSSN}
                                 sx={textsx}
                             />
                         </Grid>
@@ -142,7 +265,7 @@ export default function EmployeeUpdate() {
                             <Button
                                 fullWidth 
                                 variant="contained"
-                                onClick={handleClickOpen}
+                                onClick={search}
                                 sx={{
                                     overflow: "visible",
                                     color: 'white', 
@@ -157,6 +280,11 @@ export default function EmployeeUpdate() {
                                 Search Records
                             </Button>
                         </Grid>
+                        {searchError !== '' &&
+                            <Grid item xs={12} color="white" display="flex" justifyContent="center">
+                                <Typography variant="h7" fontWeight="bold" sx={{ top: 0, left: 0, }}>{searchError}</Typography>
+                            </Grid>
+                        }
                         <Grid item xs={12}>
                             <Divider 
                                 sx={{
@@ -179,17 +307,10 @@ export default function EmployeeUpdate() {
                             <TextField
                                 required
                                 fullWidth
-                                label="SSN"
-                                variant="filled"
-                                sx={textsx}
-                            />
-                        </Grid>
-                        <Grid item xs={6}>
-                            <TextField
-                                required
-                                fullWidth
                                 label="Address"
                                 variant="filled"
+                                value={updateText.address}
+                                onChange={onUpdateAddressChange}
                                 sx={textsx}
                             />
                         </Grid>
@@ -197,17 +318,10 @@ export default function EmployeeUpdate() {
                             <TextField
                                 required
                                 fullWidth
-                                label="First Name"
+                                label="Full Name"
                                 variant="filled"
-                                sx={textsx}
-                            />
-                        </Grid>
-                        <Grid item xs={6}>
-                            <TextField
-                                required
-                                fullWidth
-                                label="Last Name"
-                                variant="filled"
+                                value={updateText.full_name}
+                                onChange={onUpdateNameChange}
                                 sx={textsx}
                             />
                         </Grid>
@@ -217,6 +331,8 @@ export default function EmployeeUpdate() {
                                 fullWidth
                                 label="Works At"
                                 variant="filled"
+                                value={updateText.worksat}
+                                onChange={onUpdateWorkChange}
                                 sx={textsx}
                             />
                         </Grid>
@@ -226,14 +342,20 @@ export default function EmployeeUpdate() {
                                 fullWidth
                                 label="Role"
                                 variant="filled"
+                                value={updateText.role}
+                                onChange={onUpdateRoleChange}
                                 sx={textsx}
                             />
                         </Grid>
                     </Grid>
                 </DialogContent>
                 <DialogActions>
+                {submitError !== '' &&
+                        <Typography variant="h7" fontWeight="bold" sx={{ top: 0, left: 0, color: "white", paddingRight: "10px"}}>{submitError}</Typography>
+                    }
                     <Button 
                         variant="contained"
+                        onClick={submit}
                         sx={{
                             backgroundColor:  COLORS.primaryColor,
                             ':hover': {

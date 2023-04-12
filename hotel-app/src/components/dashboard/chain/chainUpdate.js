@@ -2,6 +2,7 @@ import Button from '@mui/material/Button';
 import * as React from 'react';
 import { Divider, Typography, Grid, Box, TextField, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
 import { COLORS } from './../../consts'
+import axios from 'axios';
 
 export default function ChainUpdate() {
 
@@ -10,6 +11,16 @@ export default function ChainUpdate() {
     };
     const handleClose = () => {
         setOpen(false);
+        setUpdateText({
+            updates: "chain",
+            chain_name:"",
+            num_hotels: "",
+            city:"",
+            country:"",
+            address:"",
+        })
+        setSearchError('')
+        setSubmitError('')
     };
     const [open, setOpen] = React.useState(false);
     const textsx={
@@ -77,6 +88,110 @@ export default function ChainUpdate() {
         },
         
     }
+    const [searchText, setSearchText] = React.useState({search: "chain", chain_name: ""});
+    const [updateText, setUpdateText] = React.useState({
+        updates: "chain",
+        chain_name:"",
+        num_hotels: "",
+        city:"",
+        country:"",
+        address:"",
+    })
+    const [searchError, setSearchError] = React.useState('')
+    const [submitError, setSubmitError] = React.useState('')
+
+    const onSearchChainName = e => {
+        setSearchText({...searchText, chain_name: e.target.value});
+    }
+    const onUpdateAddressChange = e => {
+        setUpdateText({...updateText, address: e.target.value});
+    }
+    const onUpdateCityChange = e => {
+        setUpdateText({...updateText, city: e.target.value});
+    }
+    const onUpdateCountryChange = e => {
+        setUpdateText({...updateText,country: e.target.value });
+    }
+    const onUpdateNumHotelsChange = e => {
+        setUpdateText({...updateText, num_hotels: e.target.value});
+    }
+
+    const search = async () => {
+        
+        if (searchText.chain_name === "") {
+            setSearchError('Field must not be empty!')
+            return
+        }
+
+        try {
+            console.log(searchText)
+            const res = await axios.post('http://localhost:8800/updatesearch', searchText)
+            if (Object.keys(res.data)["code"] !== undefined || res.data.length === 0) {
+                setSearchError('Something went wrong with the search. Please try again.')
+                return
+            }
+            setSearchError('')
+            setUpdateText({
+                updates: "chain",
+                chain_name:res.data[0].name,
+                num_hotels: res.data[0].num_hotels,
+                country: res.data[0].country,
+                city: res.data[0].city,
+                address: res.data[0].office_address,
+                
+                
+            })
+
+        } catch (err) {
+            console.log(err);
+            
+        }
+    }
+
+    const submit = async () => {
+        if (
+            updateText.num_hotels === "" || 
+            updateText.country === "" ||
+            updateText.city === "" ||
+            updateText.address === "") {
+            setSubmitError('Fields must not be empty!')
+            return
+        }
+
+        if (searchText.chain_name === "") {
+            setSearchError('Field must not be empty!')
+            return
+        }
+
+        if (!/^\d+$/.test(updateText.num_hotels)) {
+            setSubmitError('# of Hotels must only contain digits.')
+            return
+        }
+
+        try {
+            console.log(updateText)
+            const res = await axios.post('http://localhost:8800/update', updateText)
+            console.log(res.data)
+            if (Object.keys(res.data)["code"] !== undefined || res.data.length === 0) {
+                setSubmitError('Something went wrong with the search. Please try again.')
+                return
+            }
+            setSubmitError('')
+            setSearchError('')
+            setUpdateText({
+                updates: "chain",
+                chain_name:"",
+                num_hotels: "",
+                country: "",
+                city: "",
+                address: "",
+            })
+            setOpen(false)
+        } catch (err) {
+            console.log(err);
+        }
+
+    }
 
     return (
         <Box justifyContent={'center'} alignItems={'center'}>
@@ -129,17 +244,22 @@ export default function ChainUpdate() {
                             <TextField
                                 required
                                 fullWidth
-                                label="Room #"
+                                label="Chain Name"
+                                onChange={onSearchChainName}
                                 variant="filled"
                                 sx={textsx}
                             />
                         </Grid>
-
+                        {searchError !== '' &&
+                            <Grid item xs={12} color="white" display="flex" justifyContent="center">
+                                <Typography variant="h7" fontWeight="bold" sx={{ top: 0, left: 0, }}>{searchError}</Typography>
+                            </Grid>
+                        }
                         <Grid item xs={12}>
                             <Button
                                 fullWidth 
                                 variant="contained"
-                                onClick={handleClickOpen}
+                                onClick={search}
                                 sx={{
                                     overflow: "visible",
                                     color: 'white', 
@@ -177,9 +297,11 @@ export default function ChainUpdate() {
                             <TextField
                                 required
                                 fullWidth
-                                label="Hotel Address"
+                                label="Office Address"
+                                value={updateText.address}
                                 variant="filled"
                                 sx={textsx}
+                                onChange={onUpdateAddressChange}
                             />
                         </Grid>
                         <Grid item xs={6}>
@@ -188,7 +310,9 @@ export default function ChainUpdate() {
                                 fullWidth
                                 label="City"
                                 variant="filled"
+                                value={updateText.city}
                                 sx={textsx}
+                                onChange={onUpdateCityChange}
                             />
                         </Grid>
                         <Grid item xs={6}>
@@ -197,7 +321,9 @@ export default function ChainUpdate() {
                                 fullWidth
                                 label="Country"
                                 variant="filled"
+                                value={updateText.country}
                                 sx={textsx}
+                                onChange={onUpdateCountryChange}
                             />
                         </Grid>
                        
@@ -206,15 +332,21 @@ export default function ChainUpdate() {
                                 required
                                 fullWidth
                                 label="# of Hotels"
+                                value={updateText.num_hotels}
                                 variant="filled"
                                 sx={textsx}
+                                onChange={onUpdateNumHotelsChange}
                             />
                         </Grid>
                     </Grid>
                 </DialogContent>
                 <DialogActions>
+                {submitError !== '' &&
+                        <Typography variant="h7" fontWeight="bold" sx={{ top: 0, left: 0, color: "white", paddingRight: "10px"}}>{submitError}</Typography>
+                    }
                     <Button 
                         variant="contained"
+                        onClick={submit}
                         sx={{
                             backgroundColor:  COLORS.primaryColor,
                             ':hover': {
